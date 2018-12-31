@@ -7,7 +7,7 @@ NexT.utils = NexT.$u = {
    */
   wrapImageWithFancyBox: function() {
     $('.content img')
-      .not(':hidden')
+      .not('[hidden]')
       .not('.group-picture img, .post-gallery img')
       .each(function() {
         var $image = $(this);
@@ -119,7 +119,7 @@ NexT.utils = NexT.$u = {
     });
 
     $top.on('click', function() {
-      $.isFunction($('html').velocity) ? $('body').velocity('scroll') : $('html, body').animate({ scrollTop: 0 });
+      $('body').velocity('scroll');
     });
   },
 
@@ -238,10 +238,6 @@ NexT.utils = NexT.$u = {
       return;
     }
     $('.sidebar-toggle').trigger('click');
-  },
-
-  isMuse: function() {
-    return CONFIG.scheme === 'Muse';
   },
 
   isMist: function() {
