@@ -355,6 +355,182 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/10/cmake使用/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zero">
+      <meta itemprop="description" content="try to look 5 years ahead">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="West to the Northwest">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2017/07/10/cmake使用/" class="post-title-link" itemprop="http://yoursite.com/page/3/index.html">cmake使用</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2017-07-10 21:24:01" itemprop="dateCreated datePublished" datetime="2017-07-10T21:24:01+08:00">2017-07-10</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-12-31 19:36:45" itemprop="dateModified" datetime="2018-12-31T19:36:45+08:00">2018-12-31</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>PROJECT(XXX)</p>
+<h2 id="工程名"><a href="#工程名" class="headerlink" title="工程名"></a>工程名</h2><p>SET(CMAKE_CXX_COMPILER g++-5)<br>SET设置一个变量的值<br>SET(LIBRARIES ${LIBRARIES} rt numa pthread)<br>SET(LIBRARIES ${LIBRARIES} curl)  </p>
+<h1 id="SET-LIBRARIES-LIBRARIES-boost-coroutine-boost-system"><a href="#SET-LIBRARIES-LIBRARIES-boost-coroutine-boost-system" class="headerlink" title="SET(LIBRARIES ${LIBRARIES} boost_coroutine boost_system)"></a>SET(LIBRARIES ${LIBRARIES} boost_coroutine boost_system)</h1><p>多个选项之间用空格隔开<br>-—<br>INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src)</p>
+<h2 id="Add-the-given-directories-to-those-the-compiler-uses-to-search-for-include-files"><a href="#Add-the-given-directories-to-those-the-compiler-uses-to-search-for-include-files" class="headerlink" title="Add the given directories to those the compiler uses to search for include files"></a>Add the given directories to those the compiler uses to search for include files</h2><p>ADD_DEFINITIONS(-std=c++14)</p>
+<h2 id="为源文件的编译添加由-D定义的标志。"><a href="#为源文件的编译添加由-D定义的标志。" class="headerlink" title="为源文件的编译添加由-D定义的标志。"></a>为源文件的编译添加由-D定义的标志。</h2><h2 id="MESSAGE-STATUS-“Debugging-is-disabled-to-enable-run-cmake-DDEBUG-ON-”"><a href="#MESSAGE-STATUS-“Debugging-is-disabled-to-enable-run-cmake-DDEBUG-ON-”" class="headerlink" title="MESSAGE(STATUS “Debugging is disabled (to enable, run cmake .. -DDEBUG=ON)”)"></a>MESSAGE(STATUS “Debugging is disabled (to enable, run <code>cmake .. -DDEBUG=ON</code>)”)</h2><p>SET_SOURCE_FILES_PROPERTIES(src/mica/util/siphash/siphash24.c PROPERTIES LANGUAGE CXX)</p>
+<h2 id="Set-properties-associated-with-source-files-using-a-key-value-paired-list-See-properties-documentation-for-those-known-to-CMake-Unrecognized-properties-are-ignored-Source-file-properties-are-visible-only-to-targets-added-in-the-same-directory-CMakeLists-txt"><a href="#Set-properties-associated-with-source-files-using-a-key-value-paired-list-See-properties-documentation-for-those-known-to-CMake-Unrecognized-properties-are-ignored-Source-file-properties-are-visible-only-to-targets-added-in-the-same-directory-CMakeLists-txt" class="headerlink" title="Set properties associated with source files using a key/value paired list. See properties documentation for those known to CMake. Unrecognized properties are ignored. Source file properties are visible only to targets added in the same directory (CMakeLists.txt)."></a>Set properties associated with source files using a key/value paired list. See properties documentation for those known to CMake. Unrecognized properties are ignored. Source file properties are visible only to targets added in the same directory (CMakeLists.txt).</h2><h2 id="ADD-EXECUTABLE-test-table-src-mica-test-test-table-cc-SOURCES"><a href="#ADD-EXECUTABLE-test-table-src-mica-test-test-table-cc-SOURCES" class="headerlink" title="ADD_EXECUTABLE(test_table src/mica/test/test_table.cc ${SOURCES})"></a>ADD_EXECUTABLE(test_table src/mica/test/test_table.cc ${SOURCES})</h2><h2 id="修改CMAKE"><a href="#修改CMAKE" class="headerlink" title="修改CMAKE"></a>修改CMAKE</h2>
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/09/reinterpret-cast的用法/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1301,7 +1477,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-12-31 19:42:03" itemprop="dateModified" datetime="2018-12-31T19:42:03+08:00">2018-12-31</time>
+                <time title="Modified: 2018-12-31 19:42:13" itemprop="dateModified" datetime="2018-12-31T19:42:13+08:00">2018-12-31</time>
               
             
           </span>
@@ -1980,179 +2156,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/21/2016121/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zero">
-      <meta itemprop="description" content="try to look 5 years ahead">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="West to the Northwest">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2016/12/21/2016121/" class="post-title-link" itemprop="http://yoursite.com/page/3/index.html">2016121</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2016-12-21 09:11:32" itemprop="dateCreated datePublished" datetime="2016-12-21T09:11:32+08:00">2016-12-21</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-12-31 19:34:06" itemprop="dateModified" datetime="2018-12-31T19:34:06+08:00">2018-12-31</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/记录/" itemprop="url" rel="index"><span itemprop="name">记录</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>总结</p>
-<p>数据流系统这个概念很难理解</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-       
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2200,7 +2203,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">106</span>
+                    <span class="site-state-item-count">107</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2212,44 +2215,6 @@
                 <div class="site-state-item site-state-categories">
                   <a href="/categories/index.html">
                     
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
                     
                       
                     
@@ -2275,62 +2240,6 @@
                 <div class="site-state-item site-state-tags">
                   <a href="/tags/index.html">
                     
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
                     
                       
                     
