@@ -1,0 +1,916 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.6.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    fastclick: ,
+    lazyload: ,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="这篇博文主要关注sheepdog中的打开存储系统的初始化设置以及基本的读写操作，并不关注sheepdog中有关分布式的内容。在sheepdog中，读写请求的处理是通过将对应的请求以及相应的 sd_opensd_open主要完成了初始化的工作，包括初始化了三个重要的链表。">
+<meta name="keywords" content="qemu,源码阅读,coroutine,sheepdog">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sheepdog源码阅读">
+<meta property="og:url" content="http://yoursite.com/2016/07/31/sheepdog源码阅读/index.html">
+<meta property="og:site_name" content="West to the Northwest">
+<meta property="og:description" content="这篇博文主要关注sheepdog中的打开存储系统的初始化设置以及基本的读写操作，并不关注sheepdog中有关分布式的内容。在sheepdog中，读写请求的处理是通过将对应的请求以及相应的 sd_opensd_open主要完成了初始化的工作，包括初始化了三个重要的链表。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-12-31T05:38:25.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="sheepdog源码阅读">
+<meta name="twitter:description" content="这篇博文主要关注sheepdog中的打开存储系统的初始化设置以及基本的读写操作，并不关注sheepdog中有关分布式的内容。在sheepdog中，读写请求的处理是通过将对应的请求以及相应的 sd_opensd_open主要完成了初始化的工作，包括初始化了三个重要的链表。">
+
+
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/07/31/sheepdog源码阅读/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>sheepdog源码阅读 | West to the Northwest</title>
+  
+
+
+
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?a76cb49b16bd00627c6154ec010eb43c";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">West to the Northwest</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <p class="site-subtitle">发上等愿 结中等缘 享下等福 择高处立 寻平处往 向宽处行</p>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+
+    
+    
+    
+
+    
+
+    <a href="/" rel="section">Home</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+
+    
+    
+    
+
+    
+
+    <a href="/about/" rel="section">About</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+
+    
+    
+    
+
+    
+
+    <a href="/tags/" rel="section">Tags</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+
+    
+    
+    
+
+    
+
+    <a href="/categories/" rel="section">Categories</a>
+
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+
+    
+    
+    
+
+    
+
+    <a href="/archives/" rel="section">Archives</a>
+
+  </li>
+
+      
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/07/31/sheepdog源码阅读/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zero">
+      <meta itemprop="description" content="try to look 5 years ahead">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="West to the Northwest">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">sheepdog源码阅读
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2016-07-31 13:46:07" itemprop="dateCreated datePublished" datetime="2016-07-31T13:46:07+08:00">2016-07-31</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/virtualization/" itemprop="url" rel="index"><span itemprop="name">virtualization</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2016/07/31/sheepdog源码阅读/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count gitment-comments-count" data-xid="/2016/07/31/sheepdog源码阅读/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这篇博文主要关注sheepdog中的打开存储系统的初始化设置以及基本的读写操作，并不关注sheepdog中有关分布式的内容。<br>在sheepdog中，读写请求的处理是通过将对应的请求以及相应的</p>
+<h2 id="sd-open"><a href="#sd-open" class="headerlink" title="sd_open"></a>sd_open</h2><p>sd_open主要完成了初始化的工作，包括初始化了三个重要的链表。</p>
+<a id="more"></a>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">int</span> sd\_open(BlockDriverState *bs, QDict *options, <span class="keyword">int</span> flags,</span><br><span class="line">	               Error **errp)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//..............                   </span></span><br><span class="line">	QLIST_INIT(&amp;s-&gt;inflight_aio_head);</span><br><span class="line">	QLIST_INIT(&amp;s-&gt;failed_aio_head);</span><br><span class="line">	QLIST_INIT(&amp;s-&gt;inflight_aiocb_head);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//然后连接到sheeodog，读取inode元数据</span></span><br><span class="line">	fd = connect_to_sdog(s, errp);</span><br><span class="line">	ret = read_object(fd, s-&gt;aio_context, buf, vid_to_vdi_oid(vid),</span><br><span class="line">	                  <span class="number">0</span>, SD_INODE_SIZE, <span class="number">0</span>, s-&gt;cache_flags);</span><br><span class="line">	 <span class="comment">//最后初始化协程队列和协程锁</span></span><br><span class="line">	qemu_co_mutex_init(&amp;s-&gt;lock);</span><br><span class="line">	qemu_co_queue_init(&amp;s-&gt;overlapping_queue);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="sd-co-readv"><a href="#sd-co-readv" class="headerlink" title="sd_co_readv"></a>sd_co_readv</h2><p>sd_co_readv协程处理读请求<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> coroutine\_fn <span class="keyword">int</span> sd\_co\_readv(BlockDriverState \*bs, int64\<span class="keyword">_t</span> sector\_num,</span><br><span class="line">	                   <span class="keyword">int</span> nb_sectors, QEMUIOVector *qiov)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//为这个请求申请分配acb，进行一系列设置（包括在acb保存当前的协程）</span></span><br><span class="line">	acb = sd_aio_setup(bs, qiov, sector_num, nb_sectors);</span><br><span class="line">	<span class="comment">//然后查找当前的请求是不是已经在inflight_aiocb_head里面了，如果重复了，就把当前的协程加入到协程队列的队尾,然后重试</span></span><br><span class="line">	retry:</span><br><span class="line">	<span class="keyword">if</span> (check_overlapping_aiocb(s, acb)) &#123;</span><br><span class="line">	    qemu_co_queue_wait(&amp;s-&gt;overlapping_queue);</span><br><span class="line">	    <span class="keyword">goto</span> retry;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//以len为长度，构造请求加入到inflight_aio_head队列，不等请求响应就返回，返回的请求由aio_read_response处理。</span></span><br><span class="line">	<span class="comment">//由sd_co_rw_vector里面的add_aio_request函数创建协程，调用aio_read_response处理请求的返回信息。</span></span><br><span class="line">	ret = sd_co_rw_vector(acb);</span><br><span class="line">	<span class="keyword">if</span> (ret &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">	    QLIST_REMOVE(acb, aiocb_siblings);</span><br><span class="line">	    qemu_co_queue_restart_all(&amp;s-&gt;overlapping_queue);</span><br><span class="line">	    qemu_aio_unref(acb);</span><br><span class="line">	    <span class="keyword">return</span> ret;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//问题是yield之后restart all是什么意思呢？我理解这里是唤醒调度</span></span><br><span class="line">	qemu_coroutine_yield();</span><br><span class="line">	<span class="comment">//yield之后，把控制权交回调用了qemu_coroutine_enter的位置，现在需要把acb从队列中移除，然后重启其它所有协程</span></span><br><span class="line">	QLIST_REMOVE(acb, aiocb_siblings);</span><br><span class="line">	qemu_co_queue_restart_all(&amp;s-&gt;overlapping_queue);</span><br><span class="line">	<span class="keyword">return</span> acb-&gt;ret;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
+<p>函数调用关系：<br>sd_co_rw_vector–> add_aio_request –>aio_set_fd_handler(s->aio_context, s->fd, false,<br>                       co_read_response, co_write_request, s); –&gt; co_read_response &amp;&amp; co_write_request</p>
+<pre><code>co_read_response[非协程，是fd handler] 创建协程--&gt;aio_read_response
+</code></pre><h3 id="add-aio-request"><a href="#add-aio-request" class="headerlink" title="add_aio_request"></a>add_aio_request</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">void</span> coroutine\_fn add\_aio\_request(BDRVSheepdogState *s, AIOReq *aio\_req,</span><br><span class="line">	                                     struct iovec *iov, <span class="keyword">int</span> niov,</span><br><span class="line">	                                     <span class="keyword">enum</span> AIOCBState aiocb_type)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//.....</span></span><br><span class="line">	aio_set_fd_handler(s-&gt;aio_context, s-&gt;fd, <span class="literal">false</span>,</span><br><span class="line">	                   co_read_response, co_write_request, s);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//.....</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">void</span> co\_read\_response(<span class="keyword">void</span> \*opaque)</span><br><span class="line">&#123;</span><br><span class="line">	BDRVSheepdogState *s = opaque;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span> (!s-&gt;co_recv) &#123;</span><br><span class="line">	    s-&gt;co_recv = qemu_coroutine_create(aio_read_response, opaque);</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	qemu_coroutine_enter(s-&gt;co_recv);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//最终落到需要aio\_read\_response来接收数据，</span></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">void</span> coroutine\_fn aio\_read\_response(<span class="keyword">void</span> \*opaque)</span><br><span class="line">&#123;</span><br><span class="line">	SheepdogObjRsp rsp;</span><br><span class="line">	BDRVSheepdogState *s = opaque;</span><br><span class="line">	<span class="comment">//...</span></span><br><span class="line">	   <span class="keyword">case</span> AIOCB_READ_UDATA:</span><br><span class="line">	    ret = qemu_co_recvv(fd, acb-&gt;qiov-&gt;iov, acb-&gt;qiov-&gt;niov,</span><br><span class="line">	                        aio_req-&gt;iov_offset, rsp.data_length);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//...</span></span><br><span class="line">	free_aio_req(s, aio_req);</span><br><span class="line">	<span class="keyword">if</span> (!acb-&gt;nr_pending) &#123;</span><br><span class="line">	    <span class="comment">/*</span></span><br><span class="line"><span class="comment">	     * We've finished all requests which belong to the AIOCB, so</span></span><br><span class="line"><span class="comment">	     * we can switch back to sd_co_readv/writev now.</span></span><br><span class="line"><span class="comment">	     */</span></span><br><span class="line">	    acb-&gt;aio_done_func(acb);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//...</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">//如果执行到上面括号里面，最终请求控制权就又回到了sd\_co\_readv，最后执行下面两句话，</span></span><br><span class="line">	QLIST_REMOVE(acb, aiocb_siblings);</span><br><span class="line">	qemu_co_queue_restart_all(&amp;s-&gt;overlapping_queue);</span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>通过这次的阅读，可以发现，sheepdog的基本机制是就是把传统的callback的机制改成了使用coroutine的方法，在读写的时候，每个读协程把请求加入队列就可以yield，然后由注册了的fd handler创建协程接收读取的数据，最终完成读写。</p>
+<p>从不同的实现机制来理解，这个机制跟同步执行相比，就是把一个请求–等待数据返回–完成请求的过程分成了，把请求加入队列并返回–等待数据返回并且完成–唤醒原协程的过程。从逻辑上来看，这和多线程工作队列的执行过程和逻辑是相同的。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/qemu/" rel="tag"># qemu</a>
+          
+            <a href="/tags/源码阅读/" rel="tag"># 源码阅读</a>
+          
+            <a href="/tags/coroutine/" rel="tag"># coroutine</a>
+          
+            <a href="/tags/sheepdog/" rel="tag"># sheepdog</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/07/31/20160731/" rel="next" title="20160731">
+                <i class="fa fa-chevron-left"></i> 20160731
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/08/02/20160801/" rel="prev" title="20160801">
+                20160801 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      
+        <div id="gitment-container"></div>
+      
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">zero</p>
+              <p class="site-description motion-element" itemprop="description">try to look 5 years ahead</p>
+          </div>
+
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  
+                  
+                    
+                  
+                  
+                    
+                  
+                  <a href="https://github.com/zhuguoliang" title="GitHub &rarr; https://github.com/zhuguoliang" rel="noopener" target="_blank"><i class="fa fa-fw fa-globe"></i>GitHub</a>
+                </span>
+              
+            </div>
+          
+
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-block">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.codingnow.com/" title="http://blog.codingnow.com/" rel="noopener" target="_blank">云风</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.vmsplice.net/" title="http://blog.vmsplice.net/" rel="noopener" target="_blank">qemu-internals</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.youxu.info/" title="http://blog.youxu.info/" rel="noopener" target="_blank">徐宥</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.crockford.com/wrrrld/style1.html" title="http://www.crockford.com/wrrrld/style1.html" rel="noopener" target="_blank">The Elements of Style</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://research.google.com/pubs/jeff.html" title="http://research.google.com/pubs/jeff.html" rel="noopener" target="_blank">Jeffrey Dean</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://research.google.com/pubs/SanjayGhemawat.html" title="http://research.google.com/pubs/SanjayGhemawat.html" rel="noopener" target="_blank">Sanjay Ghemawat</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://coolshell.cn/" title="http://coolshell.cn/" rel="noopener" target="_blank">陈皓</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#sd-open"><span class="nav-number">1.</span> <span class="nav-text">sd_open</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#sd-co-readv"><span class="nav-number">2.</span> <span class="nav-text">sd_co_readv</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#add-aio-request"><span class="nav-number">2.1.</span> <span class="nav-text">add_aio_request</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zero</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v6.6.0</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.6.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.6.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.6.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.6.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.6.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: window.location.pathname,
+            owner: 'zhuguoliang',
+            repo: 'gitment-comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: '66119b901f5bb777c53658f91e7692f3ae299856',
+            
+                client_id: 'b43b76b8171d4156b2e3'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
