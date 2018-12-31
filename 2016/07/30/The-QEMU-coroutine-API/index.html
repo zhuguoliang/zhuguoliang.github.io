@@ -108,17 +108,18 @@
 
 
 
-  <meta name="description" content="The QEMU coroutine APIThe coroutine API is documented in include/block/coroutine.h. The main functions are: 12typedef void coroutine_fn CoroutineEntry(void *opaque);Coroutine *qemu_coroutine_create(Co">
+  <meta name="description" content="QEMU的协程接口，这里介绍了几个主要函数，没有翻译，自己看看。 The QEMU coroutine APIThe coroutine API is documented in include/block/coroutine.h. The main functions are: 12typedef void coroutine\_fn CoroutineEntry(void \*opaque);">
+<meta name="keywords" content="虚拟化,云计算">
 <meta property="og:type" content="article">
 <meta property="og:title" content="The QEMU coroutine API">
 <meta property="og:url" content="http://yoursite.com/2016/07/30/The-QEMU-coroutine-API/index.html">
 <meta property="og:site_name" content="West to the Northwest">
-<meta property="og:description" content="The QEMU coroutine APIThe coroutine API is documented in include/block/coroutine.h. The main functions are: 12typedef void coroutine_fn CoroutineEntry(void *opaque);Coroutine *qemu_coroutine_create(Co">
+<meta property="og:description" content="QEMU的协程接口，这里介绍了几个主要函数，没有翻译，自己看看。 The QEMU coroutine APIThe coroutine API is documented in include/block/coroutine.h. The main functions are: 12typedef void coroutine\_fn CoroutineEntry(void \*opaque);">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-31T05:38:25.000Z">
+<meta property="og:updated_time" content="2018-12-31T11:07:21.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="The QEMU coroutine API">
-<meta name="twitter:description" content="The QEMU coroutine APIThe coroutine API is documented in include/block/coroutine.h. The main functions are: 12typedef void coroutine_fn CoroutineEntry(void *opaque);Coroutine *qemu_coroutine_create(Co">
+<meta name="twitter:description" content="QEMU的协程接口，这里介绍了几个主要函数，没有翻译，自己看看。 The QEMU coroutine APIThe coroutine API is documented in include/block/coroutine.h. The main functions are: 12typedef void coroutine\_fn CoroutineEntry(void \*opaque);">
 
 
 
@@ -414,11 +415,29 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-12-31 13:38:25" itemprop="dateModified" datetime="2018-12-31T13:38:25+08:00">2018-12-31</time>
+                <time title="Modified: 2018-12-31 19:07:21" itemprop="dateModified" datetime="2018-12-31T19:07:21+08:00">2018-12-31</time>
               
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -457,8 +476,9 @@
       
 
       
-        <p>The QEMU coroutine API<br>The coroutine API is documented in include/block/coroutine.h. The main functions are:</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">typedef</span> <span class="keyword">void</span> coroutine_fn <span class="title">CoroutineEntry</span><span class="params">(<span class="keyword">void</span> *opaque)</span></span>;</span><br><span class="line"><span class="function">Coroutine *<span class="title">qemu_coroutine_create</span><span class="params">(CoroutineEntry *entry)</span></span>;</span><br></pre></td></tr></table></figure>
+        <p>QEMU的协程接口，这里介绍了几个主要函数，没有翻译，自己看看。</p>
+<p>The QEMU coroutine API<br>The coroutine API is documented in include/block/coroutine.h. The main functions are:</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">void</span> coroutine\_<span class="function">fn <span class="title">CoroutineEntry</span><span class="params">(<span class="keyword">void</span> \*opaque)</span></span>;</span><br><span class="line">Coroutine *qemu\_coroutine\_create(CoroutineEntry *entry);</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
 <p>When a new coroutine is started, it will begin executing the entry function. The caller can pass an opaque pointer to data needed by the coroutine. If you are familiar with multi-threaded programming, this interface is similar to pthread_create(3).</p>
 <p>The new coroutine is executed by calling qemu_coroutine_enter():</p>
@@ -486,6 +506,14 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/虚拟化/" rel="tag"># 虚拟化</a>
+          
+            <a href="/tags/云计算/" rel="tag"># 云计算</a>
+          
+        </div>
       
 
       
@@ -576,7 +604,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">107</span>
+                    <span class="site-state-item-count">106</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -635,7 +663,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">23</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -752,7 +784,61 @@
                     
                       
                     
-                    <span class="site-state-item-count">52</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">51</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

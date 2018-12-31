@@ -109,13 +109,14 @@
 
 
   <meta name="description" content="RDMA provides Channel based IOIn traditional sockets networks, applications request network resources from the operating system through an API which conducts the transaction on their behalf. However R">
+<meta name="keywords" content="RDMA,网络">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Coding RDMA [1]">
 <meta property="og:url" content="http://yoursite.com/2016/12/29/Coding-RDMA-1/index.html">
 <meta property="og:site_name" content="West to the Northwest">
 <meta property="og:description" content="RDMA provides Channel based IOIn traditional sockets networks, applications request network resources from the operating system through an API which conducts the transaction on their behalf. However R">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-31T05:38:25.000Z">
+<meta property="og:updated_time" content="2018-12-31T11:34:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Coding RDMA [1]">
 <meta name="twitter:description" content="RDMA provides Channel based IOIn traditional sockets networks, applications request network resources from the operating system through an API which conducts the transaction on their behalf. However R">
@@ -414,11 +415,29 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-12-31 13:38:25" itemprop="dateModified" datetime="2018-12-31T13:38:25+08:00">2018-12-31</time>
+                <time title="Modified: 2018-12-31 19:34:49" itemprop="dateModified" datetime="2018-12-31T19:34:49+08:00">2018-12-31</time>
               
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -478,8 +497,7 @@
 <li>当注册内存时，会对内存区域设置权限，这些权限包括，local write, remote read, remote write, atomic, and bind</li>
 <li>每个内存区域MR有一个本地key和一个远程key。(r_key, l_key). 本地key由本地的HCA使用，来访问本地的内存，比如在一个receive操作中。远程key由远程HCA使用，允许远程进程通过RDMA操作访问系统内存。</li>
 <li>相同的内存区域可以被多次注册（即便是权限不一样），并且每次注册得到的key都不一样。</li>
-<li>struct ibv_mr  被用来实现内存注册_</li>
-<li></li>
+<li>struct ibv_mr  被用来实现内存注册_<br>- </li>
 </ul>
 <h4 id="Memory-Window"><a href="#Memory-Window" class="headerlink" title="Memory Window"></a>Memory Window</h4><p>内存窗口允许应用对目标是它的内存远程访问有更加灵活的控制，主要面向一下几个场景：</p>
 <ul>
@@ -539,6 +557,14 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/RDMA/" rel="tag"># RDMA</a>
+          
+            <a href="/tags/网络/" rel="tag"># 网络</a>
+          
+        </div>
+      
 
       
       
@@ -558,8 +584,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/12/30/Coding-RDMA-2/" rel="prev" title="Coding RDMA [2]">
-                Coding RDMA [2] <i class="fa fa-chevron-right"></i>
+              <a href="/2017/05/01/20170501/" rel="prev" title="20170501">
+                20170501 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -637,7 +663,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">107</span>
+                    <span class="site-state-item-count">106</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -696,7 +722,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">23</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -813,7 +843,61 @@
                     
                       
                     
-                    <span class="site-state-item-count">52</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">51</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>

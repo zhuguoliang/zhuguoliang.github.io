@@ -108,17 +108,18 @@
 
 
 
-  <meta name="description" content="首先，下面报错cc: error: unrecognized command line option &apos;-march1234-march在530上没有实现，于是直接定义mcpu``` ./zglbuild/meson-private/libdpdk.pc:Cflags: -I$&amp;#123;includedir&amp;#125; -I$&amp;#123;includedir&amp;#125; -include rte">
+  <meta name="description" content="首先，下面报错code  cc: error: unrecognized command line option &amp;#39;-march=native&amp;#39;-march在530上没有实现，于是直接定义mcpu ./zglbuild/meson-private/libdpdk.pc:Cflags: -I${includedir} -I${includedir} -include rte_conf">
+<meta name="keywords" content="SPDK-DPDK,SW64">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Playing with meson and ninja in building DPDK">
 <meta property="og:url" content="http://yoursite.com/2018/06/15/Playing-with-meson-and-ninja-in-building-DPDK/index.html">
 <meta property="og:site_name" content="West to the Northwest">
-<meta property="og:description" content="首先，下面报错cc: error: unrecognized command line option &apos;-march1234-march在530上没有实现，于是直接定义mcpu``` ./zglbuild/meson-private/libdpdk.pc:Cflags: -I$&amp;#123;includedir&amp;#125; -I$&amp;#123;includedir&amp;#125; -include rte">
+<meta property="og:description" content="首先，下面报错code  cc: error: unrecognized command line option &amp;#39;-march=native&amp;#39;-march在530上没有实现，于是直接定义mcpu ./zglbuild/meson-private/libdpdk.pc:Cflags: -I${includedir} -I${includedir} -include rte_conf">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-31T05:38:25.000Z">
+<meta property="og:updated_time" content="2018-12-31T11:39:40.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Playing with meson and ninja in building DPDK">
-<meta name="twitter:description" content="首先，下面报错cc: error: unrecognized command line option &apos;-march1234-march在530上没有实现，于是直接定义mcpu``` ./zglbuild/meson-private/libdpdk.pc:Cflags: -I$&amp;#123;includedir&amp;#125; -I$&amp;#123;includedir&amp;#125; -include rte">
+<meta name="twitter:description" content="首先，下面报错code  cc: error: unrecognized command line option &amp;#39;-march=native&amp;#39;-march在530上没有实现，于是直接定义mcpu ./zglbuild/meson-private/libdpdk.pc:Cflags: -I${includedir} -I${includedir} -include rte_conf">
 
 
 
@@ -414,11 +415,29 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-12-31 13:38:25" itemprop="dateModified" datetime="2018-12-31T13:38:25+08:00">2018-12-31</time>
+                <time title="Modified: 2018-12-31 19:39:40" itemprop="dateModified" datetime="2018-12-31T19:39:40+08:00">2018-12-31</time>
               
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -457,8 +476,8 @@
       
 
       
-        <p>首先，下面报错<br><figure class="highlight plain"><figcaption><span>cc: error: unrecognized command line option '-march</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">-march在530上没有实现，于是直接定义mcpu</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">``` ./zglbuild/meson-private/libdpdk.pc:Cflags: -I$&#123;includedir&#125; -I$&#123;includedir&#125; -include rte_config.h -march=native</span><br></pre></td></tr></table></figure></p>
-<p>这里</p>
+        <p>首先，下面报错<br><code>code  cc: error: unrecognized command line option &#39;-march=native&#39;</code><br>-march在530上没有实现，于是直接定义mcpu</p>
+<p><code>./zglbuild/meson-private/libdpdk.pc:Cflags: -I${includedir} -I${includedir} -include rte_config.h -march=native</code><br>这里</p>
 
       
     </div>
@@ -479,6 +498,14 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/SPDK-DPDK/" rel="tag"># SPDK-DPDK</a>
+          
+            <a href="/tags/SW64/" rel="tag"># SW64</a>
+          
+        </div>
       
 
       
@@ -569,7 +596,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">107</span>
+                    <span class="site-state-item-count">106</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -628,7 +655,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">23</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -745,7 +776,61 @@
                     
                       
                     
-                    <span class="site-state-item-count">52</span>
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">51</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
