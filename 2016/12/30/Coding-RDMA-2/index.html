@@ -108,25 +108,27 @@
 
 
 
-  <meta name="description" content="c++11 通过值决定对象类型  可以决定是否想要重载虚函数  可以使用Lambda表达式  新的用于遍历容器的for循环格式  auto_ptr 被 unique_ptr代替，更安全  线程库成为语言内部库，不需要包含外部库  在构建或者赋值的时候可以使用移动而不是复制。 这里使用移动而不是复制的方式很有意思，这是rust的重要特性  c++14 auto 也能作为返回值了  auto也能做la">
-<meta name="keywords" content="c++">
+  <meta name="description" content="两个相关资源You can look at the ping-pong examples that come with libibverbs.http://www.openfabrics.org/downloads/libibverbs/Also you can look at the performance tests (ib_write_lat, ib_write_bw, etc).http:">
+<meta name="keywords" content="RDMA,网络">
 <meta property="og:type" content="article">
-<meta property="og:title" content="c++11和c++14区别">
-<meta property="og:url" content="http://yoursite.com/2018/12/29/c-11和c-14区别/index.html">
+<meta property="og:title" content="Coding RDMA [2]">
+<meta property="og:url" content="http://yoursite.com/2016/12/30/Coding-RDMA-2/index.html">
 <meta property="og:site_name" content="West to the Northwest">
-<meta property="og:description" content="c++11 通过值决定对象类型  可以决定是否想要重载虚函数  可以使用Lambda表达式  新的用于遍历容器的for循环格式  auto_ptr 被 unique_ptr代替，更安全  线程库成为语言内部库，不需要包含外部库  在构建或者赋值的时候可以使用移动而不是复制。 这里使用移动而不是复制的方式很有意思，这是rust的重要特性  c++14 auto 也能作为返回值了  auto也能做la">
+<meta property="og:description" content="两个相关资源You can look at the ping-pong examples that come with libibverbs.http://www.openfabrics.org/downloads/libibverbs/Also you can look at the performance tests (ib_write_lat, ib_write_bw, etc).http:">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-12-31T11:40:04.000Z">
+<meta property="og:image" content="http://yoursite.com/Coding-RDMA-2/1.png">
+<meta property="og:updated_time" content="2018-12-31T11:42:03.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="c++11和c++14区别">
-<meta name="twitter:description" content="c++11 通过值决定对象类型  可以决定是否想要重载虚函数  可以使用Lambda表达式  新的用于遍历容器的for循环格式  auto_ptr 被 unique_ptr代替，更安全  线程库成为语言内部库，不需要包含外部库  在构建或者赋值的时候可以使用移动而不是复制。 这里使用移动而不是复制的方式很有意思，这是rust的重要特性  c++14 auto 也能作为返回值了  auto也能做la">
+<meta name="twitter:title" content="Coding RDMA [2]">
+<meta name="twitter:description" content="两个相关资源You can look at the ping-pong examples that come with libibverbs.http://www.openfabrics.org/downloads/libibverbs/Also you can look at the performance tests (ib_write_lat, ib_write_bw, etc).http:">
+<meta name="twitter:image" content="http://yoursite.com/Coding-RDMA-2/1.png">
 
 
 
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2018/12/29/c-11和c-14区别/">
+  <link rel="canonical" href="http://yoursite.com/2016/12/30/Coding-RDMA-2/">
 
 
 
@@ -136,7 +138,7 @@
   };
 </script>
 
-  <title>c++11和c++14区别 | West to the Northwest</title>
+  <title>Coding RDMA [2] | West to the Northwest</title>
   
 
 
@@ -356,7 +358,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/29/c-11和c-14区别/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/12/30/Coding-RDMA-2/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zero">
@@ -373,7 +375,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">c++11和c++14区别
+          <h1 class="post-title" itemprop="name headline">Coding RDMA [2]
               
             
           </h1>
@@ -398,7 +400,7 @@
                 
               
 
-              <time title="Created: 2018-12-29 15:57:17" itemprop="dateCreated datePublished" datetime="2018-12-29T15:57:17+08:00">2018-12-29</time>
+              <time title="Created: 2016-12-30 19:53:30" itemprop="dateCreated datePublished" datetime="2016-12-30T19:53:30+08:00">2016-12-30</time>
             
 
             
@@ -415,7 +417,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-12-31 19:40:04" itemprop="dateModified" datetime="2018-12-31T19:40:04+08:00">2018-12-31</time>
+                <time title="Modified: 2018-12-31 19:42:03" itemprop="dateModified" datetime="2018-12-31T19:42:03+08:00">2018-12-31</time>
               
             
           </span>
@@ -447,8 +449,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/12/29/c-11和c-14区别/#comments" itemprop="discussionUrl">
-                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count gitment-comments-count" data-xid="/2018/12/29/c-11和c-14区别/" itemprop="commentsCount"></span>
+                <a href="/2016/12/30/Coding-RDMA-2/#comments" itemprop="discussionUrl">
+                  <span class="post-meta-item-text">Comments: </span> <span class="post-comments-count gitment-comments-count" data-xid="/2016/12/30/Coding-RDMA-2/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -476,22 +478,14 @@
       
 
       
-        <h2 id="c-11"><a href="#c-11" class="headerlink" title="c++11"></a>c++11</h2><ul>
-<li>通过值决定对象类型 </li>
-<li>可以决定是否想要重载虚函数 </li>
-<li>可以使用Lambda表达式 </li>
-<li>新的用于遍历容器的for循环格式 </li>
-<li>auto_ptr 被 unique_ptr代替，更安全 </li>
-<li>线程库成为语言内部库，不需要包含外部库 </li>
-<li>在构建或者赋值的时候可以使用移动而不是复制。 <h3 id="这里使用移动而不是复制的方式很有意思，这是rust的重要特性"><a href="#这里使用移动而不是复制的方式很有意思，这是rust的重要特性" class="headerlink" title="这里使用移动而不是复制的方式很有意思，这是rust的重要特性"></a>这里使用移动而不是复制的方式很有意思，这是rust的重要特性</h3></li>
+        <h3 id="两个相关资源"><a href="#两个相关资源" class="headerlink" title="两个相关资源"></a>两个相关资源</h3><p>You can look at the ping-pong examples that come with libibverbs.<br><a href="http://www.openfabrics.org/downloads/libibverbs/" target="_blank" rel="noopener">http://www.openfabrics.org/downloads/libibverbs/</a><br>Also you can look at the performance tests (ib_write_lat, ib_write_bw, etc).<br><a href="http://www.openfabrics.org/downloads/perftest/" target="_blank" rel="noopener">http://www.openfabrics.org/downloads/perftest/</a></p>
+<h3 id="rdma-rc-example-c"><a href="#rdma-rc-example-c" class="headerlink" title="rdma_rc_example.c"></a>rdma_rc_example.c</h3><h4 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h4><ul>
+<li>-p port </li>
+<li>-d ib-dev</li>
+<li>-i  ib-port</li>
+<li>-g gid-idx  </li>
 </ul>
-<h2 id="c-14"><a href="#c-14" class="headerlink" title="c++14"></a>c++14</h2><ul>
-<li>auto 也能作为返回值了 </li>
-<li>auto也能做lambda参数了 </li>
-<li>加入废弃一个类的快捷方式 </li>
-<li>可以使用二进制数 </li>
-</ul>
-
+<img src="/Coding-RDMA-2/1.png">
       
     </div>
 
@@ -514,7 +508,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/c/" rel="tag"># c++</a>
+            <a href="/tags/RDMA/" rel="tag"># RDMA</a>
+          
+            <a href="/tags/网络/" rel="tag"># 网络</a>
           
         </div>
       
@@ -527,8 +523,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/12/29/git提交规范/" rel="next" title="git提交规范">
-                <i class="fa fa-chevron-left"></i> git提交规范
+              <a href="/2016/12/29/Coding-RDMA-1/" rel="next" title="Coding RDMA [1]">
+                <i class="fa fa-chevron-left"></i> Coding RDMA [1]
               </a>
             
           </div>
@@ -537,8 +533,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/12/31/2018的总结/" rel="prev" title="2018的总结">
-                2018的总结 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/05/01/20170501/" rel="prev" title="20170501">
+                20170501 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -938,7 +934,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#c-11"><span class="nav-number">1.</span> <span class="nav-text">c++11</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#这里使用移动而不是复制的方式很有意思，这是rust的重要特性"><span class="nav-number">1.1.</span> <span class="nav-text">这里使用移动而不是复制的方式很有意思，这是rust的重要特性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#c-14"><span class="nav-number">2.</span> <span class="nav-text">c++14</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#两个相关资源"><span class="nav-number">1.</span> <span class="nav-text">两个相关资源</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#rdma-rc-example-c"><span class="nav-number">2.</span> <span class="nav-text">rdma_rc_example.c</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#输入"><span class="nav-number">2.1.</span> <span class="nav-text">输入</span></a></li></ol></li></ol></div>
             
 
           </div>
