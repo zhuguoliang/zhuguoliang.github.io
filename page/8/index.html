@@ -527,6 +527,189 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/08/19/zmalloc/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zero">
+      <meta itemprop="description" content="try to look 5 years ahead">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="West to the Northwest">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2016/08/19/zmalloc/" class="post-title-link" itemprop="http://yoursite.com/page/8/index.html">zmalloc</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2016-08-19 21:51:34" itemprop="dateCreated datePublished" datetime="2016-08-19T21:51:34+08:00">2016-08-19</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-12-31 18:58:06" itemprop="dateModified" datetime="2018-12-31T18:58:06+08:00">2018-12-31</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h3 id="malloc—-sbrk"><a href="#malloc—-sbrk" class="headerlink" title="malloc—>sbrk"></a>malloc—>sbrk</h3><p>malloc allocates memory on the heap, period.<br>Your C library typically keeps a list (or some more intricate data structure) of available memory chunks, finding a suitable chunk to satisfy a malloc (possibly splitting a larger chunk into a number of smaller ones) and returning free’d memory to the list (possibly merging a few smaller chunks into a bigger one)<br>Only when the list doesn’t contain a large enough chunk to satisfy your malloc, the library will ask the OS for more memory, e.g. using the sbrk syscall. </p>
+<h3 id="sbrk"><a href="#sbrk" class="headerlink" title="sbrk"></a>sbrk</h3><p> strace -c ls</p>
+<p>现在基本可以认定，redis的zmalloc最终调用sbrk，然而在这个情形下，我们可以记录zmalloc得到的地址序列，分析命中的位置，</p>
+<p>继续仔细分析redis的详细内存增长，是以什么样的粒度进行分配的，主要使用了哪个内存分配机制。</p>
+<p>tcmalloc中的内存分配机制，在它的内存分配机制中，引入对读写均衡度的考量。明天要看一下在使用tcmalloc的时候，主要使用了哪个队列。</p>
+<p>tcmalloc</p>
+<p>tcmalloc为每个线程分配了线程局部的cache，小分配就都是子啊这种线程局部的cache中完成，<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">inline</span> <span class="keyword">void</span>\* <span class="keyword">do</span>\_malloc\_no\_errno(size\<span class="keyword">_t</span> size) &#123;</span><br><span class="line">  <span class="keyword">if</span> (ThreadCache::have\_tls &amp;&amp;</span><br><span class="line">  LIKELY(size \&lt; ThreadCache::MinSizeForSlowPath())) &#123;</span><br><span class="line"><span class="keyword">return</span> <span class="keyword">do</span>\_malloc\_small(ThreadCache::GetCacheWhichMustBePresent(), size);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (size \&lt;= kMaxSize) &#123;</span><br><span class="line"><span class="keyword">return</span> <span class="keyword">do</span>\_malloc\_small(ThreadCache::GetCache(), size);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"><span class="keyword">return</span> <span class="keyword">do</span>\_malloc\_pages(ThreadCache::GetCache(), size);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>small cache分配</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">inline</span> <span class="keyword">void</span>* <span class="keyword">do</span>\_malloc\_small(ThreadCache* heap, size\<span class="keyword">_t</span> size) &#123;</span><br><span class="line">  ASSERT(Static::IsInited());</span><br><span class="line">  ASSERT(heap != <span class="literal">NULL</span>);</span><br><span class="line">  size\<span class="keyword">_t</span> cl = Static::sizemap()-\&gt;SizeClass(size);</span><br><span class="line">  size = Static::sizemap()-\&gt;class\_to\_size(cl);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> ((FLAGS\_tcmalloc\_sample\_parameter \&gt; <span class="number">0</span>) &amp;&amp; heap-\&gt;SampleAllocation(size)) &#123;</span><br><span class="line"><span class="keyword">return</span> DoSampledAllocation(size);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"><span class="comment">// The common case, and also the simplest.  This just pops the</span></span><br><span class="line"><span class="comment">// size-appropriate freelist, after replenishing it if it's empty.</span></span><br><span class="line"><span class="keyword">return</span> CheckedMallocResult(heap-\&gt;Allocate(size, cl));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>tc_malloc_stats输出<br>在tcmalloc中，小对象在per-thread的cache中进行分配，大对象在page heap中进行分配，图中可以看出per-thread cache的大小从8B、16B到13KB.<br>实际上tcmalloc为小对象创建了86个大小的size classes。</p>
+<img src="/zmalloc/1.png">
+<p>要想弄懂，主要看下面这个实验，上面申请的是256KB+8B的块，总共申请了200MB，下面的实验中，我们申请256KB-8B的块。<br>可以看出790个span，每个31个8KB的页，<br><img src="/zmalloc/2.png"><br>和期望不符合的一点是class 86的obj数目只有36个，<br>do_malloc_stats —>PrintStats —>DumpStats</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/08/19/WeeklySum-2016-8-3/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1902,187 +2085,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/08/17/YCSB/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zero">
-      <meta itemprop="description" content="try to look 5 years ahead">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="West to the Northwest">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2016/08/17/YCSB/" class="post-title-link" itemprop="http://yoursite.com/page/8/index.html">YCSB</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2016-08-17 22:24:10" itemprop="dateCreated datePublished" datetime="2016-08-17T22:24:10+08:00">2016-08-17</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-12-31 19:15:37" itemprop="dateModified" datetime="2018-12-31T19:15:37+08:00">2018-12-31</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/科研/" itemprop="url" rel="index"><span itemprop="name">科研</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="SOSP13"><a href="#SOSP13" class="headerlink" title="SOSP13"></a>SOSP13</h3><p><strong>Speedy Transactions in Multicore In-Memory Databases</strong><br>We ran a variant of YCSB workload mix A; YCSB is Yahoo’s popular key- value benchmark.<br>这篇文章运行YCSB工作负载的变种A<br>主要做了三个改变：</p>
-<ul>
-<li>固定读写比例80/20</li>
-<li>把写操作改成了读-修改-写</li>
-<li>把每条记录大小从1000B缩小到100B</li>
-</ul>
-<p>Our variant differs in the following ways: (a) we fix the read/write ratio to 80/20 (instead of 50/50), (b) we change write operations to read-modify- writes, which in MemSilo happen in a single transaction, and (c) we shrink the size of records to 100 bytes (in- stead of 1000 bytes). These modifications prevent unin- teresting overheads that affect both systems from hiding overheads that affect only MemSilo. </p>
-<p>More specifically, (a) prevents the memory allocator for new records from becoming the primary bottleneck, (b) creates a transac- tion that actually generates read-write conflicts, which stresses MemSilo’s protocol, and (c) prevents memcpy from becoming the primary bottleneck. Both transac- tions sample keys uniformly from the key space.We fix the tree size to contain 160M keys, and vary the number of workers performing transactions against the tree.<br><strong>TODO</strong>：<br>下载<br><a href="https://github.com/brianfrankcooper/YCSB/releases" target="_blank" rel="noopener">https://github.com/brianfrankcooper/YCSB/releases</a></p>
-<p>感觉redis状态有点奇怪，是不是其他机器上的redis没有跑起来？<br>redis分析地址的方法？<br>明天把stream跑起来，然后完整建立一个观察访问量的框架。。。<br>YCSB和cloudsuite这两个哪个能够固定访问总量？<br>Clearing the Clouds是EPFL发布的时候的文章<br>这篇文章要引用！！！</p>
-<p>bin/nodetool enablethrift<br>bin/cassandra -f</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-       
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2130,7 +2132,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">107</span>
+                    <span class="site-state-item-count">108</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2270,7 +2272,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">51</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">53</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
