@@ -355,7 +355,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/14/内联汇编中的指针内存访问/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/31/Linux-内核ELF中的特殊sections/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zero">
@@ -375,7 +375,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2018/06/14/内联汇编中的指针内存访问/" class="post-title-link" itemprop="http://yoursite.com/page/2/index.html">内联汇编中的指针内存访问</a>
+                <a href="/2018/12/31/Linux-内核ELF中的特殊sections/" class="post-title-link" itemprop="http://yoursite.com/page/2/index.html">Linux 内核ELF中的特殊sections</a>
               
             
           </h1>
@@ -400,24 +400,12 @@
                 
               
 
-              <time title="Created: 2018-06-14 16:48:05" itemprop="dateCreated datePublished" datetime="2018-06-14T16:48:05+08:00">2018-06-14</time>
+              <time title="Created: 2018-12-31 20:01:07 / Modified: 20:03:22" itemprop="dateCreated datePublished" datetime="2018-12-31T20:01:07+08:00">2018-12-31</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-12-31 13:38:26" itemprop="dateModified" datetime="2018-12-31T13:38:26+08:00">2018-12-31</time>
               
             
           </span>
@@ -434,7 +422,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/技术/" itemprop="url" rel="index"><span itemprop="name">技术</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
 
                 
                 
@@ -470,7 +458,14 @@
       
         
           
-            <p>unsigned long <em>addr<br>=m(\</em>addr)<br>注意，这时取到的并不是addr的值，而是括号和*号抵消了，将addr作为地址去取数据。 </p>
+            <p>Linux内核有一些额外类型的section，被叫做特殊区，special sections<br>这些区使用来实现很多内核特性 </p>
+<p>ELF有个头，有很多段，每个段又包括一个或者多个区域，每个段的长度和每个区的长度在ELF头里面指出。 链接器把相同类型的区和并成一个区，然后给它分配一个起始地址。 比较简单的和执行文件中的section和内核中的section,可以发现有很多特别的区。 这些区域的数目依赖于体系结构，x86_64有超过30个，ARM有10个<br>特殊区域的定义在Linux链接器脚本中，这个默认的链接器脚本有区别，对应的文件存储在每个架构的子树中kernel/vmlinux.ld.S中<br>这个文件使用一系列定义在linux/include/asm_generic/vmlinux.lds.h头文件中的宏中。 </p>
+<p>   ARM平台连接脚本包含一个对特殊区域的简单易懂的定义<br>. = ALIGN(4);<br><strong>start_</strong>ex_table = .;<br>*(<strong>ex_table) 
+</strong>stop___ex_table = .; </p>
+<p>这个<strong>ex_table特殊区域四字节对其。链接器创建一堆标识符，也就是</strong>start_ex_table和<strong>stop</strong>ex_table，然后这只他们的起始地址为<strong>ex_table的开始和结尾。 Linux函数可以用这些标识符来迭代</strong>ex_table的字节， </p>
+<p>下面，根据Linux特殊区域中存储的信息对这些特殊区域进行分组， </p>
+<p>在linux初始化时调用的函数放在.init.text区域，一旦系统个初始化之后，Linux用区域的delimiter来释放这个区域分配的页帧。 </p>
+<p>定义为__sched的函数被插入到.sched.text特殊区域，这样就会被get_wchan()函数忽略，这个函数在读取/proc/PID/wchan文件时调用， </p>
 
           
         
@@ -527,7 +522,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/16/学会提问/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/31/慢思考/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zero">
@@ -547,7 +542,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2017/08/16/学会提问/" class="post-title-link" itemprop="http://yoursite.com/page/2/index.html">学会提问</a>
+                <a href="/2018/12/31/慢思考/" class="post-title-link" itemprop="http://yoursite.com/page/2/index.html">慢思考</a>
               
             
           </h1>
@@ -572,24 +567,12 @@
                 
               
 
-              <time title="Created: 2017-08-16 10:22:01" itemprop="dateCreated datePublished" datetime="2017-08-16T10:22:01+08:00">2017-08-16</time>
+              <time title="Created: 2018-12-31 19:57:56 / Modified: 19:58:25" itemprop="dateCreated datePublished" datetime="2018-12-31T19:57:56+08:00">2018-12-31</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-12-31 19:05:13" itemprop="dateModified" datetime="2018-12-31T19:05:13+08:00">2018-12-31</time>
               
             
           </span>
@@ -642,12 +625,703 @@
       
         
           
-            <p>四个问题要回答自己</p>
-<ul>
-<li>我有没有问“为什么”别人要我相信他的观点</li>
-<li>在我想到别人的说法可能有问题时有没有把它记录下来</li>
-<li>我对别人说过的话有没有进行客观评价</li>
-<li>针对某一特定主体，我有没有在别人合理说法的基础上形成自己的结论</li>
+            <p>抽出固定的不受打扰的时间，来完成专注的工作和对话。 </p>
+<p>如果没有办法摆脱多任务并行，最好每天抽出一小时，不受打扰地完成一个任务 </p>
+<p>离线方法 </p>
+<ol>
+<li>首先找出一天中思考表现最好的时间段，（可以试着把安静的一小时安排在一天中不同的时间段，找出这个时间，但对于大多数人来说是清晨，或者可以在临睡之前的一小时）</li>
+<li>在周日晚上抽出20分钟彻底离线，用于计划一周的工作，确定最重要的任务是哪些，安排在什么时间去做，确保每天都有充足的安静时间</li>
+<li>每天抽出10分钟来安排第二天的事情，时间不应该晚于睡前1小时，在这10分钟里面，确定最重要的事情并且记下来，这样在睡觉的时候，存储脑就会提前开始工作。</li>
+<li>如果需要阅读艰深的文本，最好打印出来，因为研究表明，在纸面上阅读更容易发现重要的细节或错误，而在屏幕上可能错过。</li>
+</ol>
+<p>批量处理方法，减少任务切换次数 </p>
+<ol>
+<li>艾森豪威尔原理，重要的事情通常不紧急，紧急的事情通常不重要。</li>
+<li>面对很多任务时，最好的处理方法就是直接查看日程安排个时间，如果没时间就拒绝。</li>
+<li>你的优先级是什么，不光是工作，甚至包括整个人生</li>
+<li>什么活动能为你带来最大的价值，最多的快乐。</li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/31/intel-IOAT的用处/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zero">
+      <meta itemprop="description" content="try to look 5 years ahead">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="West to the Northwest">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2018/12/31/intel-IOAT的用处/" class="post-title-link" itemprop="http://yoursite.com/page/2/index.html">intel IOAT的用处</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-12-31 19:55:11 / Modified: 19:55:47" itemprop="dateCreated datePublished" datetime="2018-12-31T19:55:11+08:00">2018-12-31</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>DMA–>IOAT </p>
+<p>之前对DMA的使用是从主机的内存直接传输到输入/输出设备，不需要主机CPU干预。一些网络例如Infiniband提供零拷贝数据传输。<br>然而，这些解决方案都是用于在节点之间进行数据传输。之前的研究人员也尝试过使用DMA在节点内部进行大规模数据传输。<br>很多这样的尝试失败的原因是由于DMA启动开销大，DRAM完成后的通知开销等开销问题。具体来说，要保证传输的内存页面不被swap出去，并且需要检查完成。 </p>
+<p>近期intel提出的IOAT引入了一个异步DMA拷贝引擎。 </p>
+<p>IOAT<br>主要三个特性 </p>
+<ol>
+<li>分割头：IOAT优化TCPIP栈，控制器将网络数据分为头部数据和应用数据，存放在不同的buffer中，这样在进行网络报文数据处理的时候不会有应用数据污染cache。</li>
+<li>使用DMA引擎进行异步拷贝：大部分接收报文处理时间用在将数据从内核buffer拷贝到用户buffer中的操作上。而且随着网络传输速度的加快，报文拷贝开销所占的时间比例越来越大。IOAT将拷贝操作放到一个额外的DMA引擎中处理。</li>
+<li>多接收队列：大报文处理并不是CPU密集的，然而如果要处理很多小的报文会完全占用CPU，因此IOAT提供了多接收队列，这样请求可以由多个CPU同时处理。然而这个特性在LINUX平台上通常关闭？？</li>
+</ol>
+<p>主要的问题在于 </p>
+<ol>
+<li>由于内存控制器使用物理地址，因此内存操作会被打散为多个单独的页传输。</li>
+<li>内存拷贝中可能出钱的源地址和目标地址的重合需要考虑。</li>
+<li>拷贝引擎需要考虑数据传输之后的内存一致性。由内存控制器进行的数据传输需要考虑在处理器cache中存储的数据，因此在数据传输完成之后可能需要进行一个总线上的cache一致性事务。</li>
+</ol>
+<p>下面这个链接是一个在线看代码的地方，下面是最新的对ioat支持<br><a href="https://elixir.free-electrons.com/linux/latest/source/drivers/dma/ioat/dma.c" target="_blank" rel="noopener">https://elixir.free-electrons.com/linux/latest/source/drivers/dma/ioat/dma.c</a></p>
+<p>在下面这个链接讨论了支持IOAT 的DCA相关的内核patch，基本实现在2007年。<br><a href="https://lwn.net/Articles/247493/" target="_blank" rel="noopener">https://lwn.net/Articles/247493/</a></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/31/Go-interface/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zero">
+      <meta itemprop="description" content="try to look 5 years ahead">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="West to the Northwest">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2018/12/31/Go-interface/" class="post-title-link" itemprop="http://yoursite.com/page/2/index.html">Go interface</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-12-31 19:48:37 / Modified: 19:56:06" itemprop="dateCreated datePublished" datetime="2018-12-31T19:48:37+08:00">2018-12-31</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>go interface<br>interface是一种具有一组方法的类型，这些方法定义了interface的行为。<br><img src="/Go-interface/1.png" width="300"></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/31/2018的总结/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zero">
+      <meta itemprop="description" content="try to look 5 years ahead">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="West to the Northwest">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2018/12/31/2018的总结/" class="post-title-link" itemprop="http://yoursite.com/page/2/index.html">2018的总结</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-12-31 18:20:31 / Modified: 18:48:37" itemprop="dateCreated datePublished" datetime="2018-12-31T18:20:31+08:00">2018-12-31</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/记录/" itemprop="url" rel="index"><span itemprop="name">记录</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>窗外是雪后第二天的寒冷，坐在沙发上，我终于能总结这一年。<br>如果说2017年是学生时代的终结，那么2018年，我真正的走向了职场，这一年参与了国产芯片的讨论，感受到了我们追赶intel的紧迫，同时，我也努力的在自主架构上实现了我之前特别感兴趣的cache划分机制，同时，又把intel的SPDK， DPDK搬到自主架构上来。讲真，在不是x86的带微码的机器上做一些东西还是很有意思的。随着事情的深入，我渐渐感到我的兴趣并不在架构相关上，封闭的架构在锁住别人的时候也锁住了自己，尽管资本已经在芯片领域里面狂欢了起来，可是我不在乎。我开始专注之前的兴趣方向，分布式系统。<br>比较有意思的事情是，当我想和师兄合作的时候，又把我拉回了操作系统领域，我熟悉的做着自己早已经做了很多遍的调模块工作，尽管我想做的Rust数据库已经有了一些起色。<br>聊完了技术，是时候回顾一下生活了，2018年，可能是我人生中最重要的一年，在介绍下认识了小添，这一年，我们相识，相恋，结婚了。我并不想和太多的人分享，因为这些事情对我太重要，我太想把它保护好。她是一个矛盾体，一个极端理想主义同时又极端现实主义的人，在医院的工作，见识了太多的人间冷暖，让她对人性没有太多的信心，而在内心里，她又渴望着完美的一切。而我，只希望能帮助她保护好对完美世界的期待，在生活的磕磕碰碰的烟火气息中，找到一些温暖的味道。<br>这一年，读书上差强人意，只是零散阅读了几本东野圭吾的书，以及为了帮朋友弄数据，看了基本数据挖掘的书，再之外就是在《得到》里面听了一些名人的故事，一些名著的梗概，一些科幻的脉络。<br>2018一切并不完美，我不急，每一步都在踏实地走着，2019，期待你的到来。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/29/c-11和c-14区别/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zero">
+      <meta itemprop="description" content="try to look 5 years ahead">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="West to the Northwest">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2018/12/29/c-11和c-14区别/" class="post-title-link" itemprop="http://yoursite.com/page/2/index.html">c++11和c++14区别</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-12-29 15:57:17" itemprop="dateCreated datePublished" datetime="2018-12-29T15:57:17+08:00">2018-12-29</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-12-31 19:40:04" itemprop="dateModified" datetime="2018-12-31T19:40:04+08:00">2018-12-31</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="c-11"><a href="#c-11" class="headerlink" title="c++11"></a>c++11</h2><ul>
+<li>通过值决定对象类型 </li>
+<li>可以决定是否想要重载虚函数 </li>
+<li>可以使用Lambda表达式 </li>
+<li>新的用于遍历容器的for循环格式 </li>
+<li>auto_ptr 被 unique_ptr代替，更安全 </li>
+<li>线程库成为语言内部库，不需要包含外部库 </li>
+<li>在构建或者赋值的时候可以使用移动而不是复制。 <h3 id="这里使用移动而不是复制的方式很有意思，这是rust的重要特性"><a href="#这里使用移动而不是复制的方式很有意思，这是rust的重要特性" class="headerlink" title="这里使用移动而不是复制的方式很有意思，这是rust的重要特性"></a>这里使用移动而不是复制的方式很有意思，这是rust的重要特性</h3></li>
+</ul>
+<h2 id="c-14"><a href="#c-14" class="headerlink" title="c++14"></a>c++14</h2><ul>
+<li>auto 也能作为返回值了 </li>
+<li>auto也能做lambda参数了 </li>
+<li>加入废弃一个类的快捷方式 </li>
+<li>可以使用二进制数 </li>
 </ul>
 
           
@@ -705,7 +1379,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/08/16/巨流河读书笔记/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/29/git提交规范/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zero">
@@ -725,7 +1399,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2017/08/16/巨流河读书笔记/" class="post-title-link" itemprop="http://yoursite.com/page/2/index.html">巨流河读书笔记</a>
+                <a href="/2018/12/29/git提交规范/" class="post-title-link" itemprop="http://yoursite.com/page/2/index.html">git提交规范</a>
               
             
           </h1>
@@ -750,7 +1424,7 @@
                 
               
 
-              <time title="Created: 2017-08-16 10:21:46" itemprop="dateCreated datePublished" datetime="2017-08-16T10:21:46+08:00">2017-08-16</time>
+              <time title="Created: 2018-12-29 15:49:25" itemprop="dateCreated datePublished" datetime="2018-12-29T15:49:25+08:00">2018-12-29</time>
             
 
             
@@ -767,7 +1441,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-12-31 19:04:28" itemprop="dateModified" datetime="2018-12-31T19:04:28+08:00">2018-12-31</time>
+                <time title="Modified: 2018-12-31 13:38:25" itemprop="dateModified" datetime="2018-12-31T13:38:25+08:00">2018-12-31</time>
               
             
           </span>
@@ -784,7 +1458,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/生活/" itemprop="url" rel="index"><span itemprop="name">生活</span></a></span>
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
 
                 
                 
@@ -820,7 +1494,16 @@
       
         
           
-            <p>这本书讲了一个国民党家庭从松花江畔，几经辗转最后到了台湾的故事，反映了民国时一代人的生活轨迹，有些悲戚，不是很看的进去。</p>
+            <p>之前做Git提交写commit信息的时候，总是不够统一，以后分为七种</p>
+<ol>
+<li>feat： 新功能</li>
+<li>fix： 修补xxxBug</li>
+<li>docs：文档上的修改</li>
+<li>style: 格式（不影响代码运行逻辑的变动）</li>
+<li>refactor：重构</li>
+<li>test：测试上的修改</li>
+<li>chore： 构建过程或者辅助工具的变动</li>
+</ol>
 
           
         
@@ -877,7 +1560,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/20/u-t是什么/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/04/Use-the-Device-Mapper-storage-driver翻译/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zero">
@@ -897,7 +1580,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2017/07/20/u-t是什么/" class="post-title-link" itemprop="http://yoursite.com/page/2/index.html">u\*\_t是什么</a>
+                <a href="/2018/12/04/Use-the-Device-Mapper-storage-driver翻译/" class="post-title-link" itemprop="http://yoursite.com/page/2/index.html">Use the Device Mapper storage driver翻译</a>
               
             
           </h1>
@@ -922,7 +1605,7 @@
                 
               
 
-              <time title="Created: 2017-07-20 09:34:21" itemprop="dateCreated datePublished" datetime="2017-07-20T09:34:21+08:00">2017-07-20</time>
+              <time title="Created: 2018-12-04 14:25:46" itemprop="dateCreated datePublished" datetime="2018-12-04T14:25:46+08:00">2018-12-04</time>
             
 
             
@@ -939,7 +1622,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2018-12-31 19:39:09" itemprop="dateModified" datetime="2018-12-31T19:39:09+08:00">2018-12-31</time>
+                <time title="Modified: 2018-12-31 13:38:25" itemprop="dateModified" datetime="2018-12-31T13:38:25+08:00">2018-12-31</time>
               
             
           </span>
@@ -992,1055 +1675,371 @@
       
         
           
-            <p>因为你会涉及到跨平台，不同的平台会有不同的字长，所以利用预编译和typedef可以让你最有效的维护你的代码。<br>按照posix标准，一般整形对应的*_t类型为：<br>1字节     uint8_t<br>2字节     uint16_t<br>4字节     uint32_t<br>8字节     uint64_t</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-       
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/20/配置ConnectX-3-DPDK-1/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zero">
-      <meta itemprop="description" content="try to look 5 years ahead">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="West to the Northwest">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2017/07/20/配置ConnectX-3-DPDK-1/" class="post-title-link" itemprop="http://yoursite.com/page/2/index.html">配置ConnectX-3 DPDK</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2017-07-20 09:33:53" itemprop="dateCreated datePublished" datetime="2017-07-20T09:33:53+08:00">2017-07-20</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-12-31 19:02:23" itemprop="dateModified" datetime="2018-12-31T19:02:23+08:00">2018-12-31</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>By default, the EAL creates hugepage files on each hugetlbfs filesystem using the rtemap_X filename, where X is in the range 0 to the maximum number of hugepages -1. </p>
-<p>Similarly, it creates shared configuration files, memory mapped in each process, using the /var/run/.rte_config filename, when run as root (or $HOME/.rte_config when run as a non-root user; if filesystem and device permissions are set up to allow this). The rte part of the filenames of each of the above is configurable using the file-prefix parameter.</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-       
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/17/配置ConnectX-3-DPDK/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zero">
-      <meta itemprop="description" content="try to look 5 years ahead">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="West to the Northwest">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2017/07/17/配置ConnectX-3-DPDK/" class="post-title-link" itemprop="http://yoursite.com/page/2/index.html">配置ConnectX-3 DPDK</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2017-07-17 16:02:40" itemprop="dateCreated datePublished" datetime="2017-07-17T16:02:40+08:00">2017-07-17</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-12-31 19:02:15" itemprop="dateModified" datetime="2018-12-31T19:02:15+08:00">2018-12-31</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="安装Install-MLNX-OFED"><a href="#安装Install-MLNX-OFED" class="headerlink" title="安装Install MLNX_OFED_"></a>安装Install MLNX_OFED_</h3><h3 id="验证固件版本高于2-36-5000"><a href="#验证固件版本高于2-36-5000" class="headerlink" title="验证固件版本高于2.36.5000"></a>验证固件版本高于2.36.5000</h3><p>###<br>./dpdk-devbind.py –status</p>
-<p>./dpdk-devbind.py -b igb_uio  0000:03:00.0_</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-       
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/13/shared-ptr智能指针/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zero">
-      <meta itemprop="description" content="try to look 5 years ahead">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="West to the Northwest">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2017/07/13/shared-ptr智能指针/" class="post-title-link" itemprop="http://yoursite.com/page/2/index.html">shared\_ptr智能指针</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2017-07-13 16:00:06" itemprop="dateCreated datePublished" datetime="2017-07-13T16:00:06+08:00">2017-07-13</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-12-31 19:38:48" itemprop="dateModified" datetime="2018-12-31T19:38:48+08:00">2018-12-31</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>boost<br>shared_ptr 本身不是 100% 线程安全的。它的引用计数本身是安全且无锁的，但对象的读写则不是_ </p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-       
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/12/Clion结合GitHub进行版本控制/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zero">
-      <meta itemprop="description" content="try to look 5 years ahead">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="West to the Northwest">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2017/07/12/Clion结合GitHub进行版本控制/" class="post-title-link" itemprop="http://yoursite.com/page/2/index.html">Clion结合GitHub进行版本控制</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2017-07-12 22:03:49" itemprop="dateCreated datePublished" datetime="2017-07-12T22:03:49+08:00">2017-07-12</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-12-31 19:38:30" itemprop="dateModified" datetime="2018-12-31T19:38:30+08:00">2018-12-31</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>基本的三步走，add commit push<br>首先要链接Clion到github，也就是给Clion配置你自己的github账户</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-       
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/12/使用Clion重构/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zero">
-      <meta itemprop="description" content="try to look 5 years ahead">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="West to the Northwest">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2017/07/12/使用Clion重构/" class="post-title-link" itemprop="http://yoursite.com/page/2/index.html">使用Clion重构</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2017-07-12 16:33:05" itemprop="dateCreated datePublished" datetime="2017-07-12T16:33:05+08:00">2017-07-12</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-12-31 19:01:28" itemprop="dateModified" datetime="2018-12-31T19:01:28+08:00">2018-12-31</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>Refactorings in CLion</p>
-<p>▪ Rename (Shift+F6) renames symbols, automatically correcting all references in the code for you.<br>▪ Change Signature (Ctrl+F6 on Windows/Linux, Cmd+F6 on OS X) helps you add/remove/reorder function parameters, change the result type or update the name of the function, all usages will be fixed as well.<br>▪ Move (F6) moves files or directories, as well as methods, variables or constants.<br>▪ Copy (F5) allows you to create a copy of file or directory.<br>▪ Safe Delete (Alt+Delete on Windows/Linux, Cmd+Delete Forward on OS X) safely removes files and symbols from your code.</p>
-<p>▪ Inline (Ctrl+Alt+N on Windows/Linux, Alt+Cmd+N on OS X) replaces redundant variable usage/method calls with its initializer/declaration.<br>▪ Extract refactoring – CLion analyses the block of code where the refactoring was invoked, detects input and output variables, together with the usages of the selected expression to replace them with the newly created:<br>▪ Variable (Ctrl+Alt+V on Windows/Linux, Alt+Cmd+V on OS X)<br>▪ Constant (Ctrl+Alt+C on Windows/Linux, Alt+Cmd+C on OS X)<br>▪ Parameter (Ctrl+Alt+P on Windows/Linux, Alt+Cmd+P on OS X)<br>▪ Typedef (Ctrl+Alt+K on Windows/Linux, Alt+Cmd+K on OS X)<br>▪ Define (Ctrl+Alt+D on Windows/Linux, Alt+Cmd+D on OS X)<br>▪ Method (Ctrl+Alt+M on Windows/Linux, Alt+Cmd+M on OS X)<br>▪ Superclass<br>▪ Subclass<br>▪ Pull Members Up safely moves class members to a superclass.<br>▪ Push Members Down safely moves class members to a subclass.<br>You can use Refactor This (Ctrl+Alt+Shift+T on Windows/Linux, Ctrl+T on OS X) to get the list of the refactorings available in the current scope.</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-       
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/07/11/etcd使用/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zero">
-      <meta itemprop="description" content="try to look 5 years ahead">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="West to the Northwest">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2017/07/11/etcd使用/" class="post-title-link" itemprop="http://yoursite.com/page/2/index.html">etcd使用</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2017-07-11 19:16:31" itemprop="dateCreated datePublished" datetime="2017-07-11T19:16:31+08:00">2017-07-11</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-12-31 19:38:05" itemprop="dateModified" datetime="2018-12-31T19:38:05+08:00">2018-12-31</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>etcd 是一个高可用的分布式 key-value(键值) 存储系统。在暴漫我们用他用来做配置管理和服务发现。<br>项目中使用etcd进行共享目录<br>DirectoryClient</p>
-<ul>
-<li>get_hostname</li>
-<li>register_server</li>
-<li><p>refresh_server</p>
-</li>
-<li><p>get_server_list</p>
-</li>
-<li><p>get_server_info</p>
-</li>
-<li><p>unregister_server</p>
-</li>
+            <p>device mapper是一个基于内核的框架，用来在linux下支持很多高级的卷管理策略。docker的devicemapper存储驱动利用这个框架的thin provisioning以及快照功能来进行镜像和容器的管理。本文中docker的设备存储驱动标记为devicemapper, 内核中的框架为Device Mapper。</p>
+<p>对于兼容的系统，devicemapper的支持已经包含在内核中，然而在docker中使用它需要进行一些配置。<br>devicemapper驱动使用指定给docker的块设备来在块层操作，而不是在文件层，这些设备可以通过在docker host中增加物理存储来扩展，并且相比在操作系统层使用文件系统，这种方式表现更好。</p>
+<h2 id="预先要求"><a href="#预先要求" class="headerlink" title="预先要求"></a>预先要求</h2><ul>
+<li>device mapper 存储驱动是在很多OS发型版中支持的DOCKER企业版上已经支持的存储驱动，详细请看产品兼容表。</li>
+<li>device mapper也在docker社区版支持，支持操作系统包括 CentOS, Fedora, Ubuntu, 和 Debian.</li>
+<li>修改存储驱动会使得你已经创建的所有容器在本地系统中无法访问。使用docker save来保存容器，并将现有容器推送到docker hub或者私有的仓库中，这样你就不需要因为修改驱动而重新创建了。</li>
 </ul>
+<h1 id="配置docker使用device-mapper存储驱动"><a href="#配置docker使用device-mapper存储驱动" class="headerlink" title="配置docker使用device mapper存储驱动"></a>配置docker使用device mapper存储驱动</h1><p>注意在进行下面操作之前，必须满足预先要求。</p>
+<h2 id="配置loop-lvm模式测试"><a href="#配置loop-lvm模式测试" class="headerlink" title="配置loop-lvm模式测试"></a>配置loop-lvm模式测试</h2>
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/07/scrapy-downloader中间件和spider中间件区别是什么？/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zero">
+      <meta itemprop="description" content="try to look 5 years ahead">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="West to the Northwest">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2018/09/07/scrapy-downloader中间件和spider中间件区别是什么？/" class="post-title-link" itemprop="http://yoursite.com/page/2/index.html">scrapy downloader中间件和spider中间件区别是什么？</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-09-07 16:56:00" itemprop="dateCreated datePublished" datetime="2018-09-07T16:56:00+08:00">2018-09-07</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-12-31 13:38:25" itemprop="dateModified" datetime="2018-12-31T13:38:25+08:00">2018-12-31</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>使用scrapy自动创建的爬虫中middleware.py中自定义了两个中间件类，在我的理解中scrape的中间件没有什么区别，所以查了一下，</p>
+<ol>
+<li><p>下载器中间件，尽管他们使用一样的接口，他们的目标不同<br>dowlloader中间件修改请求和响应，或者生成请求来回答响应。<br>他们并不直接与蜘蛛交互，这里面可以实现cookie， caching， proxy, 设置user-agent头等等。原理上是为downloader加入功能。</p>
+</li>
+<li><p>蜘蛛中间件修改传入和传出的东西，比如请求，item，exception以及start_requests. 它与下载器中间件共享基本功能，但是他们不能生成请求来回答响应。 他们位于蜘蛛和下载器之间，一个例子是过滤有坏的HTTP状态代码的回答。</p>
+</li>
+</ol>
+<p>While they have almost identical interfaces, they serve different purposes:<br>• Downloader middlewares modify requests and responses or generate requests in response to responses. They don’t directly interact with spiders. Some examples are middlewares that implement cookies, caching, proxies, redirects, setting user-agent headers, etc. They just add functionality to the downloader system.  </p>
+<p>• Spider middlewares modify things that pass in and out of spiders, like requests, items, exceptions, and start_requests. They do share some basic functionality with downloader middlewares, but they can’t generate requests in response to responses. They stand between the spiders and the downloader. One example is filtering out responses with bad HTTP status codes.  </p>
+<p>Some middlewares can function as either a downloader middleware or a spider middleware, but they’re often trivial and will be forced into one category or the other once you add more complex functionality.</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/05/spdk18-07和dpdk18-08不兼容/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zero">
+      <meta itemprop="description" content="try to look 5 years ahead">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="West to the Northwest">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2018/09/05/spdk18-07和dpdk18-08不兼容/" class="post-title-link" itemprop="http://yoursite.com/page/2/index.html">spdk18.07和dpdk18.08不兼容</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-09-05 15:53:18" itemprop="dateCreated datePublished" datetime="2018-09-05T15:53:18+08:00">2018-09-05</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-12-31 19:39:50" itemprop="dateModified" datetime="2018-12-31T19:39:50+08:00">2018-12-31</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>今天发现SPDK的版本和DPDK版本并不完全兼容，同时期github上发布的版本，两者的兼容性测试是没有做的。</p>
+<p>之前在邮件列表上看到有人抱怨SPDK总是还需要外部的DPDK，所以现在最新发布的SPDK里面是已经将DPDK作为子模块包含了，如果要使用自己单独配置的DPDK的话，需要考虑版本兼容性问题，比如你发现编译出的DPDK在SPDK中调用时发生undefined reference，这时候就要思考是不是发生了版本兼容性问题。</p>
+<p>今天发现SPDK 18.07和DPDK的18.08不兼容的，根据release描述最新应该兼容到DPDK18.05。</p>
+<hr>
+<p>需要更加耐心</p>
 
           
         
@@ -2086,7 +2085,7 @@
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="Previous page"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -2129,7 +2128,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">108</span>
+                    <span class="site-state-item-count">120</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2365,7 +2364,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>

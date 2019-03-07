@@ -355,7 +355,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/31/intel-IOAT的用处/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/07/flink窗口/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zero">
@@ -375,7 +375,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2018/12/31/intel-IOAT的用处/" class="post-title-link" itemprop="http://yoursite.com/index.html">intel IOAT的用处</a>
+                <a href="/2019/03/07/flink窗口/" class="post-title-link" itemprop="http://yoursite.com/index.html">flink窗口</a>
               
             
           </h1>
@@ -400,7 +400,7 @@
                 
               
 
-              <time title="Created: 2018-12-31 19:55:11 / Modified: 19:55:47" itemprop="dateCreated datePublished" datetime="2018-12-31T19:55:11+08:00">2018-12-31</time>
+              <time title="Created: 2019-03-07 16:21:41 / Modified: 16:22:43" itemprop="dateCreated datePublished" datetime="2019-03-07T16:21:41+08:00">2019-03-07</time>
             
 
             
@@ -410,24 +410,6 @@
             
           </span>
 
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -458,710 +440,51 @@
       
         
           
-            <p>DMA–>IOAT </p>
-<p>之前对DMA的使用是从主机的内存直接传输到输入/输出设备，不需要主机CPU干预。一些网络例如Infiniband提供零拷贝数据传输。<br>然而，这些解决方案都是用于在节点之间进行数据传输。之前的研究人员也尝试过使用DMA在节点内部进行大规模数据传输。<br>很多这样的尝试失败的原因是由于DMA启动开销大，DRAM完成后的通知开销等开销问题。具体来说，要保证传输的内存页面不被swap出去，并且需要检查完成。 </p>
-<p>近期intel提出的IOAT引入了一个异步DMA拷贝引擎。 </p>
-<p>IOAT<br>主要三个特性 </p>
-<ol>
-<li>分割头：IOAT优化TCPIP栈，控制器将网络数据分为头部数据和应用数据，存放在不同的buffer中，这样在进行网络报文数据处理的时候不会有应用数据污染cache。</li>
-<li>使用DMA引擎进行异步拷贝：大部分接收报文处理时间用在将数据从内核buffer拷贝到用户buffer中的操作上。而且随着网络传输速度的加快，报文拷贝开销所占的时间比例越来越大。IOAT将拷贝操作放到一个额外的DMA引擎中处理。</li>
-<li>多接收队列：大报文处理并不是CPU密集的，然而如果要处理很多小的报文会完全占用CPU，因此IOAT提供了多接收队列，这样请求可以由多个CPU同时处理。然而这个特性在LINUX平台上通常关闭？？</li>
-</ol>
-<p>主要的问题在于 </p>
-<ol>
-<li>由于内存控制器使用物理地址，因此内存操作会被打散为多个单独的页传输。</li>
-<li>内存拷贝中可能出钱的源地址和目标地址的重合需要考虑。</li>
-<li>拷贝引擎需要考虑数据传输之后的内存一致性。由内存控制器进行的数据传输需要考虑在处理器cache中存储的数据，因此在数据传输完成之后可能需要进行一个总线上的cache一致性事务。</li>
-</ol>
-<p>下面这个链接是一个在线看代码的地方，下面是最新的对ioat支持<br><a href="https://elixir.free-electrons.com/linux/latest/source/drivers/dma/ioat/dma.c" target="_blank" rel="noopener">https://elixir.free-electrons.com/linux/latest/source/drivers/dma/ioat/dma.c</a></p>
-<p>在下面这个链接讨论了支持IOAT 的DCA相关的内核patch，基本实现在2007年。<br><a href="https://lwn.net/Articles/247493/" target="_blank" rel="noopener">https://lwn.net/Articles/247493/</a></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-       
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/31/Go-interface/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zero">
-      <meta itemprop="description" content="try to look 5 years ahead">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="West to the Northwest">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/12/31/Go-interface/" class="post-title-link" itemprop="http://yoursite.com/index.html">Go interface</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-12-31 19:48:37 / Modified: 19:56:06" itemprop="dateCreated datePublished" datetime="2018-12-31T19:48:37+08:00">2018-12-31</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>go interface<br>interface是一种具有一组方法的类型，这些方法定义了interface的行为。<br><img src="/Go-interface/1.png" width="300"></p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-       
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/31/2018的总结/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zero">
-      <meta itemprop="description" content="try to look 5 years ahead">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="West to the Northwest">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/12/31/2018的总结/" class="post-title-link" itemprop="http://yoursite.com/index.html">2018的总结</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-12-31 18:20:31 / Modified: 18:48:37" itemprop="dateCreated datePublished" datetime="2018-12-31T18:20:31+08:00">2018-12-31</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/记录/" itemprop="url" rel="index"><span itemprop="name">记录</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>窗外是雪后第二天的寒冷，坐在沙发上，我终于能总结这一年。<br>如果说2017年是学生时代的终结，那么2018年，我真正的走向了职场，这一年参与了国产芯片的讨论，感受到了我们追赶intel的紧迫，同时，我也努力的在自主架构上实现了我之前特别感兴趣的cache划分机制，同时，又把intel的SPDK， DPDK搬到自主架构上来。讲真，在不是x86的带微码的机器上做一些东西还是很有意思的。随着事情的深入，我渐渐感到我的兴趣并不在架构相关上，封闭的架构在锁住别人的时候也锁住了自己，尽管资本已经在芯片领域里面狂欢了起来，可是我不在乎。我开始专注之前的兴趣方向，分布式系统。<br>比较有意思的事情是，当我想和师兄合作的时候，又把我拉回了操作系统领域，我熟悉的做着自己早已经做了很多遍的调模块工作，尽管我想做的Rust数据库已经有了一些起色。<br>聊完了技术，是时候回顾一下生活了，2018年，可能是我人生中最重要的一年，在介绍下认识了小添，这一年，我们相识，相恋，结婚了。我并不想和太多的人分享，因为这些事情对我太重要，我太想把它保护好。她是一个矛盾体，一个极端理想主义同时又极端现实主义的人，在医院的工作，见识了太多的人间冷暖，让她对人性没有太多的信心，而在内心里，她又渴望着完美的一切。而我，只希望能帮助她保护好对完美世界的期待，在生活的磕磕碰碰的烟火气息中，找到一些温暖的味道。<br>这一年，读书上差强人意，只是零散阅读了几本东野圭吾的书，以及为了帮朋友弄数据，看了基本数据挖掘的书，再之外就是在《得到》里面听了一些名人的故事，一些名著的梗概，一些科幻的脉络。<br>2018一切并不完美，我不急，每一步都在踏实地走着，2019，期待你的到来。</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-       
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/29/c-11和c-14区别/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zero">
-      <meta itemprop="description" content="try to look 5 years ahead">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="West to the Northwest">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/12/29/c-11和c-14区别/" class="post-title-link" itemprop="http://yoursite.com/index.html">c++11和c++14区别</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-12-29 15:57:17" itemprop="dateCreated datePublished" datetime="2018-12-29T15:57:17+08:00">2018-12-29</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-12-31 19:40:04" itemprop="dateModified" datetime="2018-12-31T19:40:04+08:00">2018-12-31</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="c-11"><a href="#c-11" class="headerlink" title="c++11"></a>c++11</h2><ul>
-<li>通过值决定对象类型 </li>
-<li>可以决定是否想要重载虚函数 </li>
-<li>可以使用Lambda表达式 </li>
-<li>新的用于遍历容器的for循环格式 </li>
-<li>auto_ptr 被 unique_ptr代替，更安全 </li>
-<li>线程库成为语言内部库，不需要包含外部库 </li>
-<li>在构建或者赋值的时候可以使用移动而不是复制。 <h3 id="这里使用移动而不是复制的方式很有意思，这是rust的重要特性"><a href="#这里使用移动而不是复制的方式很有意思，这是rust的重要特性" class="headerlink" title="这里使用移动而不是复制的方式很有意思，这是rust的重要特性"></a>这里使用移动而不是复制的方式很有意思，这是rust的重要特性</h3></li>
+            <p>flink有丰富的窗口语义。</p>
+<p>在这个训练中你会学到：</p>
+<ul>
+<li>如何使用窗口来无限流上计算累计</li>
+<li>flink支持什么类型的窗口</li>
+<li>如何使用窗口累计来实现一个数据流程序<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2>想要在有界子集上计算累计分析对流处理时是很自然的，通常这些分析想要回答一下这些类的问题：</li>
+<li>每分钟页面的访问</li>
+<li>每个用户每星期的会话数目</li>
+<li>每分钟每个传感器的最大温度</li>
 </ul>
-<h2 id="c-14"><a href="#c-14" class="headerlink" title="c++14"></a>c++14</h2><ul>
-<li>auto 也能作为返回值了 </li>
-<li>auto也能做lambda参数了 </li>
-<li>加入废弃一个类的快捷方式 </li>
-<li>可以使用二进制数 </li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-       
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/29/git提交规范/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zero">
-      <meta itemprop="description" content="try to look 5 years ahead">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="West to the Northwest">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/12/29/git提交规范/" class="post-title-link" itemprop="http://yoursite.com/index.html">git提交规范</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-12-29 15:49:25" itemprop="dateCreated datePublished" datetime="2018-12-29T15:49:25+08:00">2018-12-29</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-12-31 13:38:25" itemprop="dateModified" datetime="2018-12-31T13:38:25+08:00">2018-12-31</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>之前做Git提交写commit信息的时候，总是不够统一，以后分为七种</p>
+<p>使用flink计算窗口化的分析依赖于两个主要的抽象：一是窗口分配者把时间分配给窗口（并且在必要时创建新窗口），二是窗口函数，这些函数会被应用到分配到窗口的事件上。</p>
+<p>flink的窗口API还有一个概念叫做Triggers，触发器。触发器决定什么时候调用窗口函数，还有Evictors移除器，它负责从一个窗口中删除元素。</p>
+<p>简单来说，你可以对一个键数据流这样应用窗口：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">`stream.</span><br><span class="line">  .keyBy(\&lt;key selector\&gt;)</span><br><span class="line">  .window(\&lt;window assigner\&gt;)</span><br><span class="line">  .reduce|aggregate|process(\&lt;window function\&gt;)</span><br></pre></td></tr></table></figure></p>
+<p>`You can also use windowing with non-keyed streams, but keep in mind that in this case, the processing will not be done in parallel:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">`stream.</span><br><span class="line">  .windowAll(\&lt;window assigner\&gt;)</span><br><span class="line">  .reduce|aggregate|process(\&lt;window function\&gt;)</span><br></pre></td></tr></table></figure></p>
+<p>`</p>
+<h2 id="窗口函数"><a href="#窗口函数" class="headerlink" title="窗口函数"></a>窗口函数</h2><p>对于如何处理窗口内容，你有三个基本选项：</p>
 <ol>
-<li>feat： 新功能</li>
-<li>fix： 修补xxxBug</li>
-<li>docs：文档上的修改</li>
-<li>style: 格式（不影响代码运行逻辑的变动）</li>
-<li>refactor：重构</li>
-<li>test：测试上的修改</li>
-<li>chore： 构建过程或者辅助工具的变动</li>
+<li>像批一样，使用ProcessWindowFunction来迭代处理窗口内容；</li>
+<li>增量处理，每向窗口分配一个事件就调用一个ReduceFunction或者AggregateFunction;</li>
+<li>以上两者结合，当窗口触发时，由ReduceFunction或者AggregateFunction得到的预先累计的结果被提供给一个ProcessWindowFunction。</li>
 </ol>
+<p>下面给出方法1和方法3的例子，每个例子中，我们都在一分钟ET窗口中寻找每个传感器的峰值，并且生成一个由（键，窗口结束时间戳，最大值）组成的元组。</p>
+<h2 id="ProcessWindowFunction-Example"><a href="#ProcessWindowFunction-Example" class="headerlink" title="ProcessWindowFunction Example"></a>ProcessWindowFunction Example</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">`DataStream\&lt;SensorReading\&gt; input = ...</span><br><span class="line"></span><br><span class="line">input</span><br><span class="line">  .keyBy(“key”)</span><br><span class="line">  .window(TumblingEventTimeWindows.of(Time.minutes(1)))</span><br><span class="line">  .process(new MyWastefulMax());</span><br><span class="line"></span><br><span class="line">public static class MyWastefulMax extends ProcessWindowFunction\&lt;</span><br><span class="line">  SensorReading,                  // input type</span><br><span class="line">  Tuple3\&lt;String, Long, Integer\&gt;,  // output type</span><br><span class="line">  Tuple,                          // key type</span><br><span class="line">  TimeWindow\&gt; &#123;                   // window type</span><br><span class="line"></span><br><span class="line">@Override</span><br><span class="line">public void process(</span><br><span class="line">  Tuple key,</span><br><span class="line">  Context context, </span><br><span class="line">  Iterable\&lt;SensorReading\&gt; events,</span><br><span class="line">  Collector\&lt;Tuple3\&lt;String, Long, Integer\&gt;\&gt; out) &#123;</span><br><span class="line">int max = 0;</span><br><span class="line">for (SensorReading event : events) &#123;</span><br><span class="line">  if (event.value \&gt; max) max = event.value;</span><br><span class="line">&#125;</span><br><span class="line">// note the rather hideous cast</span><br><span class="line">out.collect(new Tuple3\&lt;\&gt;((Tuple1\&lt;String\&gt;)key).f0, context.window().getEnd(), max));</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>`在这个实现中要注意一些事情：<br>键选择器做keyby的时候用“key”作为域名，这样编译器无法知道我们的键是strings，因此在ProcessWindowFunction里面要处理的键类型是元组。注意上面代码最后一行变态的转换。</p>
+<p>所有分配到这个窗口的事件都需要缓冲在flink中直到窗口被触发，这是相对昂贵的操作。<br>我们的ProcessWindowFunction函数接受了一个Context对象，从它可以得到窗口的信息，它的接口长这样：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">`public abstract class Context implements java.io.Serializable &#123;</span><br><span class="line">public abstract W window();</span><br><span class="line"></span><br><span class="line">public abstract long currentProcessingTime();</span><br><span class="line">public abstract long currentWatermark();</span><br><span class="line"></span><br><span class="line">public abstract KeyedStateStore windowState();</span><br><span class="line">public abstract KeyedStateStore globalState();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>`windowState和globalState是你存储每个key，每个窗口或者全局每个Key信息的地方。<br>举个例子，如果你要记录当前窗口的信息并且要在后续窗口处理中使用时，就需要他们。</p>
+<h2 id="Incremental-Aggregation-Example"><a href="#Incremental-Aggregation-Example" class="headerlink" title="Incremental Aggregation Example"></a>Incremental Aggregation Example</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">`DataStream\&lt;SensorReading\&gt; input = ...</span><br><span class="line"></span><br><span class="line">input</span><br><span class="line">  .keyBy(x -\&gt; x.key)</span><br><span class="line">  .window(TumblingEventTimeWindows.of(Time.minutes(1)))</span><br><span class="line">  .reduce(new MyReducingMax(), new MyWindowFunction());</span><br><span class="line"></span><br><span class="line">private static class MyReducingMax implements ReduceFunction\&lt;SensorReading\&gt; &#123;</span><br><span class="line">  public SensorReading reduce(SensorReading r1, SensorReading r2) &#123;</span><br><span class="line">return r1.value() \&gt; r2.value() ? r1 : r2;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private static class MyWindowFunction extends ProcessWindowFunction\&lt;</span><br><span class="line">  SensorReading, Tuple3\&lt;String, Long, SensorReading\&gt;, String, TimeWindow\&gt; &#123;</span><br><span class="line"></span><br><span class="line">  @Override</span><br><span class="line">  public void process(</span><br><span class="line">String key,</span><br><span class="line">Context context,</span><br><span class="line">Iterable\&lt;SensorReading\&gt; maxReading,</span><br><span class="line">Collector\&lt;Tuple2\&lt;Long, SensorReading\&gt;\&gt; out) &#123;</span><br><span class="line"></span><br><span class="line">SensorReading max = maxReading.iterator().next();</span><br><span class="line">out.collect(new Tuple3\&lt;String, Long, SensorReading\&gt;(key, context.window().getStart(), max));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>`<br>在这个实现中，我们决定使用一个更鲁邦的键选择器，</p>
+<blockquote>
+<p>keyBy(x -> x.key)</p>
+</blockquote>
+<p>同时注意Iterable\&lt;SensorReading>这次只会包含一个读数，也就是预先累计的由MyReducingMax计算的最大值。</p>
+<h2 id="晚到事件"><a href="#晚到事件" class="headerlink" title="晚到事件"></a>晚到事件</h2><p>默认情况下，当使用ET窗口时，晚到事件会被丢弃。有两个可选的窗口API函数给你对这个的控制。你可以把本来要丢弃的事件输出到一个另外的输出流中，使用<a href="">旁路输出</a>(<a href="https://github.com/zhuguoliang/FlinkTraining_CN/issues/5#issue-418167538)。这里有一个例子" target="_blank" rel="noopener">https://github.com/zhuguoliang/FlinkTraining_CN/issues/5#issue-418167538)。这里有一个例子</a>:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">`OutputTag\&lt;Event\&gt; lateTag = new OutputTag\&lt;Event\&gt;(&quot;late&quot;)&#123;&#125;;</span><br><span class="line"></span><br><span class="line">SingleOutputStreamOperator\&lt;Event\&gt; result = stream.</span><br><span class="line">  .keyBy(...)</span><br><span class="line">  .window(...)</span><br><span class="line">  .process(...)</span><br><span class="line">  .getSideOutput(lateTag);</span><br><span class="line">  </span><br><span class="line">DataStream\&lt;Event\&gt; lateStream = result.getSideOutput(lateTag);</span><br></pre></td></tr></table></figure>
+<p>`You can also specify an interval of allowed lateness during which the late events will continue to be assigned to the appropriate window(s) (whose state will have been retained). By default each late event will cause a late firing of the window function.</p>
+<p>By default the allowed lateness is 0. In other words, elements behind the watermark are dropped (or sent to the side output).</p>
+<p>For example:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">`stream.</span><br><span class="line">  .keyBy(...)</span><br><span class="line">  .window(...)</span><br><span class="line">  .allowedLateness(Time.seconds(10))</span><br><span class="line">  .process(...);</span><br></pre></td></tr></table></figure></p>
+<p>`<br>Surprises<br>Some aspects of Flink’s windowing API may not behave in the way you would expect. Based on frequently asked questions on <a href="">Stack Overflow</a>(<a href="https://stackoverflow.com/questions/tagged/apache-flink" target="_blank" rel="noopener">https://stackoverflow.com/questions/tagged/apache-flink</a>) and the <a href="">flink-user mailing list</a>(<a href="https://flink.apache.org/community.html#mailing-lists)" target="_blank" rel="noopener">https://flink.apache.org/community.html#mailing-lists)</a>, here are some facts about windows that may surprise you.</p>
+<p>Sliding Windows Make Copies<br>Sliding window assigners can create lots of window objects, and will copy each event into every relevant window. For example, if you have sliding windows every 15 minutes that are 24-hours in length, each event will be copied into 4 * 24 = 96 windows.</p>
+<p>Time Windows are Aligned to the Epoch<br>Just because you are using hour-long processing-time windows and start your application running at 12:05 does not mean that the first window will close at 1:05. The first window will be 55 minutes long and close at 1:00.</p>
+<p>Windows Can Follow Windows<br>For example, it works to do this:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">`</span><br><span class="line">stream</span><br><span class="line">  .keyBy(t -\&gt; t.key)</span><br><span class="line">  .timeWindow(\&lt;time specification\&gt;)</span><br><span class="line">  .reduce(\&lt;reduce function\&gt;)</span><br><span class="line">  .timeWindowAll(\&lt;same time specification\&gt;)</span><br><span class="line">  .reduce(\&lt;same reduce function\&gt;)</span><br></pre></td></tr></table></figure></p>
+<p>`<br>You might expect Flink’s runtime to be smart enough to do this parallel pre-aggregation for you (provided you are using a ReduceFunction or AggregateFunction), but it’s not.</p>
+<p>No Results for Empty TimeWindows<br>Windows are only created when events are assigned to them. So if there are no events in a given time frame, no results will be reported.</p>
+<p>Late Events Can Cause Late Merges<br>Session windows are based on an abstraction of windows that can merge. Each element is initially assigned to a new window, after which windows are merged whenever the gap between them is small enough. In this way, a late event can bridge the gap separating two previously separate sessions, producing a late merge.</p>
+<p>Evictors are Incompatible with Incremental Aggregation<br>This is true simply by definition – you can’t evict elements you didn’t store. But this means that designs that depend on using Evictors are adopting something of an anti-pattern.</p>
 
           
         
@@ -1218,7 +541,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/04/Use-the-Device-Mapper-storage-driver翻译/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/13/flink源码阅读之一/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zero">
@@ -1238,7 +561,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2018/12/04/Use-the-Device-Mapper-storage-driver翻译/" class="post-title-link" itemprop="http://yoursite.com/index.html">Use the Device Mapper storage driver翻译</a>
+                <a href="/2019/02/13/flink源码阅读之一/" class="post-title-link" itemprop="http://yoursite.com/index.html">flink源码阅读之一</a>
               
             
           </h1>
@@ -1263,46 +586,16 @@
                 
               
 
-              <time title="Created: 2018-12-04 14:25:46" itemprop="dateCreated datePublished" datetime="2018-12-04T14:25:46+08:00">2018-12-04</time>
+              <time title="Created: 2019-02-13 22:13:08 / Modified: 22:14:43" itemprop="dateCreated datePublished" datetime="2019-02-13T22:13:08+08:00">2019-02-13</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-12-31 13:38:25" itemprop="dateModified" datetime="2018-12-31T13:38:25+08:00">2018-12-31</time>
               
             
           </span>
 
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -1333,15 +626,719 @@
       
         
           
-            <p>device mapper是一个基于内核的框架，用来在linux下支持很多高级的卷管理策略。docker的devicemapper存储驱动利用这个框架的thin provisioning以及快照功能来进行镜像和容器的管理。本文中docker的设备存储驱动标记为devicemapper, 内核中的框架为Device Mapper。</p>
-<p>对于兼容的系统，devicemapper的支持已经包含在内核中，然而在docker中使用它需要进行一些配置。<br>devicemapper驱动使用指定给docker的块设备来在块层操作，而不是在文件层，这些设备可以通过在docker host中增加物理存储来扩展，并且相比在操作系统层使用文件系统，这种方式表现更好。</p>
-<h2 id="预先要求"><a href="#预先要求" class="headerlink" title="预先要求"></a>预先要求</h2><ul>
-<li>device mapper 存储驱动是在很多OS发型版中支持的DOCKER企业版上已经支持的存储驱动，详细请看产品兼容表。</li>
-<li>device mapper也在docker社区版支持，支持操作系统包括 CentOS, Fedora, Ubuntu, 和 Debian.</li>
-<li>修改存储驱动会使得你已经创建的所有容器在本地系统中无法访问。使用docker save来保存容器，并将现有容器推送到docker hub或者私有的仓库中，这样你就不需要因为修改驱动而重新创建了。</li>
+            
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/19/enable-sysstat/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zero">
+      <meta itemprop="description" content="try to look 5 years ahead">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="West to the Northwest">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/01/19/enable-sysstat/" class="post-title-link" itemprop="http://yoursite.com/index.html">enable sysstat</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-01-19 21:10:11 / Modified: 21:11:16" itemprop="dateCreated datePublished" datetime="2019-01-19T21:10:11+08:00">2019-01-19</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>systemctl restart sysstat.service<br>On Ubuntu 16.04 I just ran into this same issue. After some grousing around I found I needed to enable the service by editing the file /etc/default/sysstat<br>Change ENABLED=”false” to true:</p>
+<blockquote>
+<p>Should sadc collect system activity informations? Valid values<br>are “true” and “false”. Please do not put other values, they<br>will be overwritten by debconf!<br>ENABLED=”true”<br>Restart the service:<br>systemctl restart sysstat.service</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/31/计算存储分离之我见/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zero">
+      <meta itemprop="description" content="try to look 5 years ahead">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="West to the Northwest">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2018/12/31/计算存储分离之我见/" class="post-title-link" itemprop="http://yoursite.com/index.html">计算存储分离之我见</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-12-31 20:30:10" itemprop="dateCreated datePublished" datetime="2018-12-31T20:30:10+08:00">2018-12-31</time>
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/31/chandy-lamport算法/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zero">
+      <meta itemprop="description" content="try to look 5 years ahead">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="West to the Northwest">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2018/12/31/chandy-lamport算法/" class="post-title-link" itemprop="http://yoursite.com/index.html">chandy lamport算法</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-12-31 20:29:55" itemprop="dateCreated datePublished" datetime="2018-12-31T20:29:55+08:00">2018-12-31</time>
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/31/Readings-in-Streaming-Systems/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zero">
+      <meta itemprop="description" content="try to look 5 years ahead">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="West to the Northwest">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2018/12/31/Readings-in-Streaming-Systems/" class="post-title-link" itemprop="http://yoursite.com/index.html"># Readings in Streaming Systems</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-12-31 20:29:30 / Modified: 20:30:28" itemprop="dateCreated datePublished" datetime="2018-12-31T20:29:30+08:00">2018-12-31</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>额</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/31/Qcon18-blink/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zero">
+      <meta itemprop="description" content="try to look 5 years ahead">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="West to the Northwest">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2018/12/31/Qcon18-blink/" class="post-title-link" itemprop="http://yoursite.com/index.html">Qcon18' blink</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-12-31 20:17:05 / Modified: 20:22:46" itemprop="dateCreated datePublished" datetime="2018-12-31T20:17:05+08:00">2018-12-31</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>流计算特点</p>
+<ul>
+<li>低延迟（不一定非常低，不同于批处理）</li>
+<li>快速容错（不同于批处理，要快） </li>
+<li>通用的API （通用性决定用户数目）</li>
+<li>易用性   （决定开发速度） </li>
+<li>弹性    （可扩展性怎么样，能不能1w台机器）</li>
+<li>高性能  </li>
 </ul>
-<h1 id="配置docker使用device-mapper存储驱动"><a href="#配置docker使用device-mapper存储驱动" class="headerlink" title="配置docker使用device mapper存储驱动"></a>配置docker使用device mapper存储驱动</h1><p>注意在进行下面操作之前，必须满足预先要求。</p>
-<h2 id="配置loop-lvm模式测试"><a href="#配置loop-lvm模式测试" class="headerlink" title="配置loop-lvm模式测试"></a>配置loop-lvm模式测试</h2>
+<p>早起流计算是批处理的，纯流计算是没有批的概念的，进行有状态的计算，所以需要一个能够固化保存的分布式存储，这通常是流计算系统的瓶颈。需要能够快速的完成检查点的恢复<br>容错语义上：exactly once   》  at least once 至少一次开销小一些。<br>最主流的是全局快照 chandy lamport算法。</p>
+
           
         
       
@@ -1397,7 +1394,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/07/scrapy-downloader中间件和spider中间件区别是什么？/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/31/Qcon18-TIDB/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zero">
@@ -1417,7 +1414,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2018/09/07/scrapy-downloader中间件和spider中间件区别是什么？/" class="post-title-link" itemprop="http://yoursite.com/index.html">scrapy downloader中间件和spider中间件区别是什么？</a>
+                <a href="/2018/12/31/Qcon18-TIDB/" class="post-title-link" itemprop="http://yoursite.com/index.html">Qcon18' TIDB</a>
               
             
           </h1>
@@ -1442,24 +1439,12 @@
                 
               
 
-              <time title="Created: 2018-09-07 16:56:00" itemprop="dateCreated datePublished" datetime="2018-09-07T16:56:00+08:00">2018-09-07</time>
+              <time title="Created: 2018-12-31 20:12:30 / Modified: 20:15:37" itemprop="dateCreated datePublished" datetime="2018-12-31T20:12:30+08:00">2018-12-31</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-12-31 13:38:25" itemprop="dateModified" datetime="2018-12-31T13:38:25+08:00">2018-12-31</time>
               
             
           </span>
@@ -1512,16 +1497,35 @@
       
         
           
-            <p>使用scrapy自动创建的爬虫中middleware.py中自定义了两个中间件类，在我的理解中scrape的中间件没有什么区别，所以查了一下，</p>
-<ol>
-<li><p>下载器中间件，尽管他们使用一样的接口，他们的目标不同<br>dowlloader中间件修改请求和响应，或者生成请求来回答响应。<br>他们并不直接与蜘蛛交互，这里面可以实现cookie， caching， proxy, 设置user-agent头等等。原理上是为downloader加入功能。</p>
+            <h2 id="设计目标"><a href="#设计目标" class="headerlink" title="设计目标"></a>设计目标</h2><ol>
+<li>水平扩展</li>
+<li>高可用</li>
+<li>ACID事务</li>
+<li>SQL的数据库  </li>
+</ol>
+<h2 id="发展历程"><a href="#发展历程" class="headerlink" title="发展历程"></a>发展历程</h2><ol>
+<li>只在内存中</li>
+<li>加入golevelDB做持久化</li>
+<li>基于HBASE做分布式，但是发现下层软件栈厚，依赖过多</li>
+<li>开发TIkv 选择用rust实现，选择没有GC的语言 选择rocksDB</li>
+<li>用sysbench 性能没有达到预期，还有很多sql功能没有实现–》实现更好的sql层，</li>
+<li>tispark</li>
+</ol>
+<h2 id="测试很重要"><a href="#测试很重要" class="headerlink" title="测试很重要"></a>测试很重要</h2><ul>
+<li>单元测试 </li>
+<li>性能测试 </li>
+<li>chaos测试</li>
+<li>混沌测试</li>
+<li>突然杀死。。</li>
+<li>测试的测试 <h2 id="工具很重要"><a href="#工具很重要" class="headerlink" title="工具很重要"></a>工具很重要</h2></li>
+<li>自动化所有事情<ul>
+<li>混沌测试工具 </li>
+<li>调试工具 </li>
+<li>基础框架工具</li>
+<li>jira/Confluence </li>
+</ul>
 </li>
-<li><p>蜘蛛中间件修改传入和传出的东西，比如请求，item，exception以及start_requests. 它与下载器中间件共享基本功能，但是他们不能生成请求来回答响应。 他们位于蜘蛛和下载器之间，一个例子是过滤有坏的HTTP状态代码的回答。</p>
-</li>
-</ol>
-<p>While they have almost identical interfaces, they serve different purposes:<br>• Downloader middlewares modify requests and responses or generate requests in response to responses. They don’t directly interact with spiders. Some examples are middlewares that implement cookies, caching, proxies, redirects, setting user-agent headers, etc. They just add functionality to the downloader system.  </p>
-<p>• Spider middlewares modify things that pass in and out of spiders, like requests, items, exceptions, and start_requests. They do share some basic functionality with downloader middlewares, but they can’t generate requests in response to responses. They stand between the spiders and the downloader. One example is filtering out responses with bad HTTP status codes.  </p>
-<p>Some middlewares can function as either a downloader middleware or a spider middleware, but they’re often trivial and will be forced into one category or the other once you add more complex functionality.</p>
+</ul>
 
           
         
@@ -1578,7 +1582,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/09/05/spdk18-07和dpdk18-08不兼容/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/31/Qcon18-smartx/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zero">
@@ -1598,7 +1602,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2018/09/05/spdk18-07和dpdk18-08不兼容/" class="post-title-link" itemprop="http://yoursite.com/index.html">spdk18.07和dpdk18.08不兼容</a>
+                <a href="/2018/12/31/Qcon18-smartx/" class="post-title-link" itemprop="http://yoursite.com/index.html">Qcon18' smartx</a>
               
             
           </h1>
@@ -1623,24 +1627,12 @@
                 
               
 
-              <time title="Created: 2018-09-05 15:53:18" itemprop="dateCreated datePublished" datetime="2018-09-05T15:53:18+08:00">2018-09-05</time>
+              <time title="Created: 2018-12-31 20:05:58 / Modified: 20:09:09" itemprop="dateCreated datePublished" datetime="2018-12-31T20:05:58+08:00">2018-12-31</time>
             
 
             
               
 
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-12-31 19:39:50" itemprop="dateModified" datetime="2018-12-31T19:39:50+08:00">2018-12-31</time>
               
             
           </span>
@@ -1693,11 +1685,21 @@
       
         
           
-            <p>今天发现SPDK的版本和DPDK版本并不完全兼容，同时期github上发布的版本，两者的兼容性测试是没有做的。</p>
-<p>之前在邮件列表上看到有人抱怨SPDK总是还需要外部的DPDK，所以现在最新发布的SPDK里面是已经将DPDK作为子模块包含了，如果要使用自己单独配置的DPDK的话，需要考虑版本兼容性问题，比如你发现编译出的DPDK在SPDK中调用时发生undefined reference，这时候就要思考是不是发生了版本兼容性问题。</p>
-<p>今天发现SPDK 18.07和DPDK的18.08不兼容的，根据release描述最新应该兼容到DPDK18.05。</p>
-<hr>
-<p>需要更加耐心</p>
+            <p>如何构建元数据服务 </p>
+<p>failover<br>zookeeper 存储空间严格受限，所有数据在内存中。<br>DHT无法精确控制，负载不均衡情况<br>最终选择：<br>levelDB+ ZOOKEEPER<br>原因：轻量级，稳定 </p>
+<p>Log replication<br> 数据认为成操作日志累加结果，记录操作日志即可拿到完整数据状态。 </p>
+<p>zookeeper选取meta server leader， zookeeper负责log持久化 其他的从zookeeper上拉取log<br>failover，当leader fail 重新选举，把没有消费完的日志重新消费，即可继续提供服务 </p>
+<p>数据存储引擎要求 </p>
+<ul>
+<li>可靠 </li>
+<li>性能 </li>
+<li>效率 </li>
+<li>容易debug </li>
+</ul>
+<p><strong>LSM树问题 写放大 3倍 读放大300多倍 </strong></p>
+<p><strong>内核文件系统的问题： </strong><br>内核文件系统，构建存储引擎没用到，<br>文件系统为了单个磁盘设计<br>对异步IO支持不好<br>文件系统的日志操作带来写放大问题 </p>
+<p>用户空间的存储引擎，直接构建在块设备层之上<br>目前的问题在于上下文切换。 </p>
+<p>未来：pmd实现在用户层，存储引擎实现在 </p>
 
           
         
@@ -1754,7 +1756,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/08/23/数据库处理iterator模型的pro和con/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/31/如何构建元数据服务/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zero">
@@ -1774,7 +1776,7 @@
           <h1 class="post-title" itemprop="name headline">
                 
                 
-                <a href="/2018/08/23/数据库处理iterator模型的pro和con/" class="post-title-link" itemprop="http://yoursite.com/index.html">数据库处理iterator模型的pro和con</a>
+                <a href="/2018/12/31/如何构建元数据服务/" class="post-title-link" itemprop="http://yoursite.com/index.html">如何构建元数据服务</a>
               
             
           </h1>
@@ -1799,25 +1801,9 @@
                 
               
 
-              <time title="Created: 2018-08-23 16:02:30" itemprop="dateCreated datePublished" datetime="2018-08-23T16:02:30+08:00">2018-08-23</time>
+              <time title="Created: 2018-12-31 20:05:34" itemprop="dateCreated datePublished" datetime="2018-12-31T20:05:34+08:00">2018-12-31</time>
             
 
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-12-31 13:38:26" itemprop="dateModified" datetime="2018-12-31T13:38:26+08:00">2018-12-31</time>
-              
             
           </span>
 
@@ -1851,195 +1837,7 @@
       
         
           
-            <p>iterator模型（也叫火山执行引擎）出现的年代，数据库查询处理的时间由IO时间主导，而CPU开销并不是很重要。</p>
-<ol>
-<li>对每个作为中间结果或者最终结果生成的元组都要调用next函数</li>
-<li>对next的调用通常是一个虚函数，或者函数指针</li>
-</ol>
-<p>因此对next调用比普通调用更昂贵，因为虚函数调用会损害现代CPU的分支预测性能。</p>
-<ol start="3">
-<li>模型的代码局部性不好，需要复杂的book-keeping</li>
-</ol>
-<p>假设对一个压缩的关系进行简单的table扫描，由于元组一次生成一个，table扫描的操作需要记住当前元组在压缩的流中的位置，当需要访问下一个元组时，要跳转到对应的解压缩代码位置。</p>
-<p>下面用一个例子展示火山执行引擎的原理：</p>
-<img src="/数据库处理iterator模型的pro和con/7.png" width="600">
-<p>上图描述了 select id,name,age from people where age >30 的火山模型的查询计划，该查询计划包含 User，Project，Select，Scan 四个 operator，每个 operator 的 next 方法递归调用子节点的 next，一直递归调用到叶子节点 Scan operato，Scan Operator 的 next 从文件中返回一个元组。</p>
-<p>火山模型的主要缺点是昂贵的解释开销 (interpretation overhead) 和低下的 CPU Cache 命中率。首先，火山模型的 next 方法通常实现为一个虚函数，在编译器中，虚函数调用需要查找虚函数表, 并且虚函数调用是一个非直接跳转 (indirect jump), 会导致一次错误的 CPU 分支预测 (branch mis-prediction), 一次错误的分支预测需要十几个周期的开销。火山模型为了返回一个元组，需要调用多次 next 方法，导致昂贵的函数调用开销。研究表明，在采用火山执行模型的 MySQL 中执行 TPC-H Q1 查询，仅有 10% 的时间用于真正的查询计算，其余的 90% 时间都浪费在解释开销 。其次，next 方法一次只返回一个元组，元组通常采用行存储，如图 Row Format，如果顺序访问第一列 1，2，3，那么每次访问都将导致 CPU Cache 命中失败 (假设该行不能完全放入 CPU Cache 中)。如果采用 Column Format，那么只有在访问第一个值时才出现缓存命中失败，后续访问 2 和 3 时都将缓存命中成功, 从而极大的提高查询性能。</p>
-<img src="/数据库处理iterator模型的pro和con/8.png" width="600">
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-       
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/15/Playing-with-meson-and-ninja-in-building-DPDK/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zero">
-      <meta itemprop="description" content="try to look 5 years ahead">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="West to the Northwest">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/06/15/Playing-with-meson-and-ninja-in-building-DPDK/" class="post-title-link" itemprop="http://yoursite.com/index.html">Playing with meson and ninja in building DPDK</a>
-              
             
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-06-15 09:45:46" itemprop="dateCreated datePublished" datetime="2018-06-15T09:45:46+08:00">2018-06-15</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-12-31 19:39:40" itemprop="dateModified" datetime="2018-12-31T19:39:40+08:00">2018-12-31</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>首先，下面报错<br><code>code  cc: error: unrecognized command line option &#39;-march=native&#39;</code><br>-march在530上没有实现，于是直接定义mcpu</p>
-<p><code>./zglbuild/meson-private/libdpdk.pc:Cflags: -I${includedir} -I${includedir} -include rte_config.h -march=native</code><br>这里</p>
-
           
         
       
@@ -2084,7 +1882,7 @@
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/12/">12</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
   </nav>
 
 
@@ -2127,7 +1925,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">108</span>
+                    <span class="site-state-item-count">120</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2363,7 +2161,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
   </span>
