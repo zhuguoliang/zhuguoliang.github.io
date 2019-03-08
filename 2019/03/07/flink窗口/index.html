@@ -109,13 +109,14 @@
 
 
   <meta name="description" content="flink有丰富的窗口语义。 在这个训练中你会学到：  如何使用窗口来无限流上计算累计 flink支持什么类型的窗口 如何使用窗口累计来实现一个数据流程序Introduction想要在有界子集上计算累计分析对流处理时是很自然的，通常这些分析想要回答一下这些类的问题： 每分钟页面的访问 每个用户每星期的会话数目 每分钟每个传感器的最大温度  使用flink计算窗口化的分析依赖于两个主要的抽象：一是窗">
+<meta name="keywords" content="flink,stream processing">
 <meta property="og:type" content="article">
 <meta property="og:title" content="flink窗口">
 <meta property="og:url" content="http://yoursite.com/2019/03/07/flink窗口/index.html">
 <meta property="og:site_name" content="West to the Northwest">
 <meta property="og:description" content="flink有丰富的窗口语义。 在这个训练中你会学到：  如何使用窗口来无限流上计算累计 flink支持什么类型的窗口 如何使用窗口累计来实现一个数据流程序Introduction想要在有界子集上计算累计分析对流处理时是很自然的，通常这些分析想要回答一下这些类的问题： 每分钟页面的访问 每个用户每星期的会话数目 每分钟每个传感器的最大温度  使用flink计算窗口化的分析依赖于两个主要的抽象：一是窗">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-07T08:22:43.000Z">
+<meta property="og:updated_time" content="2019-03-08T06:05:46.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="flink窗口">
 <meta name="twitter:description" content="flink有丰富的窗口语义。 在这个训练中你会学到：  如何使用窗口来无限流上计算累计 flink支持什么类型的窗口 如何使用窗口累计来实现一个数据流程序Introduction想要在有界子集上计算累计分析对流处理时是很自然的，通常这些分析想要回答一下这些类的问题： 每分钟页面的访问 每个用户每星期的会话数目 每分钟每个传感器的最大温度  使用flink计算窗口化的分析依赖于两个主要的抽象：一是窗">
@@ -397,16 +398,46 @@
                 
               
 
-              <time title="Created: 2019-03-07 16:21:41 / Modified: 16:22:43" itemprop="dateCreated datePublished" datetime="2019-03-07T16:21:41+08:00">2019-03-07</time>
+              <time title="Created: 2019-03-07 16:21:41" itemprop="dateCreated datePublished" datetime="2019-03-07T16:21:41+08:00">2019-03-07</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-03-08 14:05:46" itemprop="dateModified" datetime="2019-03-08T14:05:46+08:00">2019-03-08</time>
               
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -477,7 +508,7 @@
 <p>keyBy(x -> x.key)</p>
 </blockquote>
 <p>同时注意Iterable\&lt;SensorReading>这次只会包含一个读数，也就是预先累计的由MyReducingMax计算的最大值。</p>
-<h2 id="晚到事件"><a href="#晚到事件" class="headerlink" title="晚到事件"></a>晚到事件</h2><p>默认情况下，当使用ET窗口时，晚到事件会被丢弃。有两个可选的窗口API函数给你对这个的控制。你可以把本来要丢弃的事件输出到一个另外的输出流中，使用<a href="">旁路输出</a>(<a href="https://github.com/zhuguoliang/FlinkTraining_CN/issues/5#issue-418167538)。这里有一个例子" target="_blank" rel="noopener">https://github.com/zhuguoliang/FlinkTraining_CN/issues/5#issue-418167538)。这里有一个例子</a>:</p>
+<h2 id="晚到事件"><a href="#晚到事件" class="headerlink" title="晚到事件"></a>晚到事件</h2><p>默认情况下，当使用ET窗口时，晚到事件会被丢弃。有两个可选的窗口API函数给你对这个的控制。你可以把本来要丢弃的事件输出到一个另外的输出流中，使用<a href="">旁路输出</a>(<a href="https://github.com/zhuguoliang/FlinkTraining\_CN/issues/5#issue-418167538)。这里有一个例子" target="_blank" rel="noopener">https://github.com/zhuguoliang/FlinkTraining\_CN/issues/5#issue-418167538)。这里有一个例子</a>:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">`OutputTag\&lt;Event\&gt; lateTag = new OutputTag\&lt;Event\&gt;(&quot;late&quot;)&#123;&#125;;</span><br><span class="line"></span><br><span class="line">SingleOutputStreamOperator\&lt;Event\&gt; result = stream.</span><br><span class="line">  .keyBy(...)</span><br><span class="line">  .window(...)</span><br><span class="line">  .process(...)</span><br><span class="line">  .getSideOutput(lateTag);</span><br><span class="line">  </span><br><span class="line">DataStream\&lt;Event\&gt; lateStream = result.getSideOutput(lateTag);</span><br></pre></td></tr></table></figure>
 <p>`You can also specify an interval of allowed lateness during which the late events will continue to be assigned to the appropriate window(s) (whose state will have been retained). By default each late event will cause a late firing of the window function.</p>
 <p>By default the allowed lateness is 0. In other words, elements behind the watermark are dropped (or sent to the side output).</p>
@@ -510,6 +541,14 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/flink/" rel="tag"># flink</a>
+          
+            <a href="/tags/stream-processing/" rel="tag"># stream processing</a>
+          
+        </div>
       
 
       
@@ -753,7 +792,11 @@
                     
                       
                     
-                    <span class="site-state-item-count">53</span>
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">55</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
