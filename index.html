@@ -355,6 +355,167 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/21/锁的发展/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zero">
+      <meta itemprop="description" content="try to look 5 years ahead">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="West to the Northwest">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/03/21/锁的发展/" class="post-title-link" itemprop="http://yoursite.com/index.html">锁的发展</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-03-21 09:54:18 / Modified: 09:55:31" itemprop="dateCreated datePublished" datetime="2019-03-21T09:54:18+08:00">2019-03-21</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/总结/" itemprop="url" rel="index"><span itemprop="name">总结</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>锁的发展基本上就是5个阶段，第一个阶段粗粒度的锁开始，一个锁管一个对象，这样过度序列化。<br>第二个阶段是通过细粒度的锁，乐观的锁，放松一致性的锁等等。但是这种锁的容易做错，或者造成优先级倒置，死锁等等问题。特别是大规模系统中，锁的使用都写在代码注释里面，做着做着就失传了，靠看代码维持。<br>第三个阶段是CAS阶段，就是通过原子操作实现无锁数据结构，这种方法能够多线程协同完成工作，上限很高，但是代码可维护性不是很好，通常是难以接续传男不传女传南不传北传胖不传瘦。<br>第四个阶段和第五个阶段都是事务化阶段，分别是软件事务化和硬件事务化。 </p>
+<p>和传统在静态，从逻辑上判断关键区域不同，TSX让处理器来动态决定是否线程需要串行执行关键区，这里的动态是相对我们考虑什么时候使用锁的时候的静态逻辑分析来说的，如果一次执行中，同步是不需要的，那么不需要任何的跨线程的序列化。如何判断是不是需要同步，intel通过分析用户定义的事务代码，建立事务中内存区域的读集合和写集合，动态监测发生在同一个cache行中的处理器间访问冲突，决定是否需要序列化事务的操作。 </p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/08/在IntelliJ中使用flink的webUI/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1820,180 +1981,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/31/Qcon18-smartx/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zero">
-      <meta itemprop="description" content="try to look 5 years ahead">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="West to the Northwest">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/12/31/Qcon18-smartx/" class="post-title-link" itemprop="http://yoursite.com/index.html">Qcon18' smartx</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-12-31 20:05:58 / Modified: 20:09:09" itemprop="dateCreated datePublished" datetime="2018-12-31T20:05:58+08:00">2018-12-31</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>如何构建元数据服务 </p>
-<p>failover<br>zookeeper 存储空间严格受限，所有数据在内存中。<br>DHT无法精确控制，负载不均衡情况<br>最终选择：<br>levelDB+ ZOOKEEPER<br>原因：轻量级，稳定 </p>
-<p>Log replication<br> 数据认为成操作日志累加结果，记录操作日志即可拿到完整数据状态。 </p>
-<p>zookeeper选取meta server leader， zookeeper负责log持久化 其他的从zookeeper上拉取log<br>failover，当leader fail 重新选举，把没有消费完的日志重新消费，即可继续提供服务 </p>
-<p>数据存储引擎要求 </p>
-<ul>
-<li>可靠 </li>
-<li>性能 </li>
-<li>效率 </li>
-<li>容易debug </li>
-</ul>
-<p><strong>LSM树问题 写放大 3倍 读放大300多倍 </strong></p>
-<p><strong>内核文件系统的问题： </strong><br>内核文件系统，构建存储引擎没用到，<br>文件系统为了单个磁盘设计<br>对异步IO支持不好<br>文件系统的日志操作带来写放大问题 </p>
-<p>用户空间的存储引擎，直接构建在块设备层之上<br>目前的问题在于上下文切换。 </p>
-<p>未来：pmd实现在用户层，存储引擎实现在 </p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-       
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2041,7 +2028,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">121</span>
+                    <span class="site-state-item-count">122</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
@@ -2066,7 +2053,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">6</span>
+                      
+                    
+                    <span class="site-state-item-count">7</span>
                     <span class="site-state-item-name">categories</span>
                   </a>
                 </div>
@@ -2189,7 +2178,9 @@
                     
                       
                     
-                    <span class="site-state-item-count">55</span>
+                      
+                    
+                    <span class="site-state-item-count">56</span>
                     <span class="site-state-item-name">tags</span>
                   </a>
                 </div>
