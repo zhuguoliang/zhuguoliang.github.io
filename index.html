@@ -15,7 +15,7 @@
 
 
 <html class="theme-next muse use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -176,7 +176,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -187,7 +187,7 @@
   page-home">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
@@ -350,20 +350,20 @@
 
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/04/flink-task之间的数据交换/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zero">
       <meta itemprop="description" content="try to look 5 years ahead">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="West to the Northwest">
     </span>
 
@@ -400,7 +400,7 @@
                 
               
 
-              <time title="Created: 2019-10-04 15:10:02 / Modified: 15:44:03" itemprop="dateCreated datePublished" datetime="2019-10-04T15:10:02+08:00">2019-10-04</time>
+              <time title="Created: 2019-10-04 15:10:02 / Modified: 16:10:53" itemprop="dateCreated datePublished" datetime="2019-10-04T15:10:02+08:00">2019-10-04</time>
             
 
             
@@ -449,7 +449,12 @@
 <li>JobManager 这是主节点，负责调度任务，恢复以及协调，通过ExecutionGraph数据结构保存job执行的全貌</li>
 <li>TaskManagers 这是工作节点，一个TM在线程级别并发执行多个task。每个TM还包含了一个CommunicationManager（CM在task之间共享），以及一个MemoryManager（MM，也是在task之间共享）。TM之间可以通过建立好的TCP连接交换数据。</li>
 </ul>
-<p>要注意的是在Flink里面，是TM而不是task来通过网络交换数据，也就是说同一个TM的数据交换是被它里面的多个task多路复用的。<br><img src="" alt="123">(jobmanager-taskmanagers.png)</p>
+<p>要注意的是在Flink里面，是TM而不是task来通过网络交换数据，也就是说同一个TM的数据交换是被它里面的多个task多路复用的。<br><img src alt="123">)(jobmanager-taskmanagers.png)</p>
+<hr>
+<p>fads<br><img src alt="alt">)(jobmanager-taskmanagers.png)</p>
+<p>ExecutionGraph： 执行图是包含着job计算的基础事实的数据结构，它由代表着计算task的执行节点（ExecutionVertex）组成。节点通过ExecutionEdges执行边（EE）连接到中间结果。</p>
+<p>JM里面有一些逻辑数据结构，他们有他们的运行时等价结构来负责TM内部的世界数据处理。对于IntermediateResultPartition的运行时等价结构叫做ResultPartition。<br>ResultPartition（RP）代表一个BufferWriter写的数据块，比如，一个task产生的数据块。一个RP是Result Subpartitions（RSs）的集合。这是为了区分分发给不同的接收者产生的数据结构，比如说在一个reduce或者join操作中的一个partitioning shuffle 操作。</p>
+<p>These are logical data structures that live in the JobManager. They have their runtime equivalent structures that are responsible for the actual data processing that live at the TaskManagers. The runtime equivalent of the IntermediateResultPartition is called ResultPartition.<br>ResultPartition (RP) represents a chunk of data that a BufferWriter writes to, i.e., a chunk of data produced by a single task. A RP is a collection of Result Subpartitions (RSs). This is to distinguish between data that is destined to different receivers, e.g., in the case of a partitioning shuffle for a reduce or a join.<br>ResultSubpartition (RS) represents one partition of the data that is created by an operator, together with the logic for forwarding this data to the receiving operator. The specific implementation of a RS determines the actual data transfer logic, and this is the pluggable mechanism that allows the system to support a variety of data transfers. For example, the PipelinedSubpartition is a pipelined implementation to support streaming data exchange. The SpillableSubpartition is a blocking implementation to support batch data exchange.</p>
 
           
         
@@ -501,20 +506,20 @@
 
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/21/20190821/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zero">
       <meta itemprop="description" content="try to look 5 years ahead">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="West to the Northwest">
     </span>
 
@@ -638,20 +643,20 @@
 
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/21/锁的发展/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zero">
       <meta itemprop="description" content="try to look 5 years ahead">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="West to the Northwest">
     </span>
 
@@ -710,7 +715,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/总结/" itemprop="url" rel="index"><span itemprop="name">总结</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/总结/" itemprop="url" rel="index"><span itemprop="name">总结</span></a></span>
 
                 
                 
@@ -799,20 +804,20 @@
 
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/08/在IntelliJ中使用flink的webUI/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zero">
       <meta itemprop="description" content="try to look 5 years ahead">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="West to the Northwest">
     </span>
 
@@ -871,7 +876,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
 
                 
                 
@@ -962,20 +967,20 @@
 
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/07/flink窗口/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zero">
       <meta itemprop="description" content="try to look 5 years ahead">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="West to the Northwest">
     </span>
 
@@ -1046,7 +1051,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
 
                 
                 
@@ -1114,12 +1119,12 @@
 <p>keyBy(x -> x.key)</p>
 </blockquote>
 <p>同时注意Iterable\&lt;SensorReading>这次只会包含一个读数，也就是预先累计的由MyReducingMax计算的最大值。</p>
-<h2 id="晚到事件"><a href="#晚到事件" class="headerlink" title="晚到事件"></a>晚到事件</h2><p>默认情况下，当使用ET窗口时，晚到事件会被丢弃。有两个可选的窗口API函数给你对这个的控制。你可以把本来要丢弃的事件输出到一个另外的输出流中，使用<a href="">旁路输出</a>(<a href="https://github.com/zhuguoliang/FlinkTraining\_CN/issues/5#issue-418167538)。这里有一个例子" target="_blank" rel="noopener">https://github.com/zhuguoliang/FlinkTraining\_CN/issues/5#issue-418167538)。这里有一个例子</a>:</p>
+<h2 id="晚到事件"><a href="#晚到事件" class="headerlink" title="晚到事件"></a>晚到事件</h2><p>默认情况下，当使用ET窗口时，晚到事件会被丢弃。有两个可选的窗口API函数给你对这个的控制。你可以把本来要丢弃的事件输出到一个另外的输出流中，使用<a href>旁路输出</a>(<a href="https://github.com/zhuguoliang/FlinkTraining\_CN/issues/5#issue-418167538)。这里有一个例子" target="_blank" rel="noopener">https://github.com/zhuguoliang/FlinkTraining\_CN/issues/5#issue-418167538)。这里有一个例子</a>:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">`OutputTag\&lt;Event\&gt; lateTag = new OutputTag\&lt;Event\&gt;(&quot;late&quot;)&#123;&#125;;</span><br><span class="line"></span><br><span class="line">SingleOutputStreamOperator\&lt;Event\&gt; result = stream.</span><br><span class="line">  .keyBy(...)</span><br><span class="line">  .window(...)</span><br><span class="line">  .process(...)</span><br><span class="line">  .getSideOutput(lateTag);</span><br><span class="line">  </span><br><span class="line">DataStream\&lt;Event\&gt; lateStream = result.getSideOutput(lateTag);</span><br></pre></td></tr></table></figure>
 <p>`You can also specify an interval of allowed lateness during which the late events will continue to be assigned to the appropriate window(s) (whose state will have been retained). By default each late event will cause a late firing of the window function.</p>
 <p>By default the allowed lateness is 0. In other words, elements behind the watermark are dropped (or sent to the side output).</p>
 <p>For example:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">`stream.</span><br><span class="line">  .keyBy(...)</span><br><span class="line">  .window(...)</span><br><span class="line">  .allowedLateness(Time.seconds(10))</span><br><span class="line">  .process(...);</span><br></pre></td></tr></table></figure></p>
-<p>`<br>Surprises<br>Some aspects of Flink’s windowing API may not behave in the way you would expect. Based on frequently asked questions on <a href="">Stack Overflow</a>(<a href="https://stackoverflow.com/questions/tagged/apache-flink" target="_blank" rel="noopener">https://stackoverflow.com/questions/tagged/apache-flink</a>) and the <a href="">flink-user mailing list</a>(<a href="https://flink.apache.org/community.html#mailing-lists)" target="_blank" rel="noopener">https://flink.apache.org/community.html#mailing-lists)</a>, here are some facts about windows that may surprise you.</p>
+<p>`<br>Surprises<br>Some aspects of Flink’s windowing API may not behave in the way you would expect. Based on frequently asked questions on <a href>Stack Overflow</a>(<a href="https://stackoverflow.com/questions/tagged/apache-flink" target="_blank" rel="noopener">https://stackoverflow.com/questions/tagged/apache-flink</a>) and the <a href>flink-user mailing list</a>(<a href="https://flink.apache.org/community.html#mailing-lists)" target="_blank" rel="noopener">https://flink.apache.org/community.html#mailing-lists)</a>, here are some facts about windows that may surprise you.</p>
 <p>Sliding Windows Make Copies<br>Sliding window assigners can create lots of window objects, and will copy each event into every relevant window. For example, if you have sliding windows every 15 minutes that are 24-hours in length, each event will be copied into 4 * 24 = 96 windows.</p>
 <p>Time Windows are Aligned to the Epoch<br>Just because you are using hour-long processing-time windows and start your application running at 12:05 does not mean that the first window will close at 1:05. The first window will be 55 minutes long and close at 1:00.</p>
 <p>Windows Can Follow Windows<br>For example, it works to do this:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">`</span><br><span class="line">stream</span><br><span class="line">  .keyBy(t -\&gt; t.key)</span><br><span class="line">  .timeWindow(\&lt;time specification\&gt;)</span><br><span class="line">  .reduce(\&lt;reduce function\&gt;)</span><br><span class="line">  .timeWindowAll(\&lt;same time specification\&gt;)</span><br><span class="line">  .reduce(\&lt;same reduce function\&gt;)</span><br></pre></td></tr></table></figure></p>
@@ -1178,20 +1183,20 @@
 
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/13/flink源码阅读之一/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zero">
       <meta itemprop="description" content="try to look 5 years ahead">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="West to the Northwest">
     </span>
 
@@ -1262,7 +1267,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
 
                 
                 
@@ -1349,20 +1354,20 @@
 
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/01/19/enable-sysstat/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zero">
       <meta itemprop="description" content="try to look 5 years ahead">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="West to the Northwest">
     </span>
 
@@ -1494,20 +1499,20 @@
 
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/31/计算存储分离之我见/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zero">
       <meta itemprop="description" content="try to look 5 years ahead">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="West to the Northwest">
     </span>
 
@@ -1631,20 +1636,20 @@
 
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/31/chandy-lamport算法/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zero">
       <meta itemprop="description" content="try to look 5 years ahead">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="West to the Northwest">
     </span>
 
@@ -1768,20 +1773,20 @@
 
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/31/Readings-in-Streaming-Systems/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zero">
       <meta itemprop="description" content="try to look 5 years ahead">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="West to the Northwest">
     </span>
 
@@ -1934,7 +1939,7 @@
 
       <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">zero</p>
               <p class="site-description motion-element" itemprop="description">try to look 5 years ahead</p>
@@ -2191,7 +2196,7 @@
 </div>
 
 
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
 
 
 

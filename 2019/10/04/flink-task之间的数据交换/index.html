@@ -15,7 +15,7 @@
 
 
 <html class="theme-next muse use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -115,7 +115,7 @@
 <meta property="og:site_name" content="West to the Northwest">
 <meta property="og:description" content="由于比赛需要，这部分是非常重要的内容，所以自己手动翻译一下。Flink中数据交换的构建遵循以下设计原则  数据交换的控制流是接收方发出的，这与mapreduce相似。 数据交换的数据流，也就是实际数据传输通过IntermediateResult这个提法来抽象，并且是可插拔的，这意味着系统能够用相同的实现同时支持批流数据传输数据交换包括几个对象，包括：   JobManager 这是主节点，负责调度">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-04T07:44:03.524Z">
+<meta property="og:updated_time" content="2019-10-04T08:10:53.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="flink task之间的数据交换">
 <meta name="twitter:description" content="由于比赛需要，这部分是非常重要的内容，所以自己手动翻译一下。Flink中数据交换的构建遵循以下设计原则  数据交换的控制流是接收方发出的，这与mapreduce相似。 数据交换的数据流，也就是实际数据传输通过IntermediateResult这个提法来抽象，并且是可插拔的，这意味着系统能够用相同的实现同时支持批流数据传输数据交换包括几个对象，包括：   JobManager 这是主节点，负责调度">
@@ -177,7 +177,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -187,7 +187,7 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
@@ -350,20 +350,20 @@
 
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/04/flink-task之间的数据交换/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zero">
       <meta itemprop="description" content="try to look 5 years ahead">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="West to the Northwest">
     </span>
 
@@ -397,7 +397,7 @@
                 
               
 
-              <time title="Created: 2019-10-04 15:10:02 / Modified: 15:44:03" itemprop="dateCreated datePublished" datetime="2019-10-04T15:10:02+08:00">2019-10-04</time>
+              <time title="Created: 2019-10-04 15:10:02 / Modified: 16:10:53" itemprop="dateCreated datePublished" datetime="2019-10-04T15:10:02+08:00">2019-10-04</time>
             
 
             
@@ -454,7 +454,12 @@
 <li>JobManager 这是主节点，负责调度任务，恢复以及协调，通过ExecutionGraph数据结构保存job执行的全貌</li>
 <li>TaskManagers 这是工作节点，一个TM在线程级别并发执行多个task。每个TM还包含了一个CommunicationManager（CM在task之间共享），以及一个MemoryManager（MM，也是在task之间共享）。TM之间可以通过建立好的TCP连接交换数据。</li>
 </ul>
-<p>要注意的是在Flink里面，是TM而不是task来通过网络交换数据，也就是说同一个TM的数据交换是被它里面的多个task多路复用的。<br><img src="" alt="123">(jobmanager-taskmanagers.png)</p>
+<p>要注意的是在Flink里面，是TM而不是task来通过网络交换数据，也就是说同一个TM的数据交换是被它里面的多个task多路复用的。<br><img src alt="123">)(jobmanager-taskmanagers.png)</p>
+<hr>
+<p>fads<br><img src alt="alt">)(jobmanager-taskmanagers.png)</p>
+<p>ExecutionGraph： 执行图是包含着job计算的基础事实的数据结构，它由代表着计算task的执行节点（ExecutionVertex）组成。节点通过ExecutionEdges执行边（EE）连接到中间结果。</p>
+<p>JM里面有一些逻辑数据结构，他们有他们的运行时等价结构来负责TM内部的世界数据处理。对于IntermediateResultPartition的运行时等价结构叫做ResultPartition。<br>ResultPartition（RP）代表一个BufferWriter写的数据块，比如，一个task产生的数据块。一个RP是Result Subpartitions（RSs）的集合。这是为了区分分发给不同的接收者产生的数据结构，比如说在一个reduce或者join操作中的一个partitioning shuffle 操作。</p>
+<p>These are logical data structures that live in the JobManager. They have their runtime equivalent structures that are responsible for the actual data processing that live at the TaskManagers. The runtime equivalent of the IntermediateResultPartition is called ResultPartition.<br>ResultPartition (RP) represents a chunk of data that a BufferWriter writes to, i.e., a chunk of data produced by a single task. A RP is a collection of Result Subpartitions (RSs). This is to distinguish between data that is destined to different receivers, e.g., in the case of a partitioning shuffle for a reduce or a join.<br>ResultSubpartition (RS) represents one partition of the data that is created by an operator, together with the logic for forwarding this data to the receiving operator. The specific implementation of a RS determines the actual data transfer logic, and this is the pluggable mechanism that allows the system to support a variety of data transfers. For example, the PipelinedSubpartition is a pipelined implementation to support streaming data exchange. The SpillableSubpartition is a blocking implementation to support batch data exchange.</p>
 
       
     </div>
@@ -557,7 +562,7 @@
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">zero</p>
               <p class="site-description motion-element" itemprop="description">try to look 5 years ahead</p>
@@ -830,7 +835,7 @@
 </div>
 
 
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
 
 
 

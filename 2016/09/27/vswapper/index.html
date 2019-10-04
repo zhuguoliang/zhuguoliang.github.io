@@ -15,7 +15,7 @@
 
 
 <html class="theme-next muse use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -178,7 +178,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -188,7 +188,7 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
@@ -351,20 +351,20 @@
 
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/27/vswapper/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zero">
       <meta itemprop="description" content="try to look 5 years ahead">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="West to the Northwest">
     </span>
 
@@ -432,7 +432,7 @@
                 <span class="post-meta-item-text">In</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
 
                 
                 
@@ -481,7 +481,7 @@
 <p>vswapper如何应对动态变化的内存负载的？？？？？<br><strong>paravirtualization</strong>: A guest OS is paravirtual if it is modified in a manner that makes it aware it is being virtulized,e.g. by installing hypervisor tools.</p>
 <p>Comment: 我们需要跟谁比较呢？带来的多余读写，适合的动态响应策略，都是我们像这里的ballooning 一样可以和unmodified system进行比较的优势。</p>
 <p>好吧，接下来不骂ballooning了，把原生系统虚拟化的不合作现象一顿臭骂。。。</p>
-<p><strong>Silent SwapWrites</strong>: So long as memory is plentiful, much of the memory is dedicated to caching file content long after the content is used, in the hope that it will get re-used in the future.<br><a href="">Data centers in the wild: A large performance study</a><br>in virtual setup with uncooperative swapping, host decide which page to swap, host 没法区分一个被reclaim的页在guest VM中是否是脏的，所以把所有reclaim的页都放到swap区域，指定时间到了就会写回到disk，不管这个页和原来的页是否相同。。。<strong>、!!!这个对NVM有影响！！！</strong> 但是也是要在host非常紧张，reclaim了guest的页的情况才存在。</p>
+<p><strong>Silent SwapWrites</strong>: So long as memory is plentiful, much of the memory is dedicated to caching file content long after the content is used, in the hope that it will get re-used in the future.<br><a href>Data centers in the wild: A large performance study</a><br>in virtual setup with uncooperative swapping, host decide which page to swap, host 没法区分一个被reclaim的页在guest VM中是否是脏的，所以把所有reclaim的页都放到swap区域，指定时间到了就会写回到disk，不管这个页和原来的页是否相同。。。<strong>、!!!这个对NVM有影响！！！</strong> 但是也是要在host非常紧张，reclaim了guest的页的情况才存在。</p>
 <blockquote>
 <p>If a victim page is dirty, the host writes it to its swap area so as to later be able to recover the correct data.</p>
 </blockquote>
@@ -598,7 +598,7 @@
 
       <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <p class="site-author-name" itemprop="name">zero</p>
               <p class="site-description motion-element" itemprop="description">try to look 5 years ahead</p>
@@ -855,7 +855,7 @@
 </div>
 
 
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.8.0</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
 
 
 
