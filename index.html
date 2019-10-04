@@ -355,6 +355,294 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/04/flink-task之间的数据交换/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zero">
+      <meta itemprop="description" content="try to look 5 years ahead">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="West to the Northwest">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/10/04/flink-task之间的数据交换/" class="post-title-link" itemprop="http://yoursite.com/index.html">flink task之间的数据交换</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-10-04 15:10:02 / Modified: 15:25:18" itemprop="dateCreated datePublished" datetime="2019-10-04T15:10:02+08:00">2019-10-04</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="由于比赛需要，这部分是非常重要的内容，所以自己手动翻译一下。"><a href="#由于比赛需要，这部分是非常重要的内容，所以自己手动翻译一下。" class="headerlink" title="由于比赛需要，这部分是非常重要的内容，所以自己手动翻译一下。"></a>由于比赛需要，这部分是非常重要的内容，所以自己手动翻译一下。</h2><p>Flink中数据交换的构建遵循以下设计原则</p>
+<ol>
+<li>数据交换的控制流是接收方发出的，这与mapreduce相似。</li>
+<li>数据交换的数据流，也就是实际数据传输通过IntermediateResult这个提法来抽象，并且是可插拔的，这意味着系统能够用相同的实现同时支持批流数据传输<br>数据交换包括几个对象，包括：</li>
+</ol>
+<ul>
+<li>JobManager 这是主节点，负责调度任务，恢复以及协调，通过ExecutionGraph数据结构保存job执行的全貌</li>
+<li>TaskManagers 这是工作节点，一个TM在线程级别并发执行多个task。每个TM还包含了一个CommunicationManager（CM在task之间共享），以及一个MemoryManager（MM，也是在task之间共享）。TM之间可以通过建立好的TCP连接交换数据。</li>
+</ul>
+<p>要注意的是在Flink里面，是TM而不是task来通过网络交换数据，也就是说同一个TM的数据交换是被它里面的多个task多路复用的。<br><img src="" alt="fig.1">(<a href="https://cwiki.apache.org/confluence/download/attachments/53741520/jobmanager-taskmanagers.png?version=1&amp;modificationDate=1426848220000&amp;api=v2" target="_blank" rel="noopener">https://cwiki.apache.org/confluence/download/attachments/53741520/jobmanager-taskmanagers.png?version=1&amp;modificationDate=1426848220000&amp;api=v2</a>)</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/08/21/20190821/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zero">
+      <meta itemprop="description" content="try to look 5 years ahead">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="West to the Northwest">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/08/21/20190821/" class="post-title-link" itemprop="http://yoursite.com/index.html">20190821</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2019-08-21 09:59:49" itemprop="dateCreated datePublished" datetime="2019-08-21T09:59:49+08:00">2019-08-21</time>
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/21/锁的发展/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -1612,375 +1900,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/31/Qcon18-blink/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zero">
-      <meta itemprop="description" content="try to look 5 years ahead">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="West to the Northwest">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/12/31/Qcon18-blink/" class="post-title-link" itemprop="http://yoursite.com/index.html">Qcon18' blink</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-12-31 20:17:05" itemprop="dateCreated datePublished" datetime="2018-12-31T20:17:05+08:00">2018-12-31</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2019-03-08 14:05:34" itemprop="dateModified" datetime="2019-03-08T14:05:34+08:00">2019-03-08</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>流计算特点</p>
-<ul>
-<li>低延迟（不一定非常低，不同于批处理）</li>
-<li>快速容错（不同于批处理，要快） </li>
-<li>通用的API （通用性决定用户数目）</li>
-<li>易用性   （决定开发速度） </li>
-<li>弹性    （可扩展性怎么样，能不能1w台机器）</li>
-<li>高性能  </li>
-</ul>
-<p>早起流计算是批处理的，纯流计算是没有批的概念的，进行有状态的计算，所以需要一个能够固化保存的分布式存储，这通常是流计算系统的瓶颈。需要能够快速的完成检查点的恢复<br>容错语义上：exactly once   》  at least once 至少一次开销小一些。<br>最主流的是全局快照 chandy lamport算法。</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-       
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/31/Qcon18-TIDB/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zero">
-      <meta itemprop="description" content="try to look 5 years ahead">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="West to the Northwest">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/12/31/Qcon18-TIDB/" class="post-title-link" itemprop="http://yoursite.com/index.html">Qcon18' TIDB</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-12-31 20:12:30 / Modified: 20:15:37" itemprop="dateCreated datePublished" datetime="2018-12-31T20:12:30+08:00">2018-12-31</time>
-            
-
-            
-              
-
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h2 id="设计目标"><a href="#设计目标" class="headerlink" title="设计目标"></a>设计目标</h2><ol>
-<li>水平扩展</li>
-<li>高可用</li>
-<li>ACID事务</li>
-<li>SQL的数据库  </li>
-</ol>
-<h2 id="发展历程"><a href="#发展历程" class="headerlink" title="发展历程"></a>发展历程</h2><ol>
-<li>只在内存中</li>
-<li>加入golevelDB做持久化</li>
-<li>基于HBASE做分布式，但是发现下层软件栈厚，依赖过多</li>
-<li>开发TIkv 选择用rust实现，选择没有GC的语言 选择rocksDB</li>
-<li>用sysbench 性能没有达到预期，还有很多sql功能没有实现–》实现更好的sql层，</li>
-<li>tispark</li>
-</ol>
-<h2 id="测试很重要"><a href="#测试很重要" class="headerlink" title="测试很重要"></a>测试很重要</h2><ul>
-<li>单元测试 </li>
-<li>性能测试 </li>
-<li>chaos测试</li>
-<li>混沌测试</li>
-<li>突然杀死。。</li>
-<li>测试的测试 <h2 id="工具很重要"><a href="#工具很重要" class="headerlink" title="工具很重要"></a>工具很重要</h2></li>
-<li>自动化所有事情<ul>
-<li>混沌测试工具 </li>
-<li>调试工具 </li>
-<li>基础框架工具</li>
-<li>jira/Confluence </li>
-</ul>
-</li>
-</ul>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-       
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2028,7 +1947,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">122</span>
+                    <span class="site-state-item-count">124</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
