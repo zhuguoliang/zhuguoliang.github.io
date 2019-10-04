@@ -400,7 +400,7 @@
                 
               
 
-              <time title="Created: 2019-10-04 15:10:02 / Modified: 15:41:38" itemprop="dateCreated datePublished" datetime="2019-10-04T15:10:02+08:00">2019-10-04</time>
+              <time title="Created: 2019-10-04 15:10:02 / Modified: 15:44:03" itemprop="dateCreated datePublished" datetime="2019-10-04T15:10:02+08:00">2019-10-04</time>
             
 
             
@@ -449,7 +449,7 @@
 <li>JobManager 这是主节点，负责调度任务，恢复以及协调，通过ExecutionGraph数据结构保存job执行的全貌</li>
 <li>TaskManagers 这是工作节点，一个TM在线程级别并发执行多个task。每个TM还包含了一个CommunicationManager（CM在task之间共享），以及一个MemoryManager（MM，也是在task之间共享）。TM之间可以通过建立好的TCP连接交换数据。</li>
 </ul>
-<p>要注意的是在Flink里面，是TM而不是task来通过网络交换数据，也就是说同一个TM的数据交换是被它里面的多个task多路复用的。<br><img src="" alt="">(jobmanager-taskmanagers.png)</p>
+<p>要注意的是在Flink里面，是TM而不是task来通过网络交换数据，也就是说同一个TM的数据交换是被它里面的多个task多路复用的。<br><img src="" alt="123">(jobmanager-taskmanagers.png)</p>
 
           
         
