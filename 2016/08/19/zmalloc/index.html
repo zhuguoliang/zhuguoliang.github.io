@@ -108,21 +108,21 @@
 
 
 
-  <meta name="description" content="malloc—&amp;gt;sbrkmalloc allocates memory on the heap, period.Your C library typically keeps a list (or some more intricate data structure) of available memory chunks, finding a suitable chunk to satisfy a">
+  <meta name="description" content="malloc—&amp;gt;sbrkmalloc allocates memory on the heap, period.Your C library typically keeps a list (or some more intricate data structure) of available memory chunks, finding a suitable chunk to satisfy">
 <meta name="keywords" content="内存分配,malloc,sbrk,tcmalloc">
 <meta property="og:type" content="article">
 <meta property="og:title" content="zmalloc">
 <meta property="og:url" content="http://yoursite.com/2016/08/19/zmalloc/index.html">
 <meta property="og:site_name" content="West to the Northwest">
-<meta property="og:description" content="malloc—&amp;gt;sbrkmalloc allocates memory on the heap, period.Your C library typically keeps a list (or some more intricate data structure) of available memory chunks, finding a suitable chunk to satisfy a">
+<meta property="og:description" content="malloc—&amp;gt;sbrkmalloc allocates memory on the heap, period.Your C library typically keeps a list (or some more intricate data structure) of available memory chunks, finding a suitable chunk to satisfy">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/zmalloc/1.png">
-<meta property="og:image" content="http://yoursite.com/zmalloc/2.png">
+<meta property="og:image" content="http://yoursite.com/2016/08/19/zmalloc/1.png">
+<meta property="og:image" content="http://yoursite.com/2016/08/19/zmalloc/2.png">
 <meta property="og:updated_time" content="2018-12-31T10:58:06.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="zmalloc">
-<meta name="twitter:description" content="malloc—&amp;gt;sbrkmalloc allocates memory on the heap, period.Your C library typically keeps a list (or some more intricate data structure) of available memory chunks, finding a suitable chunk to satisfy a">
-<meta name="twitter:image" content="http://yoursite.com/zmalloc/1.png">
+<meta name="twitter:description" content="malloc—&amp;gt;sbrkmalloc allocates memory on the heap, period.Your C library typically keeps a list (or some more intricate data structure) of available memory chunks, finding a suitable chunk to satisfy">
+<meta name="twitter:image" content="http://yoursite.com/2016/08/19/zmalloc/1.png">
 
 
 
@@ -479,18 +479,24 @@
       
 
       
-        <h3 id="malloc—-sbrk"><a href="#malloc—-sbrk" class="headerlink" title="malloc—>sbrk"></a>malloc—>sbrk</h3><p>malloc allocates memory on the heap, period.<br>Your C library typically keeps a list (or some more intricate data structure) of available memory chunks, finding a suitable chunk to satisfy a malloc (possibly splitting a larger chunk into a number of smaller ones) and returning free’d memory to the list (possibly merging a few smaller chunks into a bigger one)<br>Only when the list doesn’t contain a large enough chunk to satisfy your malloc, the library will ask the OS for more memory, e.g. using the sbrk syscall. </p>
+        <h3 id="malloc—-gt-sbrk"><a href="#malloc—-gt-sbrk" class="headerlink" title="malloc—&gt;sbrk"></a>malloc—&gt;sbrk</h3><p>malloc allocates memory on the heap, period.<br>Your C library typically keeps a list (or some more intricate data structure) of available memory chunks, finding a suitable chunk to satisfy a malloc (possibly splitting a larger chunk into a number of smaller ones) and returning free’d memory to the list (possibly merging a few smaller chunks into a bigger one)<br>Only when the list doesn’t contain a large enough chunk to satisfy your malloc, the library will ask the OS for more memory, e.g. using the sbrk syscall. </p>
 <h3 id="sbrk"><a href="#sbrk" class="headerlink" title="sbrk"></a>sbrk</h3><p> strace -c ls</p>
 <p>现在基本可以认定，redis的zmalloc最终调用sbrk，然而在这个情形下，我们可以记录zmalloc得到的地址序列，分析命中的位置，</p>
 <p>继续仔细分析redis的详细内存增长，是以什么样的粒度进行分配的，主要使用了哪个内存分配机制。</p>
 <p>tcmalloc中的内存分配机制，在它的内存分配机制中，引入对读写均衡度的考量。明天要看一下在使用tcmalloc的时候，主要使用了哪个队列。</p>
 <p>tcmalloc</p>
-<p>tcmalloc为每个线程分配了线程局部的cache，小分配就都是子啊这种线程局部的cache中完成，<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">inline</span> <span class="keyword">void</span>\* <span class="keyword">do</span>\_malloc\_no\_errno(size\<span class="keyword">_t</span> size) &#123;</span><br><span class="line">  <span class="keyword">if</span> (ThreadCache::have\_tls &amp;&amp;</span><br><span class="line">  LIKELY(size \&lt; ThreadCache::MinSizeForSlowPath())) &#123;</span><br><span class="line"><span class="keyword">return</span> <span class="keyword">do</span>\_malloc\_small(ThreadCache::GetCacheWhichMustBePresent(), size);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (size \&lt;= kMaxSize) &#123;</span><br><span class="line"><span class="keyword">return</span> <span class="keyword">do</span>\_malloc\_small(ThreadCache::GetCache(), size);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"><span class="keyword">return</span> <span class="keyword">do</span>\_malloc\_pages(ThreadCache::GetCache(), size);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>tcmalloc为每个线程分配了线程局部的cache，小分配就都是子啊这种线程局部的cache中完成，</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">inline</span> <span class="keyword">void</span>\* <span class="keyword">do</span>\_malloc\_no\_errno(size\<span class="keyword">_t</span> size) &#123;</span><br><span class="line">  <span class="keyword">if</span> (ThreadCache::have\_tls &amp;&amp;</span><br><span class="line">  LIKELY(size \&lt; ThreadCache::MinSizeForSlowPath())) &#123;</span><br><span class="line"><span class="keyword">return</span> <span class="keyword">do</span>\_malloc\_small(ThreadCache::GetCacheWhichMustBePresent(), size);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (size \&lt;= kMaxSize) &#123;</span><br><span class="line"><span class="keyword">return</span> <span class="keyword">do</span>\_malloc\_small(ThreadCache::GetCache(), size);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"><span class="keyword">return</span> <span class="keyword">do</span>\_malloc\_pages(ThreadCache::GetCache(), size);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>small cache分配</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">inline</span> <span class="keyword">void</span>* <span class="keyword">do</span>\_malloc\_small(ThreadCache* heap, size\<span class="keyword">_t</span> size) &#123;</span><br><span class="line">  ASSERT(Static::IsInited());</span><br><span class="line">  ASSERT(heap != <span class="literal">NULL</span>);</span><br><span class="line">  size\<span class="keyword">_t</span> cl = Static::sizemap()-\&gt;SizeClass(size);</span><br><span class="line">  size = Static::sizemap()-\&gt;class\_to\_size(cl);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> ((FLAGS\_tcmalloc\_sample\_parameter \&gt; <span class="number">0</span>) &amp;&amp; heap-\&gt;SampleAllocation(size)) &#123;</span><br><span class="line"><span class="keyword">return</span> DoSampledAllocation(size);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"><span class="comment">// The common case, and also the simplest.  This just pops the</span></span><br><span class="line"><span class="comment">// size-appropriate freelist, after replenishing it if it's empty.</span></span><br><span class="line"><span class="keyword">return</span> CheckedMallocResult(heap-\&gt;Allocate(size, cl));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
 <p>tc_malloc_stats输出<br>在tcmalloc中，小对象在per-thread的cache中进行分配，大对象在page heap中进行分配，图中可以看出per-thread cache的大小从8B、16B到13KB.<br>实际上tcmalloc为小对象创建了86个大小的size classes。</p>
-<img src="/zmalloc/1.png">
-<p>要想弄懂，主要看下面这个实验，上面申请的是256KB+8B的块，总共申请了200MB，下面的实验中，我们申请256KB-8B的块。<br>可以看出790个span，每个31个8KB的页，<br><img src="/zmalloc/2.png"><br>和期望不符合的一点是class 86的obj数目只有36个，<br>do_malloc_stats —>PrintStats —>DumpStats</p>
+<img src="/2016/08/19/zmalloc/1.png">
+
+<p>要想弄懂，主要看下面这个实验，上面申请的是256KB+8B的块，总共申请了200MB，下面的实验中，我们申请256KB-8B的块。<br>可以看出790个span，每个31个8KB的页，</p>
+<img src="/2016/08/19/zmalloc/2.png">
+<p>和期望不符合的一点是class 86的obj数目只有36个，<br>do_malloc_stats —&gt;PrintStats —&gt;DumpStats</p>
 
       
     </div>
@@ -850,7 +856,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#malloc—-sbrk"><span class="nav-number">1.</span> <span class="nav-text">malloc—&gt;sbrk</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sbrk"><span class="nav-number">2.</span> <span class="nav-text">sbrk</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#malloc—-gt-sbrk"><span class="nav-number">1.</span> <span class="nav-text">malloc—&gt;sbrk</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sbrk"><span class="nav-number">2.</span> <span class="nav-text">sbrk</span></a></li></ol></div>
             
 
           </div>

@@ -108,17 +108,22 @@
 
 
 
-  <meta name="description" content="由于比赛需要，这部分是非常重要的内容，所以自己手动翻译一下。Flink中数据交换的构建遵循以下设计原则  数据交换的控制流是接收方发出的，这与mapreduce相似。 数据交换的数据流，也就是实际数据传输通过IntermediateResult这个提法来抽象，并且是可插拔的，这意味着系统能够用相同的实现同时支持批流数据传输数据交换包括几个对象，包括：   JobManager 这是主节点，负责调度">
+  <meta name="description" content="由于比赛需要，这部分是非常重要的内容，所以自己手动翻译一下。 Flink中数据交换的构建遵循以下设计原则  数据交换的控制流是接收方发出的，这与mapreduce相似。 数据交换的数据流，也就是实际数据传输通过IntermediateResult这个提法来抽象，并且是可插拔的，这意味着系统能够用相同的实现同时支持批流数据传输数据交换包括几个对象，包括：   JobManager 这是主节点，负责调">
+<meta name="keywords" content="flink,stream processing">
 <meta property="og:type" content="article">
 <meta property="og:title" content="flink task之间的数据交换">
 <meta property="og:url" content="http://yoursite.com/2019/10/04/flink-task之间的数据交换/index.html">
 <meta property="og:site_name" content="West to the Northwest">
-<meta property="og:description" content="由于比赛需要，这部分是非常重要的内容，所以自己手动翻译一下。Flink中数据交换的构建遵循以下设计原则  数据交换的控制流是接收方发出的，这与mapreduce相似。 数据交换的数据流，也就是实际数据传输通过IntermediateResult这个提法来抽象，并且是可插拔的，这意味着系统能够用相同的实现同时支持批流数据传输数据交换包括几个对象，包括：   JobManager 这是主节点，负责调度">
+<meta property="og:description" content="由于比赛需要，这部分是非常重要的内容，所以自己手动翻译一下。 Flink中数据交换的构建遵循以下设计原则  数据交换的控制流是接收方发出的，这与mapreduce相似。 数据交换的数据流，也就是实际数据传输通过IntermediateResult这个提法来抽象，并且是可插拔的，这意味着系统能够用相同的实现同时支持批流数据传输数据交换包括几个对象，包括：   JobManager 这是主节点，负责调">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-10-04T08:10:53.000Z">
+<meta property="og:image" content="http://yoursite.com/2019/10/04/flink-task之间的数据交换/jobmanager-taskmanagers.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/04/flink-task之间的数据交换/executiongraph.png">
+<meta property="og:image" content="http://yoursite.com/2019/10/04/flink-task之间的数据交换/controlflow.png">
+<meta property="og:updated_time" content="2019-10-04T08:58:12.161Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="flink task之间的数据交换">
-<meta name="twitter:description" content="由于比赛需要，这部分是非常重要的内容，所以自己手动翻译一下。Flink中数据交换的构建遵循以下设计原则  数据交换的控制流是接收方发出的，这与mapreduce相似。 数据交换的数据流，也就是实际数据传输通过IntermediateResult这个提法来抽象，并且是可插拔的，这意味着系统能够用相同的实现同时支持批流数据传输数据交换包括几个对象，包括：   JobManager 这是主节点，负责调度">
+<meta name="twitter:description" content="由于比赛需要，这部分是非常重要的内容，所以自己手动翻译一下。 Flink中数据交换的构建遵循以下设计原则  数据交换的控制流是接收方发出的，这与mapreduce相似。 数据交换的数据流，也就是实际数据传输通过IntermediateResult这个提法来抽象，并且是可插拔的，这意味着系统能够用相同的实现同时支持批流数据传输数据交换包括几个对象，包括：   JobManager 这是主节点，负责调">
+<meta name="twitter:image" content="http://yoursite.com/2019/10/04/flink-task之间的数据交换/jobmanager-taskmanagers.png">
 
 
 
@@ -397,7 +402,7 @@
                 
               
 
-              <time title="Created: 2019-10-04 15:10:02 / Modified: 16:10:53" itemprop="dateCreated datePublished" datetime="2019-10-04T15:10:02+08:00">2019-10-04</time>
+              <time title="Created: 2019-10-04 15:10:02 / Modified: 16:58:12" itemprop="dateCreated datePublished" datetime="2019-10-04T15:10:02+08:00">2019-10-04</time>
             
 
             
@@ -407,6 +412,24 @@
             
           </span>
 
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -445,7 +468,8 @@
       
 
       
-        <h2 id="由于比赛需要，这部分是非常重要的内容，所以自己手动翻译一下。"><a href="#由于比赛需要，这部分是非常重要的内容，所以自己手动翻译一下。" class="headerlink" title="由于比赛需要，这部分是非常重要的内容，所以自己手动翻译一下。"></a>由于比赛需要，这部分是非常重要的内容，所以自己手动翻译一下。</h2><p>Flink中数据交换的构建遵循以下设计原则</p>
+        <p>由于比赛需要，这部分是非常重要的内容，所以自己手动翻译一下。</p>
+<p>Flink中数据交换的构建遵循以下设计原则</p>
 <ol>
 <li>数据交换的控制流是接收方发出的，这与mapreduce相似。</li>
 <li>数据交换的数据流，也就是实际数据传输通过IntermediateResult这个提法来抽象，并且是可插拔的，这意味着系统能够用相同的实现同时支持批流数据传输<br>数据交换包括几个对象，包括：</li>
@@ -454,12 +478,25 @@
 <li>JobManager 这是主节点，负责调度任务，恢复以及协调，通过ExecutionGraph数据结构保存job执行的全貌</li>
 <li>TaskManagers 这是工作节点，一个TM在线程级别并发执行多个task。每个TM还包含了一个CommunicationManager（CM在task之间共享），以及一个MemoryManager（MM，也是在task之间共享）。TM之间可以通过建立好的TCP连接交换数据。</li>
 </ul>
-<p>要注意的是在Flink里面，是TM而不是task来通过网络交换数据，也就是说同一个TM的数据交换是被它里面的多个task多路复用的。<br><img src alt="123">)(jobmanager-taskmanagers.png)</p>
-<hr>
-<p>fads<br><img src alt="alt">)(jobmanager-taskmanagers.png)</p>
-<p>ExecutionGraph： 执行图是包含着job计算的基础事实的数据结构，它由代表着计算task的执行节点（ExecutionVertex）组成。节点通过ExecutionEdges执行边（EE）连接到中间结果。</p>
-<p>JM里面有一些逻辑数据结构，他们有他们的运行时等价结构来负责TM内部的世界数据处理。对于IntermediateResultPartition的运行时等价结构叫做ResultPartition。<br>ResultPartition（RP）代表一个BufferWriter写的数据块，比如，一个task产生的数据块。一个RP是Result Subpartitions（RSs）的集合。这是为了区分分发给不同的接收者产生的数据结构，比如说在一个reduce或者join操作中的一个partitioning shuffle 操作。</p>
-<p>These are logical data structures that live in the JobManager. They have their runtime equivalent structures that are responsible for the actual data processing that live at the TaskManagers. The runtime equivalent of the IntermediateResultPartition is called ResultPartition.<br>ResultPartition (RP) represents a chunk of data that a BufferWriter writes to, i.e., a chunk of data produced by a single task. A RP is a collection of Result Subpartitions (RSs). This is to distinguish between data that is destined to different receivers, e.g., in the case of a partitioning shuffle for a reduce or a join.<br>ResultSubpartition (RS) represents one partition of the data that is created by an operator, together with the logic for forwarding this data to the receiving operator. The specific implementation of a RS determines the actual data transfer logic, and this is the pluggable mechanism that allows the system to support a variety of data transfers. For example, the PipelinedSubpartition is a pipelined implementation to support streaming data exchange. The SpillableSubpartition is a blocking implementation to support batch data exchange.</p>
+<p>要注意的是在Flink里面，是TM而不是task来通过网络交换数据，也就是说同一个TM的数据交换是被它里面的多个task多路复用的。</p>
+<h2 id><a href="#" class="headerlink" title></a><img src="/2019/10/04/flink-task之间的数据交换/jobmanager-taskmanagers.png" alt></h2><p>ExecutionGraph： 执行图是包含着job计算的基础事实的数据结构，它由代表着计算task的执行节点（ExecutionVertex）组成。节点通过ExecutionEdges执行边（EE）连接到中间结果。</p>
+<p><img src="/2019/10/04/flink-task之间的数据交换/executiongraph.png" alt><br>JM里面有一些逻辑数据结构，他们有他们的运行时等价结构来负责TM内部的世界数据处理。</p>
+<ul>
+<li><p>对于IntermediateResultPartition的运行时等价结构叫做ResultPartition。ResultPartition（RP）代表一个BufferWriter写的数据块，比如，一个task产生的数据块。一个RP是Result Subpartitions（RSs）的集合。这是为了区分分发给不同的接收者产生的数据结构，比如说在一个reduce或者join操作中的一个partitioning shuffle 操作。</p>
+</li>
+<li><p>ResultSubpartition(RS) 代表了有一个operator创建的数据的分区，同时还包括了把这个数据分区转发给接受放operator的逻辑。特定RS的实现决定了实际的数据传输逻辑，这是一个可插拔的机制，运行系统支持多种数据传输，比如PipelinedSubpartition是一个流水线的实现，支持流数据交换而SpillableSubpartition是一个阻塞的实现来支持批数据交换。</p>
+</li>
+<li><p>InputGate: 在接收方的RP的等价类。它负责收集数据buffer，并且在上游处理他们。</p>
+</li>
+<li><p>InputChannel：在接收方的RS等价类。它负责收集特定数据分区的数据buffer。</p>
+</li>
+<li><p>Buffer: 参看  <a href="https://cwiki.apache.org/confluence/pages/viewpage.action?pageId=53741525" target="_blank" rel="noopener">https://cwiki.apache.org/confluence/pages/viewpage.action?pageId=53741525</a></p>
+</li>
+<li><p>Serializers and deserializers reliably convert typed records into raw byte buffers and vice versa, handling records that span multiple buffers, etc.</p>
+</li>
+</ul>
+<h2 id="数据交换的控制流"><a href="#数据交换的控制流" class="headerlink" title="数据交换的控制流"></a>数据交换的控制流</h2><p><img src="/2019/10/04/flink-task之间的数据交换/controlflow.png" alt></p>
+<p>这张图代表了一个简单的包括两个并发的task的map-reduce job的执行。我们有两个TM，每一个<br>The picture represents a simple map-reduce job with two parallel tasks. We have two TaskManagers, with two tasks each (one map task and one reduce task) running in two different nodes, and one JobManager running in a third node. We focus on the initiation of the transfer between tasks M1 and R2. Data transfers are represented using thick arrows, and messages are represented using thin arrows. First, M1 produces a ResultPartition (RP1) (arrow 1). When the RP becomes available for consumption (we discuss when this is later), it informs the JobManager (arrow 2). The JobManager notifies the intended receivers of this partition (tasks R1 and R2) that the partition is ready. If the receivers have not been scheduled yet, this will actually trigger the deployment of the tasks (arrows 3a, 3b). Then, the receivers will request data from the RP (arrows 4a and 4b). This will initiate the data transfer between the tasks (arrows 5a and 5b), either locally (case 5a), or passing through the network stack of the TaskManagers (5b). This process leaves as a degree of freedom the when a RP decides to inform the JobManager of its availability. For example, if RP1 fully produces itself (and is perhaps written to a file) before informing the JM, the data exchange corresponds roughly to a batch exchange as implemented in Hadoop. If the RP1 informs the JM as soon as its first record is produced, we have a streaming data exchange.</p>
 
       
     </div>
@@ -480,6 +517,14 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/flink/" rel="tag"># flink</a>
+          
+            <a href="/tags/stream-processing/" rel="tag"># stream processing</a>
+          
+        </div>
       
 
       
@@ -803,7 +848,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#由于比赛需要，这部分是非常重要的内容，所以自己手动翻译一下。"><span class="nav-number">1.</span> <span class="nav-text">由于比赛需要，这部分是非常重要的内容，所以自己手动翻译一下。</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据交换的控制流"><span class="nav-number">2.</span> <span class="nav-text">数据交换的控制流</span></a></li></ol></div>
             
 
           </div>
