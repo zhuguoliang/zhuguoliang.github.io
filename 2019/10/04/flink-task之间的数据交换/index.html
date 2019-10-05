@@ -119,7 +119,8 @@
 <meta property="og:image" content="http://yoursite.com/2019/10/04/flink-task之间的数据交换/jobmanager-taskmanagers.png">
 <meta property="og:image" content="http://yoursite.com/2019/10/04/flink-task之间的数据交换/executiongraph.png">
 <meta property="og:image" content="http://yoursite.com/2019/10/04/flink-task之间的数据交换/controlflow.png">
-<meta property="og:updated_time" content="2019-10-04T08:58:12.161Z">
+<meta property="og:image" content="http://yoursite.com/2019/10/04/flink-task之间的数据交换/transfer.png">
+<meta property="og:updated_time" content="2019-10-05T16:31:34.103Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="flink task之间的数据交换">
 <meta name="twitter:description" content="由于比赛需要，这部分是非常重要的内容，所以自己手动翻译一下。 Flink中数据交换的构建遵循以下设计原则  数据交换的控制流是接收方发出的，这与mapreduce相似。 数据交换的数据流，也就是实际数据传输通过IntermediateResult这个提法来抽象，并且是可插拔的，这意味着系统能够用相同的实现同时支持批流数据传输数据交换包括几个对象，包括：   JobManager 这是主节点，负责调">
@@ -402,12 +403,24 @@
                 
               
 
-              <time title="Created: 2019-10-04 15:10:02 / Modified: 16:58:12" itemprop="dateCreated datePublished" datetime="2019-10-04T15:10:02+08:00">2019-10-04</time>
+              <time title="Created: 2019-10-04 15:10:02" itemprop="dateCreated datePublished" datetime="2019-10-04T15:10:02+08:00">2019-10-04</time>
             
 
             
               
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2019-10-06 00:31:34" itemprop="dateModified" datetime="2019-10-06T00:31:34+08:00">2019-10-06</time>
               
             
           </span>
@@ -496,7 +509,8 @@
 </li>
 </ul>
 <h2 id="数据交换的控制流"><a href="#数据交换的控制流" class="headerlink" title="数据交换的控制流"></a>数据交换的控制流</h2><p><img src="/2019/10/04/flink-task之间的数据交换/controlflow.png" alt></p>
-<p>这张图代表了一个简单的包括两个并发的task的map-reduce job的执行。我们有两个TM，每一个<br>The picture represents a simple map-reduce job with two parallel tasks. We have two TaskManagers, with two tasks each (one map task and one reduce task) running in two different nodes, and one JobManager running in a third node. We focus on the initiation of the transfer between tasks M1 and R2. Data transfers are represented using thick arrows, and messages are represented using thin arrows. First, M1 produces a ResultPartition (RP1) (arrow 1). When the RP becomes available for consumption (we discuss when this is later), it informs the JobManager (arrow 2). The JobManager notifies the intended receivers of this partition (tasks R1 and R2) that the partition is ready. If the receivers have not been scheduled yet, this will actually trigger the deployment of the tasks (arrows 3a, 3b). Then, the receivers will request data from the RP (arrows 4a and 4b). This will initiate the data transfer between the tasks (arrows 5a and 5b), either locally (case 5a), or passing through the network stack of the TaskManagers (5b). This process leaves as a degree of freedom the when a RP decides to inform the JobManager of its availability. For example, if RP1 fully produces itself (and is perhaps written to a file) before informing the JM, the data exchange corresponds roughly to a batch exchange as implemented in Hadoop. If the RP1 informs the JM as soon as its first record is produced, we have a streaming data exchange.</p>
+<p>这张图代表了一个简单的包括两个并发的task的map-reduce job的执行。我们有两个TM，每个TM里面有两个task（一个map task和一个reduce task），两个TM分别运行在两个不同的节点中，一个JobManager运行在第三个节点中。我们关注tasks M1和R2之间的数据传输的初始化。数据传输用粗箭头代表，消息用细箭头表示。首先，M1产生一个 ResultPartition (RP1) (arrow 1) 当这个RP可以被消耗的时候，它会通知JobManager（arrow 2）.JobManager会通知这个partition的潜在接收者（任务R1和R2）分区已经准备好了。如果接收者还没被调度执行，这会触发接收者task的部署（箭头3a和3b）。然后，接收者会从RP请求数据（箭头4a和4b）。这会初始化task之间的数据传输(5a 5b)，这个传输可能是本地传输(5a)或者通过TaskManager的网络栈传输（5b）。当RP决定通知JobManager它可以被使用了的时候，这个过程保证了设计上的自由度。举个例子，如果RP1在通知JM之前，就把所有记录完全写到一个文件，那么数据交换基本上和在hadoop里面实现的批数据交换相同，如果RPI每产生一个记录就通知JM，就触发了一个流数据交换。</p>
+<h2 id="两个task之间的一个byte-buffer的传输"><a href="#两个task之间的一个byte-buffer的传输" class="headerlink" title="两个task之间的一个byte buffer的传输"></a>两个task之间的一个byte buffer的传输</h2><p><img src="/2019/10/04/flink-task之间的数据交换/transfer.png" alt></p>
 
       
     </div>
@@ -848,7 +862,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据交换的控制流"><span class="nav-number">2.</span> <span class="nav-text">数据交换的控制流</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#null"><span class="nav-number">1.</span> <span class="nav-text"></span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据交换的控制流"><span class="nav-number">2.</span> <span class="nav-text">数据交换的控制流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#两个task之间的一个byte-buffer的传输"><span class="nav-number">3.</span> <span class="nav-text">两个task之间的一个byte buffer的传输</span></a></li></ol></div>
             
 
           </div>
