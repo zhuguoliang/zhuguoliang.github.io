@@ -469,8 +469,7 @@
 
       
         
-          
-            <p>之前做Git提交写commit信息的时候，总是不够统一，以后分为七种</p>
+          <p>之前做Git提交写commit信息的时候，总是不够统一，以后分为七种</p>
 <ol>
 <li>feat： 新功能</li>
 <li>fix： 修补xxxBug</li>
@@ -481,7 +480,15 @@
 <li>chore： 构建过程或者辅助工具的变动</li>
 </ol>
 
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2018/12/29/git提交规范/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
         
       
     </div>
@@ -650,8 +657,7 @@
 
       
         
-          
-            <p>device mapper是一个基于内核的框架，用来在linux下支持很多高级的卷管理策略。docker的devicemapper存储驱动利用这个框架的thin provisioning以及快照功能来进行镜像和容器的管理。本文中docker的设备存储驱动标记为devicemapper, 内核中的框架为Device Mapper。</p>
+          <p>device mapper是一个基于内核的框架，用来在linux下支持很多高级的卷管理策略。docker的devicemapper存储驱动利用这个框架的thin provisioning以及快照功能来进行镜像和容器的管理。本文中docker的设备存储驱动标记为devicemapper, 内核中的框架为Device Mapper。</p>
 <p>对于兼容的系统，devicemapper的支持已经包含在内核中，然而在docker中使用它需要进行一些配置。<br>devicemapper驱动使用指定给docker的块设备来在块层操作，而不是在文件层，这些设备可以通过在docker host中增加物理存储来扩展，并且相比在操作系统层使用文件系统，这种方式表现更好。</p>
 <h2 id="预先要求"><a href="#预先要求" class="headerlink" title="预先要求"></a>预先要求</h2><ul>
 <li>device mapper 存储驱动是在很多OS发型版中支持的DOCKER企业版上已经支持的存储驱动，详细请看产品兼容表。</li>
@@ -660,7 +666,15 @@
 </ul>
 <h1 id="配置docker使用device-mapper存储驱动"><a href="#配置docker使用device-mapper存储驱动" class="headerlink" title="配置docker使用device mapper存储驱动"></a>配置docker使用device mapper存储驱动</h1><p>注意在进行下面操作之前，必须满足预先要求。</p>
 <h2 id="配置loop-lvm模式测试"><a href="#配置loop-lvm模式测试" class="headerlink" title="配置loop-lvm模式测试"></a>配置loop-lvm模式测试</h2>
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2018/12/04/Use-the-Device-Mapper-storage-driver翻译/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
         
       
     </div>
@@ -829,8 +843,7 @@
 
       
         
-          
-            <p>使用scrapy自动创建的爬虫中middleware.py中自定义了两个中间件类，在我的理解中scrape的中间件没有什么区别，所以查了一下，</p>
+          <p>使用scrapy自动创建的爬虫中middleware.py中自定义了两个中间件类，在我的理解中scrape的中间件没有什么区别，所以查了一下，</p>
 <ol>
 <li><p>下载器中间件，尽管他们使用一样的接口，他们的目标不同<br>dowlloader中间件修改请求和响应，或者生成请求来回答响应。<br>他们并不直接与蜘蛛交互，这里面可以实现cookie， caching， proxy, 设置user-agent头等等。原理上是为downloader加入功能。</p>
 </li>
@@ -841,7 +854,15 @@
 <p>• Spider middlewares modify things that pass in and out of spiders, like requests, items, exceptions, and start_requests. They do share some basic functionality with downloader middlewares, but they can’t generate requests in response to responses. They stand between the spiders and the downloader. One example is filtering out responses with bad HTTP status codes.  </p>
 <p>Some middlewares can function as either a downloader middleware or a spider middleware, but they’re often trivial and will be forced into one category or the other once you add more complex functionality.</p>
 
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2018/09/07/scrapy-downloader中间件和spider中间件区别是什么？/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
         
       
     </div>
@@ -1010,14 +1031,21 @@
 
       
         
-          
-            <p>今天发现SPDK的版本和DPDK版本并不完全兼容，同时期github上发布的版本，两者的兼容性测试是没有做的。</p>
+          <p>今天发现SPDK的版本和DPDK版本并不完全兼容，同时期github上发布的版本，两者的兼容性测试是没有做的。</p>
 <p>之前在邮件列表上看到有人抱怨SPDK总是还需要外部的DPDK，所以现在最新发布的SPDK里面是已经将DPDK作为子模块包含了，如果要使用自己单独配置的DPDK的话，需要考虑版本兼容性问题，比如你发现编译出的DPDK在SPDK中调用时发生undefined reference，这时候就要思考是不是发生了版本兼容性问题。</p>
 <p>今天发现SPDK 18.07和DPDK的18.08不兼容的，根据release描述最新应该兼容到DPDK18.05。</p>
 <hr>
 <p>需要更加耐心</p>
 
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2018/09/05/spdk18-07和dpdk18-08不兼容/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
         
       
     </div>
@@ -1168,8 +1196,7 @@
 
       
         
-          
-            <p>iterator模型（也叫火山执行引擎）出现的年代，数据库查询处理的时间由IO时间主导，而CPU开销并不是很重要。</p>
+          <p>iterator模型（也叫火山执行引擎）出现的年代，数据库查询处理的时间由IO时间主导，而CPU开销并不是很重要。</p>
 <ol>
 <li>对每个作为中间结果或者最终结果生成的元组都要调用next函数</li>
 <li>对next的调用通常是一个虚函数，或者函数指针</li>
@@ -1184,8 +1211,15 @@
 <p>上图描述了 select id,name,age from people where age >30 的火山模型的查询计划，该查询计划包含 User，Project，Select，Scan 四个 operator，每个 operator 的 next 方法递归调用子节点的 next，一直递归调用到叶子节点 Scan operato，Scan Operator 的 next 从文件中返回一个元组。</p>
 <p>火山模型的主要缺点是昂贵的解释开销 (interpretation overhead) 和低下的 CPU Cache 命中率。首先，火山模型的 next 方法通常实现为一个虚函数，在编译器中，虚函数调用需要查找虚函数表, 并且虚函数调用是一个非直接跳转 (indirect jump), 会导致一次错误的 CPU 分支预测 (branch mis-prediction), 一次错误的分支预测需要十几个周期的开销。火山模型为了返回一个元组，需要调用多次 next 方法，导致昂贵的函数调用开销。研究表明，在采用火山执行模型的 MySQL 中执行 TPC-H Q1 查询，仅有 10% 的时间用于真正的查询计算，其余的 90% 时间都浪费在解释开销 。其次，next 方法一次只返回一个元组，元组通常采用行存储，如图 Row Format，如果顺序访问第一列 1，2，3，那么每次访问都将导致 CPU Cache 命中失败 (假设该行不能完全放入 CPU Cache 中)。如果采用 Column Format，那么只有在访问第一个值时才出现缓存命中失败，后续访问 2 和 3 时都将缓存命中成功, 从而极大的提高查询性能。</p>
 <img src="/数据库处理iterator模型的pro和con/8.png" width="600">
-
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2018/08/23/数据库处理iterator模型的pro和con/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
         
       
     </div>
@@ -1354,11 +1388,18 @@
 
       
         
-          
-            <p>首先，下面报错<br><code>code  cc: error: unrecognized command line option &#39;-march=native&#39;</code><br>-march在530上没有实现，于是直接定义mcpu</p>
+          <p>首先，下面报错<br><code>code  cc: error: unrecognized command line option &#39;-march=native&#39;</code><br>-march在530上没有实现，于是直接定义mcpu</p>
 <p><code>./zglbuild/meson-private/libdpdk.pc:Cflags: -I${includedir} -I${includedir} -include rte_config.h -march=native</code><br>这里</p>
 
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2018/06/15/Playing-with-meson-and-ninja-in-building-DPDK/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
         
       
     </div>
@@ -1527,10 +1568,17 @@
 
       
         
-          
-            <p>unsigned long <em>addr<br>=m(\</em>addr)<br>注意，这时取到的并不是addr的值，而是括号和*号抵消了，将addr作为地址去取数据。 </p>
+          <p>unsigned long <em>addr<br>=m(\</em>addr)<br>注意，这时取到的并不是addr的值，而是括号和*号抵消了，将addr作为地址去取数据。 </p>
 
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2018/06/14/内联汇编中的指针内存访问/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
         
       
     </div>
@@ -1699,8 +1747,7 @@
 
       
         
-          
-            <p>四个问题要回答自己</p>
+          <p>四个问题要回答自己</p>
 <ul>
 <li>我有没有问“为什么”别人要我相信他的观点</li>
 <li>在我想到别人的说法可能有问题时有没有把它记录下来</li>
@@ -1708,7 +1755,15 @@
 <li>针对某一特定主体，我有没有在别人合理说法的基础上形成自己的结论</li>
 </ul>
 
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2017/08/16/学会提问/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
         
       
     </div>
@@ -1877,10 +1932,17 @@
 
       
         
-          
-            <p>这本书讲了一个国民党家庭从松花江畔，几经辗转最后到了台湾的故事，反映了民国时一代人的生活轨迹，有些悲戚，不是很看的进去。</p>
+          <p>这本书讲了一个国民党家庭从松花江畔，几经辗转最后到了台湾的故事，反映了民国时一代人的生活轨迹，有些悲戚，不是很看的进去。</p>
 
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2017/08/16/巨流河读书笔记/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
         
       
     </div>
@@ -2049,10 +2111,17 @@
 
       
         
-          
-            <p>因为你会涉及到跨平台，不同的平台会有不同的字长，所以利用预编译和typedef可以让你最有效的维护你的代码。<br>按照posix标准，一般整形对应的*_t类型为：<br>1字节     uint8_t<br>2字节     uint16_t<br>4字节     uint32_t<br>8字节     uint64_t</p>
+          <p>因为你会涉及到跨平台，不同的平台会有不同的字长，所以利用预编译和typedef可以让你最有效的维护你的代码。<br>按照posix标准，一般整形对应的*_t类型为：<br>1字节     uint8_t<br>2字节     uint16_t<br>4字节     uint32_t<br>8字节     uint64_t</p>
 
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2017/07/20/u-t是什么/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
         
       
     </div>

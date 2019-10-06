@@ -108,18 +108,18 @@
 
 
 
-  <meta name="description" content="这篇博文主要关注sheepdog中的打开存储系统的初始化设置以及基本的读写操作，并不关注sheepdog中有关分布式的内容。在sheepdog中，读写请求的处理是通过将对应的请求以及相应的 sd_opensd_open主要完成了初始化的工作，包括初始化了三个重要的链表。">
+  <meta name="description" content="这篇博文主要关注sheepdog中的打开存储系统的初始化设置以及基本的读写操作，并不关注sheepdog中有关分布式的内容。在sheepdog中，读写请求的处理是通过将对应的请求以及相应的 sd_opensd_open主要完成了初始化的工作，包括初始化了三个重要的链表。  12345678910111213141516static int sd\_open(BlockDriverState *bs">
 <meta name="keywords" content="虚拟化,存储">
 <meta property="og:type" content="article">
 <meta property="og:title" content="sheepdog源码阅读">
 <meta property="og:url" content="http://yoursite.com/2016/07/31/sheepdog源码阅读/index.html">
 <meta property="og:site_name" content="West to the Northwest">
-<meta property="og:description" content="这篇博文主要关注sheepdog中的打开存储系统的初始化设置以及基本的读写操作，并不关注sheepdog中有关分布式的内容。在sheepdog中，读写请求的处理是通过将对应的请求以及相应的 sd_opensd_open主要完成了初始化的工作，包括初始化了三个重要的链表。">
+<meta property="og:description" content="这篇博文主要关注sheepdog中的打开存储系统的初始化设置以及基本的读写操作，并不关注sheepdog中有关分布式的内容。在sheepdog中，读写请求的处理是通过将对应的请求以及相应的 sd_opensd_open主要完成了初始化的工作，包括初始化了三个重要的链表。  12345678910111213141516static int sd\_open(BlockDriverState *bs">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-12-31T11:09:35.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="sheepdog源码阅读">
-<meta name="twitter:description" content="这篇博文主要关注sheepdog中的打开存储系统的初始化设置以及基本的读写操作，并不关注sheepdog中有关分布式的内容。在sheepdog中，读写请求的处理是通过将对应的请求以及相应的 sd_opensd_open主要完成了初始化的工作，包括初始化了三个重要的链表。">
+<meta name="twitter:description" content="这篇博文主要关注sheepdog中的打开存储系统的初始化设置以及基本的读写操作，并不关注sheepdog中有关分布式的内容。在sheepdog中，读写请求的处理是通过将对应的请求以及相应的 sd_opensd_open主要完成了初始化的工作，包括初始化了三个重要的链表。  12345678910111213141516static int sd\_open(BlockDriverState *bs">
 
 
 

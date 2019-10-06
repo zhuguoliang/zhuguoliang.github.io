@@ -469,10 +469,17 @@
 
       
         
-          
-            <p>Disk / File-Systems:<br>Two new I/O schedulers make things exciting in the block layer. The BFQ (Budget Fair Queueing) finally landed in mainline as well as the Facebook-developed Kyber I/O scheduler. I’ve already done some SSD Linux 4.12 I/O scheduler tests while more benchmarks (including on HDDs) will be done soon.<br>XFS support for GETFSMAP, a new ioctl for returning space mapping information. EXT4 also picked up GETFSMAP support as well as some performance tuning/fixes.<br>Btrfs meanwhile has some long-awaited RAID 5/6 fixes.<br>The F2FS flash file-system has seen various optimizations and fixes.<br>Also noteworthy are more MD RAID optimizations.</p>
+          <p>Disk / File-Systems:<br>Two new I/O schedulers make things exciting in the block layer. The BFQ (Budget Fair Queueing) finally landed in mainline as well as the Facebook-developed Kyber I/O scheduler. I’ve already done some SSD Linux 4.12 I/O scheduler tests while more benchmarks (including on HDDs) will be done soon.<br>XFS support for GETFSMAP, a new ioctl for returning space mapping information. EXT4 also picked up GETFSMAP support as well as some performance tuning/fixes.<br>Btrfs meanwhile has some long-awaited RAID 5/6 fixes.<br>The F2FS flash file-system has seen various optimizations and fixes.<br>Also noteworthy are more MD RAID optimizations.</p>
 
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2017/07/08/What-s-new-in-Linux-Kernel-4-12/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
         
       
     </div>
@@ -647,7 +654,11 @@
 <li><strong>Request-reply</strong>, which connects a set of clients to a set of services. This is a remote procedure call and task distribution pattern.</li>
 <li><strong>Pub-sub</strong>, which connects a set of publishers to a set of subscribers. This is a data distribution pattern.</li>
 <li><strong>Pipeline</strong>, which connects nodes in a fan-out/fan-in pattern that can have multiple steps and loops. This is a parallel task distribution and collection pattern.</li>
-<li><strong>Exclusive pair</strong>, which connects two sockets exclusively. This is a pattern for connecting two threads in a process, not to be confused with “normal” pairs of sockets.<br>要弄懂这些模式，首先要看函数 zmq_socket的手册页<br>初始化一个zmq的上下文context首先要调用zmq_socket，<br>void *zmq_socket (void *context, int type);
+<li><strong>Exclusive pair</strong>, which connects two sockets exclusively. This is a pattern for connecting two threads in a process, not to be confused with “normal” pairs of sockets.<br>要弄懂这些模式，首先要看函数 zmq_socket的手册页<br>初始化一个zmq的上下文context首先要调用zmq_socket，<br>void *zmq_socket (void *context, int type);<a id="more"></a>
+对于上面提到的四个模式，每个模式都有对应的不同的type来用来初始话一个zmq的socket.</li>
+</ul>
+<img src="/为什么要用zeromq/ZMQ.png" width="600">
+
           <!--noindex-->
           
             <div class="post-button text-center">
@@ -659,7 +670,7 @@
           <!--/noindex-->
         
       
-    </li></ul></div>
+    </div>
 
     
 
@@ -825,10 +836,17 @@
 
       
         
-          
-            <p>？？？这一天干了什么？</p>
+          <p>？？？这一天干了什么？</p>
 
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2017/05/01/20170501/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
         
       
     </div>
@@ -997,8 +1015,7 @@
 
       
         
-          
-            <h3 id="两个相关资源"><a href="#两个相关资源" class="headerlink" title="两个相关资源"></a>两个相关资源</h3><p>You can look at the ping-pong examples that come with libibverbs.<br><a href="http://www.openfabrics.org/downloads/libibverbs/" target="_blank" rel="noopener">http://www.openfabrics.org/downloads/libibverbs/</a><br>Also you can look at the performance tests (ib_write_lat, ib_write_bw, etc).<br><a href="http://www.openfabrics.org/downloads/perftest/" target="_blank" rel="noopener">http://www.openfabrics.org/downloads/perftest/</a></p>
+          <h3 id="两个相关资源"><a href="#两个相关资源" class="headerlink" title="两个相关资源"></a>两个相关资源</h3><p>You can look at the ping-pong examples that come with libibverbs.<br><a href="http://www.openfabrics.org/downloads/libibverbs/" target="_blank" rel="noopener">http://www.openfabrics.org/downloads/libibverbs/</a><br>Also you can look at the performance tests (ib_write_lat, ib_write_bw, etc).<br><a href="http://www.openfabrics.org/downloads/perftest/" target="_blank" rel="noopener">http://www.openfabrics.org/downloads/perftest/</a></p>
 <h3 id="rdma-rc-example-c"><a href="#rdma-rc-example-c" class="headerlink" title="rdma_rc_example.c"></a>rdma_rc_example.c</h3><h4 id="输入"><a href="#输入" class="headerlink" title="输入"></a>输入</h4><ul>
 <li>-p port </li>
 <li>-d ib-dev</li>
@@ -1006,7 +1023,15 @@
 <li>-g gid-idx  </li>
 </ul>
 <img src="/Coding-RDMA-2/1.png">
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2016/12/30/Coding-RDMA-2/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
         
       
     </div>
@@ -1175,8 +1200,7 @@
 
       
         
-          
-            <h3 id="RDMA-provides-Channel-based-IO"><a href="#RDMA-provides-Channel-based-IO" class="headerlink" title="RDMA provides Channel based IO"></a>RDMA provides Channel based IO</h3><p>In traditional sockets networks, applications request network resources from the operating system through an API which conducts the transaction on their behalf. However RDMA use the OS to establish a channel and then allows applications to directly exchange <em>messages</em> without further OS intervention</p>
+          <h3 id="RDMA-provides-Channel-based-IO"><a href="#RDMA-provides-Channel-based-IO" class="headerlink" title="RDMA provides Channel based IO"></a>RDMA provides Channel based IO</h3><p>In traditional sockets networks, applications request network resources from the operating system through an API which conducts the transaction on their behalf. However RDMA use the OS to establish a channel and then allows applications to directly exchange <em>messages</em> without further OS intervention</p>
 <h3 id="Compare-with-TCP-IP"><a href="#Compare-with-TCP-IP" class="headerlink" title="Compare with TCP/IP"></a>Compare with TCP/IP</h3><ul>
 <li>When an application wants to send a packet, the OS places the bytes into an anonymous buffer in main memory belonging to the operating system and when the byte transfer is complete, the OS copies the data in its buffer into the receive buffer of the application. This process is repeated each time a packet arrives until the entire byte stream is received. TCP is responsible for retransmitting any lost packets due to congestion.</li>
 <li>In IB, a complete message is delivered directly to an application. Once an application has requested transport of an RDMA Read or Write, the IB hardware segments the outbound message as needed into packets whose size is determined by the fabric path maximum transfer unit. These packets are transmitted through the IB network and delivered directly into the receiving application’s virtual buffer where they are re-assembled into a complete message. The receiving application is notified once the entire message has been received. Thus neither the sending nor the receiving application is involved until the entire message is delivered into the receiving application’s buffer.</li>
@@ -1188,56 +1212,16 @@
 <li>UC 不可靠连接 一个QP只和一个其他的QP相关联，连接不可靠，数据包可能丢失。如果发送的信息出现错误，将不会重传，错误的处理必须依靠高一层的协议完成。</li>
 <li>UD 不可靠数据报文 一个QP可以向任意一个其他的QP接受和发送报文。数据包的顺序不保证，已经收到的数据包也可能会被发送方放弃掉。</li>
 </ul>
-<h3 id="关键部件"><a href="#关键部件" class="headerlink" title="关键部件"></a>关键部件</h3><h4 id="Send-Request-SR"><a href="#Send-Request-SR" class="headerlink" title="Send Request (SR)"></a>Send Request (SR)</h4><p>SR定义数据怎么发送，从哪里发送，到哪里。struct <strong>ibv_send_wr</strong>用来实现SR</p>
-<h4 id="Receive-Request-RR"><a href="#Receive-Request-RR" class="headerlink" title="Receive Request (RR)"></a>Receive Request (RR)</h4><p>一个RR会定义一个buffer，对于非RDMA操作的数据会被接收并且存储在这里。如果在有传输方发送了一个send请求或者RDMA write请求时没有buffer，接收方会发送一个receive not ready (RNR) error，struct ibv_recv_wr实现了RR。</p>
-<h4 id="Completion-Queue"><a href="#Completion-Queue" class="headerlink" title="Completion Queue"></a>Completion Queue</h4><h4 id="Memory-Registration"><a href="#Memory-Registration" class="headerlink" title="Memory Registration"></a>Memory Registration</h4><ul>
-<li>允许应用定义一些连续虚存区域的集合，或者一些连续物理地址区域的集合，然后把这个集合交给网络适配器，作为一个虚拟地址连续的buffer。</li>
-<li>这个注册过程会将内存页pin在内存中不会被操作系统换出。</li>
-<li>在注册过程中，操作系统检查注册了的块的权限，并且注册进程会把虚实地址映射表写入到网络适配器中。</li>
-<li>当注册内存时，会对内存区域设置权限，这些权限包括，local write, remote read, remote write, atomic, and bind</li>
-<li>每个内存区域MR有一个本地key和一个远程key。(r_key, l_key). 本地key由本地的HCA使用，来访问本地的内存，比如在一个receive操作中。远程key由远程HCA使用，允许远程进程通过RDMA操作访问系统内存。</li>
-<li>相同的内存区域可以被多次注册（即便是权限不一样），并且每次注册得到的key都不一样。</li>
-<li>struct ibv_mr  被用来实现内存注册_<br>- </li>
-</ul>
-<h4 id="Memory-Window"><a href="#Memory-Window" class="headerlink" title="Memory Window"></a>Memory Window</h4><p>内存窗口允许应用对目标是它的内存远程访问有更加灵活的控制，主要面向一下几个场景：</p>
-<ul>
-<li>应用想要使用动态的方式，用更小的开销授予或者撤销远程访问对一个已经注册了的内存区域的访问权限<ul>
-<li>wants to grant different remote access rights to different remote agents and/or grant those rights over different ranges within a registered Region.<br>把一个内存窗口和一个内存区域关联起来的操作叫做binding<br>不同的内存窗口可能重叠相同的MR<h4 id="Address-Vector"><a href="#Address-Vector" class="headerlink" title="Address Vector"></a>Address Vector</h4>地址向量是用来描述从本地节点到远程节点的路由的对象<br>每个UC/RC QP 都有一个地址向量在QP上下文当中<br>对于UD QP，对于每个post SR都要定义一个地址向量<br>struct ibv_ah  is used to implement address vectors._</li>
-</ul>
-</li>
-</ul>
-<hr>
-<h3 id="Typical-Application"><a href="#Typical-Application" class="headerlink" title="Typical Application"></a>Typical Application</h3><p>两个例子，</p>
-<ol>
-<li>RDMA RC例子，使用VPI verbs API，证明如何执行RC: Send, Receive, RDMA Read and RDMA Write operations.</li>
-<li>多播的例子，使用RDMA_CM verbs API, _demonstrating Multicast UD.</li>
-</ol>
-<hr>
-<p>主要结构如下</p>
-<ol>
-<li>拿到设备列表<br>. 首先你要拿到本地机器中可用IB的列表，这个列表中的每个设备都包含了一个名字和一个GUID，例如设备名字可能是： mthca0, mlx4_1._<ol start="2">
-<li>打开请求了的设备<br>循环访问设备列表，根据GUID或者设备名字来打开它</li>
-<li>查询设备功能<br>设备功能允许打开了的设备支持的特性 (APM, SRQ)和功能</li>
-<li>分配保护域（Protection Domain）来包含你的资源<br>一个保护域允许用户来约束哪些部件可以和哪些部件进行交互，这些部件可能是AH, QP, MR, MW, and SRQ</li>
-<li>注册一个内存区域<br>VPI只能在注册了的内存上工作，进程地址空间中的任何内存Buffer都可以被注册。在注册过程中，用户设置内存权限并且获得本地与远程keys,这些key会被后来用于访问内存buffer</li>
-<li>创建一个完成队列Completion Queue (CQ);<br>一个CQ包含了完成了的工作请求 work requests (WR)，每个WR会生成一个完成队列项 completion queue entry (CQE)，这个项会被放在CQ中，每个CQE会指出WR完成的成功与否。</li>
-<li>创建一个QP<br>创建一个QP同时也会创建相关联的发送队列和接收队列</li>
-<li>启动一个QP<br>创建了的QP必须经过几个状态转换才能被使用，最终达到 Ready To Send (RTS)状态。这些提供了QP用来传输与接收数据的必要信息。具体例子见文档1.</li>
-<li>发送工作请求并且查询等待<br>使用创建了的QP来进行通讯操作。</li>
-<li>Cleanup</li>
-</ol>
-<ul>
-<li>Destroy objects in the reverse order you created them:</li>
-<li>Delete QP</li>
-<li>Delete CQ</li>
-<li>Deregister MR</li>
-<li>Deallocate PD</li>
-<li>Close device</li>
-</ul>
-</li>
-</ol>
-
+<h3 id="关键部件"><a href="#关键部件" class="headerlink" title="关键部件"></a>关键部件</h3>
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2016/12/29/Coding-RDMA-1/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
         
       
     </div>
@@ -1406,10 +1390,17 @@
 
       
         
-          
-            <p>这一天也不知道干了啥………………</p>
+          <p>这一天也不知道干了啥………………</p>
 
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2016/12/28/20161228/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
         
       
     </div>
@@ -1578,13 +1569,20 @@
 
       
         
-          
-            <p>安装完毕执行<br>/etc/init.d/openibd restart<br>这时ib进入初始化阶段<br>/etc/init.d/opensmd start<br>这时进入active状态</p>
+          <p>安装完毕执行<br>/etc/init.d/openibd restart<br>这时ib进入初始化阶段<br>/etc/init.d/opensmd start<br>这时进入active状态</p>
 <hr>
 <p>infiniband<br>ibping 0x1<br>ibstat<br>mount node-1.rdma:/home/zgl/HERD /home/zgl/HERD<br>opensm<br>osmtest<br>ibaddr</p>
 <h2 id="etc-init-d-opensm-start"><a href="#etc-init-d-opensm-start" class="headerlink" title=" /etc/init.d/opensm start"></a> /etc/init.d/opensm start</h2><h2 id="imp"><a href="#imp" class="headerlink" title="imp"></a>imp</h2><p>hugepages-create.sh 0 4096<br>hugepages-create.sh 1 4096</p>
 
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2016/12/26/20161226/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
         
       
     </div>
@@ -1753,11 +1751,18 @@
 
       
         
-          
-            <p>总结</p>
+          <p>总结</p>
 <p>数据流系统这个概念很难理解</p>
 
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2016/12/21/2016121/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
         
       
     </div>
@@ -1926,10 +1931,17 @@
 
       
         
-          
-            <p>2</p>
+          <p>2</p>
 
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2016/12/13/20161213/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
         
       
     </div>
@@ -2098,10 +2110,17 @@
 
       
         
-          
-            <p>今天开始看专注力这本书，这里先起个头。</p>
+          <p>今天开始看专注力这本书，这里先起个头。</p>
 
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2016/12/07/专注力/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
         
       
     </div>

@@ -417,7 +417,7 @@
                 
                   <span class="post-meta-item-text">Edited on</span>
                 
-                <time title="Modified: 2019-10-06 13:27:57" itemprop="dateModified" datetime="2019-10-06T13:27:57+08:00">2019-10-06</time>
+                <time title="Modified: 2019-10-06 14:53:56" itemprop="dateModified" datetime="2019-10-06T14:53:56+08:00">2019-10-06</time>
               
             
           </span>
@@ -469,8 +469,7 @@
 
       
         
-          
-            <p>由于比赛需要，这部分是非常重要的内容，所以自己手动翻译一下。</p>
+          <p>由于比赛需要，这部分是非常重要的内容，所以自己手动翻译一下。</p>
 <h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><p>Flink中数据交换的构建遵循以下设计原则</p>
 <ol>
 <li>数据交换的控制流是接收方发出的，这与mapreduce相似。</li>
@@ -498,20 +497,15 @@
 <li><p>Serializers and deserializers reliably convert typed records into raw byte buffers and vice versa, handling records that span multiple buffers, etc.</p>
 </li>
 </ul>
-<h2 id="数据交换的控制流"><a href="#数据交换的控制流" class="headerlink" title="数据交换的控制流"></a>数据交换的控制流</h2><p><img src="/2019/10/04/flink-task之间的数据交换/controlflow.png" alt></p>
-<p>这张图代表了一个简单的包括两个并发的task的map-reduce job的执行。我们有两个TM，每个TM里面有两个task（一个map task和一个reduce task），两个TM分别运行在两个不同的节点中，一个JobManager运行在第三个节点中。我们关注tasks M1和R2之间的数据传输的初始化。数据传输用粗箭头代表，消息用细箭头表示。首先，M1产生一个 ResultPartition (RP1) (arrow 1) 当这个RP可以被消耗的时候，它会通知JobManager（arrow 2）.JobManager会通知这个partition的潜在接收者（任务R1和R2）分区已经准备好了。如果接收者还没被调度执行，这会触发接收者task的部署（箭头3a和3b）。然后，接收者会从RP请求数据（箭头4a和4b）。这会初始化task之间的数据传输(5a 5b)，这个传输可能是本地传输(5a)或者通过TaskManager的网络栈传输（5b）。当RP决定通知JobManager它可以被使用了的时候，这个过程保证了设计上的自由度。举个例子，如果RP1在通知JM之前，就把所有记录完全写到一个文件，那么数据交换基本上和在hadoop里面实现的批数据交换相同，如果RPI每产生一个记录就通知JM，就触发了一个流数据交换。</p>
-<h2 id="两个task之间的一个byte-buffer的传输"><a href="#两个task之间的一个byte-buffer的传输" class="headerlink" title="两个task之间的一个byte buffer的传输"></a>两个task之间的一个byte buffer的传输</h2><p><img src="/2019/10/04/flink-task之间的数据交换/transfer.png" alt></p>
-<p>这张图片展示了数据记录的生存周期，包括他们从一个生产者传递到一个消费者的过程。<br>最初MapDriver产生记录（记录被一个Collector收集）并且传递给一个RecordWriter对象。</p>
-<ul>
-<li>RecordWriter包括一系列 serializers (RecordSerializer objects), 每个可能消费这些数据记录的消费者task有一个serializer。比如说，在一个shuffle或者broadcast操作中，serializers数目和consumer task数目相同。</li>
-<li>一个ChannelSelector选择一个或者多个serializer来放置数据记录。比如说，如果记录做广播，他们会被拿给所有的serializer，如果记录是hash划分的，ChannelSelector会评估哈希值并且选择合适的serializer。</li>
-<li>serializer把记录线性化为二进制表示，然后放在固定大小的buffer里面（一个记录可能跨多个buffer）。这些buffer被传递给一个BufferWriter，写到一个ResultPartition里面。RP包括几个subpartitions (ResultSubpartitions - RSs) ，每个RS收集特定消费者的buffer。在这张图中的buffer是为第二个reducer指定的（在TM 2中），这个buffer被放置在RS2. 由于这是第一个buffer，RS2可以被消费了（注意这个行为实现了一个streaming shuffle）, 并且RS2会通知JM它可以被消费。</li>
-<li>然后JM会查找RS2的消费者，并且通知TM2一块数据可以用了，给TM2的消息向下传播给InputChannel， InputChannel负责接收buffer，然后通知RS2可以发起一个网络传输了，然后RS2把这个buffer传递给TM1的网络栈，网络栈把buffer交给netty负责传输。</li>
-<li>值得注意的是网络传输是长期运行的，并且存在于TM之间而不是task之间。</li>
-<li>一旦buffer被TM2接收，它会通过一个相似的过程传递，从接收方的InputChannel（也就是IRPQ的对等对象），通过InputGate（包括几个IC）一直到RecordDeserializer（把数据恢复成数据原有类型），最后交给接收task，也就是ReduceDriver。</li>
-</ul>
-
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/10/04/flink-task之间的数据交换/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
         
       
     </div>
@@ -805,11 +799,18 @@
 
       
         
-          
-            <p>锁的发展基本上就是5个阶段，第一个阶段粗粒度的锁开始，一个锁管一个对象，这样过度序列化。<br>第二个阶段是通过细粒度的锁，乐观的锁，放松一致性的锁等等。但是这种锁的容易做错，或者造成优先级倒置，死锁等等问题。特别是大规模系统中，锁的使用都写在代码注释里面，做着做着就失传了，靠看代码维持。<br>第三个阶段是CAS阶段，就是通过原子操作实现无锁数据结构，这种方法能够多线程协同完成工作，上限很高，但是代码可维护性不是很好，通常是难以接续传男不传女传南不传北传胖不传瘦。<br>第四个阶段和第五个阶段都是事务化阶段，分别是软件事务化和硬件事务化。 </p>
+          <p>锁的发展基本上就是5个阶段，第一个阶段粗粒度的锁开始，一个锁管一个对象，这样过度序列化。<br>第二个阶段是通过细粒度的锁，乐观的锁，放松一致性的锁等等。但是这种锁的容易做错，或者造成优先级倒置，死锁等等问题。特别是大规模系统中，锁的使用都写在代码注释里面，做着做着就失传了，靠看代码维持。<br>第三个阶段是CAS阶段，就是通过原子操作实现无锁数据结构，这种方法能够多线程协同完成工作，上限很高，但是代码可维护性不是很好，通常是难以接续传男不传女传南不传北传胖不传瘦。<br>第四个阶段和第五个阶段都是事务化阶段，分别是软件事务化和硬件事务化。 </p>
 <p>和传统在静态，从逻辑上判断关键区域不同，TSX让处理器来动态决定是否线程需要串行执行关键区，这里的动态是相对我们考虑什么时候使用锁的时候的静态逻辑分析来说的，如果一次执行中，同步是不需要的，那么不需要任何的跨线程的序列化。如何判断是不是需要同步，intel通过分析用户定义的事务代码，建立事务中内存区域的读集合和写集合，动态监测发生在同一个cache行中的处理器间访问冲突，决定是否需要序列化事务的操作。 </p>
 
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/03/21/锁的发展/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
         
       
     </div>
@@ -966,13 +967,20 @@
 
       
         
-          
-            <p>为每个task或者operator收集的metric可以在dashboard可视化，在job的主页上，选择metrics标签页，在选择top graph中的一个task之后，你可以通过使用add metric下拉菜单选择要显示的metric </p>
+          <p>为每个task或者operator收集的metric可以在dashboard可视化，在job的主页上，选择metrics标签页，在选择top graph中的一个task之后，你可以通过使用add metric下拉菜单选择要显示的metric </p>
 <p>如何看到metrics–>修改工程的pom.xml文件<br>I was able to start the Flink webui from IntelliJ by adding flink-runtime-web to the dependencies for my project. I did this by adding this to my pom.xml file:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">`\&lt;dependency\&gt;</span><br><span class="line">    \&lt;groupId\&gt;org.apache.flink\&lt;/groupId\&gt;</span><br><span class="line">    \&lt;artifactId\&gt;flink-runtime-web_2.11\&lt;/artifactId\&gt;</span><br><span class="line">    \&lt;version\&gt;$&#123;flink.version&#125;\&lt;/version\&gt;</span><br><span class="line">\&lt;/dependency\&gt;</span><br></pre></td></tr></table></figure></p>
 <p>`然后在类文件中加入下面代码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">`Configuration config = new Configuration();</span><br><span class="line">config.setBoolean(ConfigConstants.LOCAL_START_WEBSERVER, true);</span><br><span class="line">StreamExecutionEnvironment env = StreamExecutionEnvironment.createLocalEnvironmentWithWebUI(config);</span><br></pre></td></tr></table></figure></p>
 <p>`</p>
 
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/03/08/在IntelliJ中使用flink的webUI/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
         
       
     </div>
@@ -1141,8 +1149,7 @@
 
       
         
-          
-            <p>flink有丰富的窗口语义。</p>
+          <p>flink有丰富的窗口语义。</p>
 <p>在这个训练中你会学到：</p>
 <ul>
 <li>如何使用窗口来无限流上计算累计</li>
@@ -1158,37 +1165,15 @@
 <p>`You can also use windowing with non-keyed streams, but keep in mind that in this case, the processing will not be done in parallel:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">`stream.</span><br><span class="line">  .windowAll(\&lt;window assigner\&gt;)</span><br><span class="line">  .reduce|aggregate|process(\&lt;window function\&gt;)</span><br></pre></td></tr></table></figure></p>
 <p>`</p>
 <h2 id="窗口函数"><a href="#窗口函数" class="headerlink" title="窗口函数"></a>窗口函数</h2><p>对于如何处理窗口内容，你有三个基本选项：</p>
-<ol>
-<li>像批一样，使用ProcessWindowFunction来迭代处理窗口内容；</li>
-<li>增量处理，每向窗口分配一个事件就调用一个ReduceFunction或者AggregateFunction;</li>
-<li>以上两者结合，当窗口触发时，由ReduceFunction或者AggregateFunction得到的预先累计的结果被提供给一个ProcessWindowFunction。</li>
-</ol>
-<p>下面给出方法1和方法3的例子，每个例子中，我们都在一分钟ET窗口中寻找每个传感器的峰值，并且生成一个由（键，窗口结束时间戳，最大值）组成的元组。</p>
-<h2 id="ProcessWindowFunction-Example"><a href="#ProcessWindowFunction-Example" class="headerlink" title="ProcessWindowFunction Example"></a>ProcessWindowFunction Example</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">`DataStream\&lt;SensorReading\&gt; input = ...</span><br><span class="line"></span><br><span class="line">input</span><br><span class="line">  .keyBy(“key”)</span><br><span class="line">  .window(TumblingEventTimeWindows.of(Time.minutes(1)))</span><br><span class="line">  .process(new MyWastefulMax());</span><br><span class="line"></span><br><span class="line">public static class MyWastefulMax extends ProcessWindowFunction\&lt;</span><br><span class="line">  SensorReading,                  // input type</span><br><span class="line">  Tuple3\&lt;String, Long, Integer\&gt;,  // output type</span><br><span class="line">  Tuple,                          // key type</span><br><span class="line">  TimeWindow\&gt; &#123;                   // window type</span><br><span class="line"></span><br><span class="line">@Override</span><br><span class="line">public void process(</span><br><span class="line">  Tuple key,</span><br><span class="line">  Context context, </span><br><span class="line">  Iterable\&lt;SensorReading\&gt; events,</span><br><span class="line">  Collector\&lt;Tuple3\&lt;String, Long, Integer\&gt;\&gt; out) &#123;</span><br><span class="line">int max = 0;</span><br><span class="line">for (SensorReading event : events) &#123;</span><br><span class="line">  if (event.value \&gt; max) max = event.value;</span><br><span class="line">&#125;</span><br><span class="line">// note the rather hideous cast</span><br><span class="line">out.collect(new Tuple3\&lt;\&gt;((Tuple1\&lt;String\&gt;)key).f0, context.window().getEnd(), max));</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>`在这个实现中要注意一些事情：<br>键选择器做keyby的时候用“key”作为域名，这样编译器无法知道我们的键是strings，因此在ProcessWindowFunction里面要处理的键类型是元组。注意上面代码最后一行变态的转换。</p>
-<p>所有分配到这个窗口的事件都需要缓冲在flink中直到窗口被触发，这是相对昂贵的操作。<br>我们的ProcessWindowFunction函数接受了一个Context对象，从它可以得到窗口的信息，它的接口长这样：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">`public abstract class Context implements java.io.Serializable &#123;</span><br><span class="line">public abstract W window();</span><br><span class="line"></span><br><span class="line">public abstract long currentProcessingTime();</span><br><span class="line">public abstract long currentWatermark();</span><br><span class="line"></span><br><span class="line">public abstract KeyedStateStore windowState();</span><br><span class="line">public abstract KeyedStateStore globalState();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>`windowState和globalState是你存储每个key，每个窗口或者全局每个Key信息的地方。<br>举个例子，如果你要记录当前窗口的信息并且要在后续窗口处理中使用时，就需要他们。</p>
-<h2 id="Incremental-Aggregation-Example"><a href="#Incremental-Aggregation-Example" class="headerlink" title="Incremental Aggregation Example"></a>Incremental Aggregation Example</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">`DataStream\&lt;SensorReading\&gt; input = ...</span><br><span class="line"></span><br><span class="line">input</span><br><span class="line">  .keyBy(x -\&gt; x.key)</span><br><span class="line">  .window(TumblingEventTimeWindows.of(Time.minutes(1)))</span><br><span class="line">  .reduce(new MyReducingMax(), new MyWindowFunction());</span><br><span class="line"></span><br><span class="line">private static class MyReducingMax implements ReduceFunction\&lt;SensorReading\&gt; &#123;</span><br><span class="line">  public SensorReading reduce(SensorReading r1, SensorReading r2) &#123;</span><br><span class="line">return r1.value() \&gt; r2.value() ? r1 : r2;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">private static class MyWindowFunction extends ProcessWindowFunction\&lt;</span><br><span class="line">  SensorReading, Tuple3\&lt;String, Long, SensorReading\&gt;, String, TimeWindow\&gt; &#123;</span><br><span class="line"></span><br><span class="line">  @Override</span><br><span class="line">  public void process(</span><br><span class="line">String key,</span><br><span class="line">Context context,</span><br><span class="line">Iterable\&lt;SensorReading\&gt; maxReading,</span><br><span class="line">Collector\&lt;Tuple2\&lt;Long, SensorReading\&gt;\&gt; out) &#123;</span><br><span class="line"></span><br><span class="line">SensorReading max = maxReading.iterator().next();</span><br><span class="line">out.collect(new Tuple3\&lt;String, Long, SensorReading\&gt;(key, context.window().getStart(), max));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>`<br>在这个实现中，我们决定使用一个更鲁邦的键选择器，</p>
-<blockquote>
-<p>keyBy(x -> x.key)</p>
-</blockquote>
-<p>同时注意Iterable\&lt;SensorReading>这次只会包含一个读数，也就是预先累计的由MyReducingMax计算的最大值。</p>
-<h2 id="晚到事件"><a href="#晚到事件" class="headerlink" title="晚到事件"></a>晚到事件</h2><p>默认情况下，当使用ET窗口时，晚到事件会被丢弃。有两个可选的窗口API函数给你对这个的控制。你可以把本来要丢弃的事件输出到一个另外的输出流中，使用<a href>旁路输出</a>(<a href="https://github.com/zhuguoliang/FlinkTraining\_CN/issues/5#issue-418167538)。这里有一个例子" target="_blank" rel="noopener">https://github.com/zhuguoliang/FlinkTraining\_CN/issues/5#issue-418167538)。这里有一个例子</a>:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">`OutputTag\&lt;Event\&gt; lateTag = new OutputTag\&lt;Event\&gt;(&quot;late&quot;)&#123;&#125;;</span><br><span class="line"></span><br><span class="line">SingleOutputStreamOperator\&lt;Event\&gt; result = stream.</span><br><span class="line">  .keyBy(...)</span><br><span class="line">  .window(...)</span><br><span class="line">  .process(...)</span><br><span class="line">  .getSideOutput(lateTag);</span><br><span class="line">  </span><br><span class="line">DataStream\&lt;Event\&gt; lateStream = result.getSideOutput(lateTag);</span><br></pre></td></tr></table></figure>
-<p>`You can also specify an interval of allowed lateness during which the late events will continue to be assigned to the appropriate window(s) (whose state will have been retained). By default each late event will cause a late firing of the window function.</p>
-<p>By default the allowed lateness is 0. In other words, elements behind the watermark are dropped (or sent to the side output).</p>
-<p>For example:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">`stream.</span><br><span class="line">  .keyBy(...)</span><br><span class="line">  .window(...)</span><br><span class="line">  .allowedLateness(Time.seconds(10))</span><br><span class="line">  .process(...);</span><br></pre></td></tr></table></figure></p>
-<p>`<br>Surprises<br>Some aspects of Flink’s windowing API may not behave in the way you would expect. Based on frequently asked questions on <a href>Stack Overflow</a>(<a href="https://stackoverflow.com/questions/tagged/apache-flink" target="_blank" rel="noopener">https://stackoverflow.com/questions/tagged/apache-flink</a>) and the <a href>flink-user mailing list</a>(<a href="https://flink.apache.org/community.html#mailing-lists)" target="_blank" rel="noopener">https://flink.apache.org/community.html#mailing-lists)</a>, here are some facts about windows that may surprise you.</p>
-<p>Sliding Windows Make Copies<br>Sliding window assigners can create lots of window objects, and will copy each event into every relevant window. For example, if you have sliding windows every 15 minutes that are 24-hours in length, each event will be copied into 4 * 24 = 96 windows.</p>
-<p>Time Windows are Aligned to the Epoch<br>Just because you are using hour-long processing-time windows and start your application running at 12:05 does not mean that the first window will close at 1:05. The first window will be 55 minutes long and close at 1:00.</p>
-<p>Windows Can Follow Windows<br>For example, it works to do this:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">`</span><br><span class="line">stream</span><br><span class="line">  .keyBy(t -\&gt; t.key)</span><br><span class="line">  .timeWindow(\&lt;time specification\&gt;)</span><br><span class="line">  .reduce(\&lt;reduce function\&gt;)</span><br><span class="line">  .timeWindowAll(\&lt;same time specification\&gt;)</span><br><span class="line">  .reduce(\&lt;same reduce function\&gt;)</span><br></pre></td></tr></table></figure></p>
-<p>`<br>You might expect Flink’s runtime to be smart enough to do this parallel pre-aggregation for you (provided you are using a ReduceFunction or AggregateFunction), but it’s not.</p>
-<p>No Results for Empty TimeWindows<br>Windows are only created when events are assigned to them. So if there are no events in a given time frame, no results will be reported.</p>
-<p>Late Events Can Cause Late Merges<br>Session windows are based on an abstraction of windows that can merge. Each element is initially assigned to a new window, after which windows are merged whenever the gap between them is small enough. In this way, a late event can bridge the gap separating two previously separate sessions, producing a late merge.</p>
-<p>Evictors are Incompatible with Incremental Aggregation<br>This is true simply by definition – you can’t evict elements you didn’t store. But this means that designs that depend on using Evictors are adopting something of an anti-pattern.</p>
-
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/03/07/flink窗口/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
         
       
     </div>
@@ -1498,13 +1483,20 @@
 
       
         
-          
-            <p>systemctl restart sysstat.service<br>On Ubuntu 16.04 I just ran into this same issue. After some grousing around I found I needed to enable the service by editing the file /etc/default/sysstat<br>Change ENABLED=”false” to true:</p>
+          <p>systemctl restart sysstat.service<br>On Ubuntu 16.04 I just ran into this same issue. After some grousing around I found I needed to enable the service by editing the file /etc/default/sysstat<br>Change ENABLED=”false” to true:</p>
 <blockquote>
 <p>Should sadc collect system activity informations? Valid values<br>are “true” and “false”. Please do not put other values, they<br>will be overwritten by debconf!<br>ENABLED=”true”<br>Restart the service:<br>systemctl restart sysstat.service</p>
 </blockquote>
 
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2019/01/19/enable-sysstat/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
         
       
     </div>
@@ -1917,10 +1909,17 @@
 
       
         
-          
-            <p>额</p>
+          <p>额</p>
 
+          <!--noindex-->
           
+            <div class="post-button text-center">
+              <a class="btn" href="/2018/12/31/Readings-in-Streaming-Systems/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
         
       
     </div>

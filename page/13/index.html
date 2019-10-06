@@ -457,6 +457,13 @@
 <li>使用longjmp跳转到目标协程<br>下面的函数coto()(short for “coroutine goto”)完成了这样的过程，首先它把参数保存到目标协程能够访问到的地方，然后它调用setjmp来保存当前协程的状态，这个函数正常返回值是0，然后它继续执行到longjmp，跳转到目标协程，<strong>在目标协程中，setjmp()返回1，</strong>这样coto()返回保存了的参数。</li>
 </ul>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">void</span> *coarg;</span><br><span class="line"><span class="function"><span class="keyword">void</span> *<span class="title">coto</span><span class="params">(jmp_buf here, jmp_buf there, <span class="keyword">void</span> *arg)</span> </span>&#123;</span><br><span class="line">	coarg = arg;</span><br><span class="line">    <span class="keyword">if</span> (setjmp(here)) <span class="keyword">return</span>(coarg);</span><br><span class="line">	longjmp(there, <span class="number">1</span>);</span><br><span class="line">&#125;</span><br><span class="line"> </span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<p>另一个需要做的事情就是创建协程。这要求为协程的栈分配空间，在协程初始化栈帧，跳转到这个栈帧。通常，如果没有操作系统或者运行时系统的特殊支持，是不可能的，举个例子，看这个文章。然而如果我们可以假设这个栈在内存中是连续分布的，可变长度的数组可以在栈上分配，我们可以使用标准C99做到。（如果你的编译器不支持可变长度数组，可以使用alloca()替代）</p>
+<p>每个协程的栈是一块用作普通进程栈的内存。为了在栈中分配一块新的内存，我们在当前的栈顶加入chunk大小的内存（这样为当前最顶部的协程进行未来可能函数调用的空间）。然后我们需要移动栈指针来指向这个新的位置，这样我们就创建了一个合适长度的可变长度数组。在计算长度的时候，我们可以利用局部变量的地址来模拟当前栈的指针。最终，一个简单的函数调用就可以创建协程的初始栈帧，并且跳转到相应的位置。</p>
+<p>下面的函数cogo() (short for “coroutine start”)实现了这个功能，同时它在创建一个新的协程的时候还会保存当前协程的状态。<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> STACKDIR - <span class="comment">// set to + for upwards and - for downwards</span></span></span><br><span class="line">   <span class="meta">#<span class="meta-keyword">define</span> STACKSIZE (1&lt;&lt;12)</span></span><br><span class="line"></span><br><span class="line">   <span class="keyword">static</span> <span class="keyword">char</span> *tos; <span class="comment">// top of stack</span></span><br><span class="line">   <span class="comment">//创建协程</span></span><br><span class="line">   <span class="function"><span class="keyword">void</span> *<span class="title">cogo</span><span class="params">(jmp_buf here, <span class="keyword">void</span> (*fun)(<span class="keyword">void</span>*), <span class="keyword">void</span> *arg)</span> </span>&#123;</span><br><span class="line">       <span class="keyword">if</span> (tos == <span class="literal">NULL</span>) tos = (<span class="keyword">char</span>*)&amp;arg;</span><br><span class="line">       tos += STACKDIR STACKSIZE;</span><br><span class="line">       <span class="keyword">char</span> n[STACKDIR (tos - (<span class="keyword">char</span>*)&amp;arg)];</span><br><span class="line">       coarg = n; <span class="comment">// ensure optimizer keeps n</span></span><br><span class="line">       <span class="keyword">if</span> (setjmp(here)) <span class="keyword">return</span>(coarg);</span><br><span class="line">	fun(arg);</span><br><span class="line">	<span class="built_in">abort</span>();</span><br><span class="line">   &#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure></p>
+<p>Here’s a little test program to demonstrate these functions in action.</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAXTHREAD 10000</span></span><br><span class="line"></span><br><span class="line">   <span class="keyword">static</span> jmp_buf thread[MAXTHREAD];</span><br><span class="line">   <span class="keyword">static</span> <span class="keyword">int</span> count = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">comain</span><span class="params">(<span class="keyword">void</span> *arg)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">int</span> *p = arg, i = *p;</span><br><span class="line">	<span class="keyword">for</span> (;;) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"coroutine %d at %p arg %p\n"</span>, i, (<span class="keyword">void</span>*)&amp;i, arg);</span><br><span class="line">		<span class="keyword">int</span> n = arc4random() % count;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"jumping to %d\n"</span>, n);</span><br><span class="line">		arg = coto(thread[i], thread[n], (<span class="keyword">char</span>*)arg + <span class="number">1</span>);</span><br><span class="line">	&#125;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">while</span> (++count &lt; MAXTHREAD) &#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"spawning %d\n"</span>, count);</span><br><span class="line">		cogo(thread[<span class="number">0</span>], comain, &amp;count);</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
           <!--noindex-->
           
             <div class="post-button text-center">
@@ -636,7 +643,16 @@
         
           <p>看精进，看到一个有意思的概念，将生活学习中的事情分成四类：</p>
 <ul>
-<li>高收益值、长半衰期事件<br>找到真爱，学会一种有效的思维技巧，跟大牛深谈
+<li>高收益值、长半衰期事件<br>找到真爱，学会一种有效的思维技巧，跟大牛深谈<a id="more"></a></li>
+<li>高收益值、短半衰期事件<br>买流行的衣服，玩儿一下午手机游戏，扶墙自助餐</li>
+<li>低收益值、长半衰期事件<br>一小时书法，背三首诗，读懂哲学著作一个章节，多重复一组技能练习，认真回复一封友人的邮件</li>
+<li>低收益值、短半衰期事件<br>挑战或者参与一次掐架，漫无目的的刷微博，社交软件。。。</li>
+</ul>
+<p>其实可以发现，哪些短半衰期的事情，都是很容易fade away的，我的生活中也充斥了与这个类似的坏习惯，比如玩儿手机，刷微博等等，希望能够通过一切强制，或者造成麻烦的方法，让我做这些事情的时候会更难一些。</p>
+<img src="/收益值与半衰期/download.jpeg" width="500">
+<hr>
+<p>人的伟大之处在于，他是一座桥梁而非目的；人的可爱之处在于，他是一个过渡，也是一个沉沦。</p>
+
           <!--noindex-->
           
             <div class="post-button text-center">
@@ -648,7 +664,7 @@
           <!--/noindex-->
         
       
-    </li></ul></div>
+    </div>
 
     
 
@@ -814,7 +830,8 @@
 
       
         
-          <p>Quora上看到一个文章，作者读了421本书，作者认为在读了这么多书之后，他成为了一个T型的读者。对很多事情有了常识，并且在几个领域有深入。<br>他专注了创新类，商业以及心理学，其他类型的数据被认为是奖励。<br>
+          <p>Quora上看到一个文章，作者读了421本书，作者认为在读了这么多书之后，他成为了一个T型的读者。对很多事情有了常识，并且在几个领域有深入。<br>他专注了创新类，商业以及心理学，其他类型的数据被认为是奖励。<br><a id="more"></a><br>这个作者认为，读书重要是要实践，读一些，去实践一些，然后再读，这是一个比较好的循环。<br>然而他发现，无论是哪个领域，当你阅读了超过10本书的时候，就会发现一些重复的概念。（难不成我的论文是看多了？eee…）</p>
+<img src="/读一千本书会有什么收获/download.jpeg" width="300">
           <!--noindex-->
           
             <div class="post-button text-center">
@@ -826,7 +843,7 @@
           <!--/noindex-->
         
       
-    </p></div>
+    </div>
 
     
 
@@ -996,6 +1013,9 @@
 <p>实验方面，发现混合内存的比例不是问题，dram的容量占比少对性能的影响在5%以内。那么基本上存在两个极端，即完全使用DRAM和完全使用NVM，我将测试两种情况。</p>
 <figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">![<span class="string">image</span>][<span class="symbol">image-1</span>]</span><br></pre></td></tr></table></figure>
 <img src="/20160728/IMG\_5016.jpg" width="180">
+<a id="more"></a>
+<h3 id="有什么需要纠正的"><a href="#有什么需要纠正的" class="headerlink" title="有什么需要纠正的"></a>有什么需要纠正的</h3><p>感觉花费了不少时间在hexo上面，这个算不算要纠正的呢？</p>
+<h3 id="有什么应该做没有做的"><a href="#有什么应该做没有做的" class="headerlink" title="有什么应该做没有做的"></a>有什么应该做没有做的</h3><p>恩恩，每天都说要看kindle十分钟的</p>
           <!--noindex-->
           
             <div class="post-button text-center">
