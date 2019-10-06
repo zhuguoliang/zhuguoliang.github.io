@@ -4,109 +4,56 @@
 
 
 
-
-
-
-
-
-
-
-  
-
-
-<html class="theme-next muse use-motion" lang="zh-Hans">
-<head><meta name="generator" content="Hexo 3.9.0">
+<html lang="zh-Hans">
+<head>
   <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.9.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.4.1">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.4.1">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.4.1" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.4.1">
 
 
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
 
 
-
-
-
-
-
-
-
-
-<meta http-equiv="Cache-Control" content="no-transform">
-<meta http-equiv="Cache-Control" content="no-siteapp">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
-
-<link href="/css/main.css?v=6.6.0" rel="stylesheet" type="text/css">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.6.0">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=6.6.0">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=6.6.0">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=6.6.0" color="#222">
-
-
-
-
-
-
-
-
-
-<script type="text/javascript" id="hexo.configurations">
+<script id="hexo-configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
     scheme: 'Muse',
-    version: '6.6.0',
-    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    version: '7.4.1',
+    exturl: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
+    copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
-    fastclick: false,
+    mediumzoom: false,
     lazyload: false,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    pangu: false,
     algolia: {
-      applicationID: '',
+      appID: '',
       apiKey: '',
       indexName: '',
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
-    }
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    },
+    sidebarPadding: 40
   };
 </script>
-
-
-  
-
-
-
 
   <meta name="description" content="try to look 5 years ahead">
 <meta property="og:type" content="website">
@@ -118,19 +65,17 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="West to the Northwest">
 <meta name="twitter:description" content="try to look 5 years ahead">
-
-
-
-
-
-
   <link rel="canonical" href="http://yoursite.com/page/9/">
 
 
-
-<script type="text/javascript" id="page.configurations">
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
+    isHome: true,
+    isPost: false,
+    isPage: false,
+    isArchive: false
   };
 </script>
 
@@ -144,217 +89,112 @@
 
 
 
-
-
-
   <noscript>
-  <style type="text/css">
-    .use-motion .motion-element,
-    .use-motion .brand,
-    .use-motion .menu-item,
-    .sidebar-inner,
-    .use-motion .post-block,
-    .use-motion .pagination,
-    .use-motion .comments,
-    .use-motion .post-header,
-    .use-motion .post-body,
-    .use-motion .collection-title { opacity: initial; }
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
 
-    .use-motion .logo,
-    .use-motion .site-title,
-    .use-motion .site-subtitle {
-      opacity: initial;
-      top: initial;
-    }
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
 
-    .use-motion {
-      .logo-line-before i { left: initial; }
-      .logo-line-after i { right: initial; }
-    }
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
   </style>
 </noscript>
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left 
-  page-home">
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-wrapper">
-  <div class="site-meta ">
-    
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-meta">
 
-    <div class="custom-logo-site-title">
+    <div>
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">West to the Northwest</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
-    
-      
         <p class="site-subtitle">发上等愿 结中等缘 享下等福 择高处立 寻平处往 向宽处行</p>
       
-    
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
+    <div class="toggle" aria-label="Toggle navigation bar">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
   </div>
 </div>
-
 
 
 <nav class="site-nav">
   
-    <ul id="menu" class="menu">
+  <ul id="menu" class="menu">
+      
+      
       
         
-        
-        
-          
-          <li class="menu-item menu-item-home">
-
-    
-    
-    
+        <li class="menu-item menu-item-home">
       
     
 
-    
-
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>Home</a>
 
   </li>
+      
+      
+      
         
-        
-        
-          
-          <li class="menu-item menu-item-about">
-
-    
-    
-    
+        <li class="menu-item menu-item-archives">
       
     
 
-    
-
-    <a href="/about/" rel="section"><i class="menu-item-icon fa fa-fw fa-user"></i> <br>About</a>
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>Archives</a>
 
   </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-tags">
-
-    
-    
-    
-      
-    
+  </ul>
 
     
 
-    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>Tags</a>
-
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-categories">
-
-    
-    
-    
-      
-    
-
-    
-
-    <a href="/categories/" rel="section"><i class="menu-item-icon fa fa-fw fa-th"></i> <br>Categories</a>
-
-  </li>
-        
-        
-        
-          
-          <li class="menu-item menu-item-archives">
-
-    
-    
-    
-      
-    
-
-    
-
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
-
-  </li>
-
-      
-      
-    </ul>
-  
-
-  
-    
-
-  
-
-  
 </nav>
-
-
-
-  
-
-
-
 </div>
     </header>
 
     
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
 
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
-    
-      
 
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  <div class="posts-expand">
+        
   
   
-  
-  <div class="post-block">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/08/25/postcopy-page-fault-handling/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -366,73 +206,44 @@
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="West to the Northwest">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2016/08/25/postcopy-page-fault-handling/" class="post-title-link" itemprop="http://yoursite.com/page/9/index.html">postcopy page fault handling</a>
-              
+        <h1 class="post-title" itemprop="name headline">
             
-          </h1>
-        
+            <a href="/2016/08/25/postcopy-page-fault-handling/" class="post-title-link" itemprop="url">postcopy page fault handling</a>
+          
+        </h1>
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               
                 
               
 
               <time title="Created: 2016-08-25 21:42:35" itemprop="dateCreated datePublished" datetime="2016-08-25T21:42:35+08:00">2016-08-25</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
+                <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2018-12-31 19:23:19" itemprop="dateModified" datetime="2018-12-31T19:23:19+08:00">2018-12-31</time>
-              
+              </span>
             
-          </span>
-
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
+              <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
 
@@ -443,21 +254,9 @@
           
 
           
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
 
         </div>
       </header>
-    
 
     
     
@@ -465,77 +264,40 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <p>在postcopy的过程中，如果target vm访问了一个没有被传输的页面，那么这个页面就会触发page fault，从而从源VM拷贝数据。这个过程在下面这个函数中完成。<br><a href="https://www.youtube.com/watch?v=2VNswMRT6JQ" target="_blank" rel="noopener">https://www.youtube.com/watch?v=2VNswMRT6JQ</a></p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
 
 
           <!--noindex-->
           
-            <div class="post-button text-center">
+            <div class="post-button">
               <a class="btn" href="/2016/08/25/postcopy-page-fault-handling/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
-         
+          
           <!--/noindex-->
         
       
     </div>
 
     
-
     
     
-    
-
-    
-
-    
-       
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
   </article>
-
+  
+  
+  
 
     
-      
-
-  
-
+        
   
   
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/08/24/How-to-add-qemu-option-by-defining-a-xml/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -547,73 +309,44 @@
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="West to the Northwest">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2016/08/24/How-to-add-qemu-option-by-defining-a-xml/" class="post-title-link" itemprop="http://yoursite.com/page/9/index.html">How to add qemu option by defining a xml</a>
-              
+        <h1 class="post-title" itemprop="name headline">
             
-          </h1>
-        
+            <a href="/2016/08/24/How-to-add-qemu-option-by-defining-a-xml/" class="post-title-link" itemprop="url">How to add qemu option by defining a xml</a>
+          
+        </h1>
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               
                 
               
 
               <time title="Created: 2016-08-24 15:37:02" itemprop="dateCreated datePublished" datetime="2016-08-24T15:37:02+08:00">2016-08-24</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
+                <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2018-12-31 19:23:03" itemprop="dateModified" datetime="2018-12-31T19:23:03+08:00">2018-12-31</time>
-              
+              </span>
             
-          </span>
-
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
+              <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
 
@@ -624,21 +357,9 @@
           
 
           
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
 
         </div>
       </header>
-    
 
     
     
@@ -646,77 +367,40 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <p>The &lt;qemu:commandline&gt; domain XML tag<br>There is a special namespace for QEMU-specific tags in libvirt domain XML. You<br>cannot use QEMU-specific tags without first declaring the namespace. To enable<br>it use the following:<br>&lt;domain type=’kvm’ xmlns:qemu=’<a href="http://libvirt.org/schemas/domain/qemu/1.0&#39;\&gt;" target="_blank" rel="noopener">http://libvirt.org/schemas/domain/qemu/1.0&#39;\&gt;</a></p>
 <p>Now you can add command-line arguments to the QEMU invocation. For example, to load an option ROM with-option-rom:<br>&lt;qemu:commandline&gt;<br>   &lt;qemu:arg value=’-option-rom’/&gt;<br>   &lt;qemu:arg value=’path/to/my.rom’/&gt;<br>&lt;/qemu:commandline&gt;</p>
 <p>It is also possible to add environment variables to the QEMU invocation:<br>&lt;qemu:commandline&gt;<br>   &lt;qemu:env name=’MY_VAR’ value=’my_value’/&gt;<br>&lt;/qemu:commandline&gt;</p>
 
           <!--noindex-->
           
-            <div class="post-button text-center">
+            <div class="post-button">
               <a class="btn" href="/2016/08/24/How-to-add-qemu-option-by-defining-a-xml/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
-         
+          
           <!--/noindex-->
         
       
     </div>
 
     
-
     
     
-    
-
-    
-
-    
-       
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
   </article>
-
+  
+  
+  
 
     
-      
-
-  
-
+        
   
   
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/08/24/page-relocation-scheme/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -728,73 +412,44 @@
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="West to the Northwest">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2016/08/24/page-relocation-scheme/" class="post-title-link" itemprop="http://yoursite.com/page/9/index.html">page relocation scheme</a>
-              
+        <h1 class="post-title" itemprop="name headline">
             
-          </h1>
-        
+            <a href="/2016/08/24/page-relocation-scheme/" class="post-title-link" itemprop="url">page relocation scheme</a>
+          
+        </h1>
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               
                 
               
 
               <time title="Created: 2016-08-24 11:18:18" itemprop="dateCreated datePublished" datetime="2016-08-24T11:18:18+08:00">2016-08-24</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
+                <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2018-12-31 19:22:49" itemprop="dateModified" datetime="2018-12-31T19:22:49+08:00">2018-12-31</time>
-              
+              </span>
             
-          </span>
-
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
+              <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
 
@@ -805,21 +460,9 @@
           
 
           
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
 
         </div>
       </header>
-    
 
     
     
@@ -827,77 +470,40 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <p>I name the process as page relocation rather than page swap just to differentiate it from the page swapping in virtual memory concept.<br>We use post copy method to do page relocation so that the VM has a minimal downtime than precopy, in which the migration will take a lot of time depending on the workload and page dirtying rate of the VM.</p>
 <p>TODO: 确定迁移是否停止VM的执行。</p>
 <p>在vl.c中，首先创建fd handler or bh or thread来完成启动region migration的操作。<br>参考migration.c中的实现，</p>
 
           <!--noindex-->
           
-            <div class="post-button text-center">
+            <div class="post-button">
               <a class="btn" href="/2016/08/24/page-relocation-scheme/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
-         
+          
           <!--/noindex-->
         
       
     </div>
 
     
-
     
     
-    
-
-    
-
-    
-       
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
   </article>
-
+  
+  
+  
 
     
-      
-
-  
-
+        
   
   
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/08/24/migration/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -909,73 +515,44 @@
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="West to the Northwest">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2016/08/24/migration/" class="post-title-link" itemprop="http://yoursite.com/page/9/index.html">migration</a>
-              
+        <h1 class="post-title" itemprop="name headline">
             
-          </h1>
-        
+            <a href="/2016/08/24/migration/" class="post-title-link" itemprop="url">migration</a>
+          
+        </h1>
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               
                 
               
 
               <time title="Created: 2016-08-24 00:15:05" itemprop="dateCreated datePublished" datetime="2016-08-24T00:15:05+08:00">2016-08-24</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
+                <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2018-12-31 19:22:29" itemprop="dateModified" datetime="2018-12-31T19:22:29+08:00">2018-12-31</time>
-              
+              </span>
             
-          </span>
-
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
+              <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
 
@@ -986,21 +563,9 @@
           
 
           
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
 
         </div>
       </header>
-    
 
     
     
@@ -1008,10 +573,6 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <p>qemu的迁移，可以通过tcp连接，也可以通过libvirt的RPC,但是核心的机制应该是相同的。</p>
 <a id="more"></a>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//迁移发起端：</span></span><br><span class="line">hmp-commands.hx</span><br><span class="line">|—\&gt; hmp\_migrate\_</span><br><span class="line">|—\&gt;qmp\_migrate</span><br><span class="line"><span class="comment">//入口函数qmp\_migrate（migration.c）</span></span><br><span class="line">qmp\_migrate</span><br><span class="line">     |--\&gt; migrate\_init</span><br><span class="line">     |--\&gt; ? tcp\_start\_outgoing\_migration</span><br><span class="line">     |--\&gt; ? rdma\_start\_outgoing\_migration</span><br><span class="line">     |--\&gt; ? exec\_start\_outgoing\_migration</span><br><span class="line">     |--\&gt; ? exec\_start\_outgoing\_migration</span><br><span class="line">     |--\&gt; ? unix\_start\_outgoing\_migration</span><br><span class="line">     |--\&gt; ? fd\_start\_outgoing\_migration </span><br><span class="line"></span><br><span class="line">|--\&gt; exec\_start\_outgoing\_migration</span><br><span class="line">* |--\&gt;  migration\_channel\_connect\_ \* |--\&gt;  migrate\_fd\_connect</span><br><span class="line">|--\&gt; rdma\_start\_outgoing\_migration</span><br><span class="line">* |--\&gt; ? migrate\_fd\_connect</span><br><span class="line">	* |--\&gt; ?  migration\_thread</span><br><span class="line">		* |--\&gt; ? qemu\_savevm\_state\_iterate</span><br><span class="line"><span class="comment">//这是源VM上的主迁移线程</span></span><br><span class="line">qemu\_savevm\_state—\&gt; qemu\_savevm\_state\_iterate</span><br><span class="line">qemu\_savevm\_state\_iterate调用注册savevm\_ram\_handler</span><br><span class="line">* |—\&gt; ram\_save\_iterate</span><br><span class="line"></span><br><span class="line">ram\_save\_iterate</span><br><span class="line">* |—\&gt; ram\_find\_and\_save\_block</span><br><span class="line">	* |—\&gt;ram\_save\_host\_page</span><br><span class="line">		* |—\&gt;ram\_save\_target\_page\_</span><br><span class="line">			* |—\&gt; ram\_save\_page</span><br><span class="line">				* |—\&gt; ram\_control\_save\_page\_</span><br><span class="line"></span><br><span class="line">ram\_save\_target\_page\_</span><br><span class="line"><span class="comment">//检查是否是脏页，如果是的话，继续调用ram\_save\_page保存这个页。</span></span><br><span class="line">ram\_save\_page</span><br><span class="line"><span class="comment">//把给定的页发送到流，调用ram\_control\_save\_page</span></span><br><span class="line"><span class="comment">//返回值是写出的页的数目，</span></span><br><span class="line">ram\_control\_save\_page\_</span><br><span class="line"><span class="comment">//调用QEMUFile注册的save\_page回调函数\_</span></span><br></pre></td></tr></table></figure>
@@ -1031,67 +592,34 @@
 
           <!--noindex-->
           
-            <div class="post-button text-center">
+            <div class="post-button">
               <a class="btn" href="/2016/08/24/migration/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
-         
+          
           <!--/noindex-->
         
       
     </div>
 
     
-
     
     
-    
-
-    
-
-    
-       
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
   </article>
-
+  
+  
+  
 
     
-      
-
-  
-
+        
   
   
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/08/23/backend-developer/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1103,73 +631,44 @@
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="West to the Northwest">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2016/08/23/backend-developer/" class="post-title-link" itemprop="http://yoursite.com/page/9/index.html">backend developer</a>
-              
+        <h1 class="post-title" itemprop="name headline">
             
-          </h1>
-        
+            <a href="/2016/08/23/backend-developer/" class="post-title-link" itemprop="url">backend developer</a>
+          
+        </h1>
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               
                 
               
 
               <time title="Created: 2016-08-23 10:44:48" itemprop="dateCreated datePublished" datetime="2016-08-23T10:44:48+08:00">2016-08-23</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
+                <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2018-12-31 19:21:50" itemprop="dateModified" datetime="2018-12-31T19:21:50+08:00">2018-12-31</time>
-              
+              </span>
             
-          </span>
-
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
+              <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/生涯思考/" itemprop="url" rel="index"><span itemprop="name">生涯思考</span></a></span>
 
@@ -1180,21 +679,9 @@
           
 
           
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
 
         </div>
       </header>
-    
 
     
     
@@ -1202,10 +689,6 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <p>看一下cabernets大神Brendan Burns的简历，高亮的那一段最重要，在之前就为了google的搜索做后端，很多人都向上层去做，我认为根据我的条件和经历，我适合做后端。</p>
 <p>Partner Architect<br>Microsoft<br>July 2016 – Present (2 months)<br>Working on Azure Resource Manager and other related Azure Cloud services.</p>
 <p>Senior Staff Software Engineer<br>Google<br>June 2008 – July 2016 (8 years 2 months)Greater Seattle Area<br>Lead engineer on Kubernetes, Google’s open source cluster manager for Docker containers.  </p>
@@ -1215,67 +698,34 @@
 
           <!--noindex-->
           
-            <div class="post-button text-center">
+            <div class="post-button">
               <a class="btn" href="/2016/08/23/backend-developer/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
-         
+          
           <!--/noindex-->
         
       
     </div>
 
     
-
     
     
-    
-
-    
-
-    
-       
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
   </article>
-
+  
+  
+  
 
     
-      
-
-  
-
+        
   
   
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/08/22/diffrerentOSes/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1287,73 +737,44 @@
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="West to the Northwest">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2016/08/22/diffrerentOSes/" class="post-title-link" itemprop="http://yoursite.com/page/9/index.html">diffrerentOSes</a>
-              
+        <h1 class="post-title" itemprop="name headline">
             
-          </h1>
-        
+            <a href="/2016/08/22/diffrerentOSes/" class="post-title-link" itemprop="url">diffrerentOSes</a>
+          
+        </h1>
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               
                 
               
 
               <time title="Created: 2016-08-22 11:12:14" itemprop="dateCreated datePublished" datetime="2016-08-22T11:12:14+08:00">2016-08-22</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
+                <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2018-12-31 19:20:52" itemprop="dateModified" datetime="2018-12-31T19:20:52+08:00">2018-12-31</time>
-              
+              </span>
             
-          </span>
-
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
+              <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
 
@@ -1364,21 +785,9 @@
           
 
           
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
 
         </div>
       </header>
-    
 
     
     
@@ -1386,10 +795,6 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <p>其实这些不能算是下一代操作系统，而是云操作系统。</p>
 <p><a href="https://cloudbase.it/qemu-img-windows/" target="_blank" rel="noopener">https://cloudbase.it/qemu-img-windows/</a><br>OSv<br><a href="https://github.com/cloudius-systems/osv/wiki/Running-OSv-image-under-KVM-QEMU" target="_blank" rel="noopener">https://github.com/cloudius-systems/osv/wiki/Running-OSv-image-under-KVM-QEMU</a></p>
 <p><a href="https://www.youtube.com/watch?v=FKc0lFaPzXA&feature=youtu.be" target="_blank" rel="noopener">https://www.youtube.com/watch?v=FKc0lFaPzXA&amp;feature=youtu.be</a></p>
@@ -1398,67 +803,34 @@
 
           <!--noindex-->
           
-            <div class="post-button text-center">
+            <div class="post-button">
               <a class="btn" href="/2016/08/22/diffrerentOSes/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
-         
+          
           <!--/noindex-->
         
       
     </div>
 
     
-
     
     
-    
-
-    
-
-    
-       
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
   </article>
-
+  
+  
+  
 
     
-      
-
-  
-
+        
   
   
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/08/20/material/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1470,73 +842,44 @@
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="West to the Northwest">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2016/08/20/material/" class="post-title-link" itemprop="http://yoursite.com/page/9/index.html">material</a>
-              
+        <h1 class="post-title" itemprop="name headline">
             
-          </h1>
-        
+            <a href="/2016/08/20/material/" class="post-title-link" itemprop="url">material</a>
+          
+        </h1>
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               
                 
               
 
               <time title="Created: 2016-08-20 20:21:22" itemprop="dateCreated datePublished" datetime="2016-08-20T20:21:22+08:00">2016-08-20</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
+                <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2018-12-31 19:20:08" itemprop="dateModified" datetime="2018-12-31T19:20:08+08:00">2018-12-31</time>
-              
+              </span>
             
-          </span>
-
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
+              <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/科研/" itemprop="url" rel="index"><span itemprop="name">科研</span></a></span>
 
@@ -1547,21 +890,9 @@
           
 
           
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
 
         </div>
       </header>
-    
 
     
     
@@ -1569,76 +900,39 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <p>PCM<br>将PCM单元暴露在0.5THz电流下几个皮秒就能构成晶态，并且晶态纤维可以可靠的测量，<br>这能够用于存储数据，尽管这个单元的大部分还是非晶态。<br>而现在DRAM工作在ns级别，<br><a href="http://news.stanford.edu/press/view/9468" target="_blank" rel="noopener">http://news.stanford.edu/press/view/9468</a></p>
 <p><strong>A thousandfold increase in speed coupled with lower energy use suggests a path toward future memory technologies that could far outperform anything previously demonstrated</strong></p>
 
           <!--noindex-->
           
-            <div class="post-button text-center">
+            <div class="post-button">
               <a class="btn" href="/2016/08/20/material/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
-         
+          
           <!--/noindex-->
         
       
     </div>
 
     
-
     
     
-    
-
-    
-
-    
-       
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
   </article>
-
+  
+  
+  
 
     
-      
-
-  
-
+        
   
   
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/08/19/zmalloc/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1650,73 +944,44 @@
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="West to the Northwest">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2016/08/19/zmalloc/" class="post-title-link" itemprop="http://yoursite.com/page/9/index.html">zmalloc</a>
-              
+        <h1 class="post-title" itemprop="name headline">
             
-          </h1>
-        
+            <a href="/2016/08/19/zmalloc/" class="post-title-link" itemprop="url">zmalloc</a>
+          
+        </h1>
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               
                 
               
 
               <time title="Created: 2016-08-19 21:51:34" itemprop="dateCreated datePublished" datetime="2016-08-19T21:51:34+08:00">2016-08-19</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
+                <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2018-12-31 18:58:06" itemprop="dateModified" datetime="2018-12-31T18:58:06+08:00">2018-12-31</time>
-              
+              </span>
             
-          </span>
-
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
+              <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
 
@@ -1727,21 +992,9 @@
           
 
           
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
 
         </div>
       </header>
-    
 
     
     
@@ -1749,10 +1002,6 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <h3 id="malloc—-gt-sbrk"><a href="#malloc—-gt-sbrk" class="headerlink" title="malloc—&gt;sbrk"></a>malloc—&gt;sbrk</h3><p>malloc allocates memory on the heap, period.<br>Your C library typically keeps a list (or some more intricate data structure) of available memory chunks, finding a suitable chunk to satisfy a malloc (possibly splitting a larger chunk into a number of smaller ones) and returning free’d memory to the list (possibly merging a few smaller chunks into a bigger one)<br>Only when the list doesn’t contain a large enough chunk to satisfy your malloc, the library will ask the OS for more memory, e.g. using the sbrk syscall. </p>
 <h3 id="sbrk"><a href="#sbrk" class="headerlink" title="sbrk"></a>sbrk</h3><p> strace -c ls</p>
 <p>现在基本可以认定，redis的zmalloc最终调用sbrk，然而在这个情形下，我们可以记录zmalloc得到的地址序列，分析命中的位置，</p>
@@ -1763,67 +1012,34 @@
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">inline</span> <span class="keyword">void</span>\* <span class="keyword">do</span>\_malloc\_no\_errno(size\<span class="keyword">_t</span> size) &#123;</span><br><span class="line">  <span class="keyword">if</span> (ThreadCache::have\_tls &amp;&amp;</span><br><span class="line">  LIKELY(size \&lt; ThreadCache::MinSizeForSlowPath())) &#123;</span><br><span class="line"><span class="keyword">return</span> <span class="keyword">do</span>\_malloc\_small(ThreadCache::GetCacheWhichMustBePresent(), size);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (size \&lt;= kMaxSize) &#123;</span><br><span class="line"><span class="keyword">return</span> <span class="keyword">do</span>\_malloc\_small(ThreadCache::GetCache(), size);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"><span class="keyword">return</span> <span class="keyword">do</span>\_malloc\_pages(ThreadCache::GetCache(), size);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
           <!--noindex-->
           
-            <div class="post-button text-center">
+            <div class="post-button">
               <a class="btn" href="/2016/08/19/zmalloc/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
-         
+          
           <!--/noindex-->
         
       
     </div>
 
     
-
     
     
-    
-
-    
-
-    
-       
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
   </article>
-
+  
+  
+  
 
     
-      
-
-  
-
+        
   
   
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/08/19/暑假有意义的一件事/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1835,73 +1051,44 @@
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="West to the Northwest">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2016/08/19/暑假有意义的一件事/" class="post-title-link" itemprop="http://yoursite.com/page/9/index.html">暑假有意义的一件事</a>
-              
+        <h1 class="post-title" itemprop="name headline">
             
-          </h1>
-        
+            <a href="/2016/08/19/暑假有意义的一件事/" class="post-title-link" itemprop="url">暑假有意义的一件事</a>
+          
+        </h1>
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               
                 
               
 
               <time title="Created: 2016-08-19 21:51:34" itemprop="dateCreated datePublished" datetime="2016-08-19T21:51:34+08:00">2016-08-19</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
+                <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2018-12-31 18:59:06" itemprop="dateModified" datetime="2018-12-31T18:59:06+08:00">2018-12-31</time>
-              
+              </span>
             
-          </span>
-
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
+              <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/生活/" itemprop="url" rel="index"><span itemprop="name">生活</span></a></span>
 
@@ -1912,21 +1099,9 @@
           
 
           
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
 
         </div>
       </header>
-    
 
     
     
@@ -1934,75 +1109,38 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <p>暑假没有离开学校，没有色彩斑斓的旅行笔记可以分享，只有枯坐宿舍的时候看的几本闲书。<br>作为一个生在新疆的汉族，犹太人对我来说，一直是一个神秘而有趣的民族，假期偶然看到这么一本书《我的应许之地：以色列的悲情与荣耀》，于是就拿来翻了一下，我一直喜欢看喜剧故事，这本书却是个开放结尾。<br>最初对以色列的了解是小时候偶然听人讲过的圣经故事，那时候觉得犹太人就是受害者，摩西带着犹太人出埃及。然而在这本书中，我看到的是现在犹太人复国的喜悦，哈罗德山谷的崛起，吕大城中对巴勒斯坦人驱逐，七日战争。。。然而正如这本书的书名一样，现在的以色列，不过是出在这个悲喜轮回的光明一面，对巴勒斯坦人的不公平，似乎就像一个镜子，反射着几千年前希伯来人的悲惨经历。<br>看完这本书的那天，我突然有些可怜这个民族，突然有人来敲门，“看电影吗？斯皮尔伯格导演的。。。”<br>阿西吧。。。</p>
 
           <!--noindex-->
           
-            <div class="post-button text-center">
+            <div class="post-button">
               <a class="btn" href="/2016/08/19/暑假有意义的一件事/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
-         
+          
           <!--/noindex-->
         
       
     </div>
 
     
-
     
     
-    
-
-    
-
-    
-       
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
   </article>
-
+  
+  
+  
 
     
-      
-
-  
-
+        
   
   
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/08/19/WeeklySum-2016-8-3/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -2014,73 +1152,44 @@
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="West to the Northwest">
     </span>
-
-    
       <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2016/08/19/WeeklySum-2016-8-3/" class="post-title-link" itemprop="http://yoursite.com/page/9/index.html">WeeklySum-2016-8-3</a>
-              
+        <h1 class="post-title" itemprop="name headline">
             
-          </h1>
-        
+            <a href="/2016/08/19/WeeklySum-2016-8-3/" class="post-title-link" itemprop="url">WeeklySum-2016-8-3</a>
+          
+        </h1>
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
+              <span class="post-meta-item-text">Posted on</span>
 
               
                 
               
 
               <time title="Created: 2016-08-19 19:20:06" itemprop="dateCreated datePublished" datetime="2016-08-19T19:20:06+08:00">2016-08-19</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
+                <span class="post-meta-item-text">Edited on</span>
                 <time title="Modified: 2018-12-31 19:19:35" itemprop="dateModified" datetime="2018-12-31T19:19:35+08:00">2018-12-31</time>
-              
+              </span>
             
-          </span>
-
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
+              <span class="post-meta-item-text">In</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/记录/" itemprop="url" rel="index"><span itemprop="name">记录</span></a></span>
 
@@ -2091,21 +1200,9 @@
           
 
           
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
 
         </div>
       </header>
-    
 
     
     
@@ -2113,63 +1210,37 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <p>在周五的晚上，一个人坐在队值日的床上，突然想起来承诺自己很久的周总结没有做，心血来潮翻出了这一周的旧账，给自己算算有什么得失吧。近期以来自省非常的多，不知道什么时候大脑中被拨动了一个开关，让自己更多关注自己作为一个人和一般人的区别，和所崇拜的人的差距。<br>这一周最大的事情，莫过于找老板申请的到了一个小型万兆以太网的使用权。并且从14号开始申请以及部署，到18号，所有的数据和代码就已经到位了。下一步就是要进行实验。<br>对自己最不满意的地方，就是在论文写作方面，我突然间发现我在论文写作上面做出的规划太多，而实际完成的又很少，总是在大框架上列出很多条条框框，然后真正落实到文章中的又很少，这样导致文章的写作效率非常低。<br>其实在科研中，我有时会觉得自己写着写者冒出一些idea，然后做着做着又做得偏了，又去修正写的过程，我不太清楚这样是不是我方法的问题，但是我常常会遇到这样的迭代循环，让我不知所措。</p>
 <p>基本上这周的工作，就是在假设环境，后半周主要精力集中在寻找合适的benchmark上，我之前主要考虑的使用VMware提供的一些benchmark.主要能用的就是三个，specjbb,kernbench,eclipse。<br>然后我再寻找更多的benchmark。方向就是YCSB和Cloudsuite.<br>我发现自己很容易分心，在做benchmark的同时又去弄了kubernetes和docker，然后还看了osv和coreos。虽然可能和下一个课题有关，但是这样总是分散是不好的！！！<br>再次回到课题上，在分析了redis的内存轨迹之后，我发现基本上没有释放内存，就是一旦分配就一直在使用，即便VM关闭之后，redis也没有马上释放内存。所以说这些内存都是在使用着的。那么问题来了，实际情况是redis是采用自己的malloc机制zmalloc.c文件中。</p>
 <p><a href="http://blog.qiji.tech/archives/7854" target="_blank" rel="noopener">http://blog.qiji.tech/archives/7854</a></p>
 
           <!--noindex-->
           
-            <div class="post-button text-center">
+            <div class="post-button">
               <a class="btn" href="/2016/08/19/WeeklySum-2016-8-3/#more" rel="contents">
                 Read more &raquo;
               </a>
             </div>
-         
+          
           <!--/noindex-->
         
       
     </div>
 
     
-
     
     
-    
-
-    
-
-    
-       
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
   </article>
-
+  
+  
+  
 
     
-  </section>
+  </div>
 
   
   <nav class="pagination">
@@ -2182,267 +1253,85 @@
           
 
         </div>
-        
           
   
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
   </div>
 
-  <aside id="sidebar" class="sidebar">
-    
+  <aside class="sidebar">
     <div class="sidebar-inner">
 
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">zero</p>
+  <div class="site-description" itemprop="description">try to look 5 years ahead</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">125</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+    
       
-
       
-
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
-        <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-            
-              <p class="site-author-name" itemprop="name">zero</p>
-              <p class="site-description motion-element" itemprop="description">try to look 5 years ahead</p>
-          </div>
-
+      <div class="site-state-item site-state-categories">
+        
           
-            <nav class="site-state motion-element">
-              
-                <div class="site-state-item site-state-posts">
-                
-                  <a href="/archives/">
-                
-                    <span class="site-state-item-count">125</span>
-                    <span class="site-state-item-name">posts</span>
-                  </a>
-                </div>
-              
-
-              
-                
-                
-                <div class="site-state-item site-state-categories">
-                  <a href="/categories/index.html">
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">7</span>
-                    <span class="site-state-item-name">categories</span>
-                  </a>
-                </div>
-              
-
-              
-                
-                
-                <div class="site-state-item site-state-tags">
-                  <a href="/tags/index.html">
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">56</span>
-                    <span class="site-state-item-name">tags</span>
-                  </a>
-                </div>
-              
-            </nav>
+            <a href="/categories/">
           
-
-          
-
-          
-            <div class="links-of-author motion-element">
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <a href="https://github.com/zhuguoliang" title="GitHub &rarr; https://github.com/zhuguoliang" rel="noopener" target="_blank"><i class="fa fa-fw fa-globe"></i>GitHub</a>
-                </span>
-              
-            </div>
-          
-
-          
-
-          
-          
-            <div class="links-of-blogroll motion-element links-of-blogroll-block">
-              <div class="links-of-blogroll-title">
-                <i class="fa  fa-fw fa-link"></i>
-                Links
-              </div>
-              <ul class="links-of-blogroll-list">
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="http://blog.vmsplice.net/" title="http://blog.vmsplice.net/" rel="noopener" target="_blank">qemu-internals</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="http://www.crockford.com/wrrrld/style1.html" title="http://www.crockford.com/wrrrld/style1.html" rel="noopener" target="_blank">The Elements of Style</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="http://research.google.com/pubs/jeff.html" title="http://research.google.com/pubs/jeff.html" rel="noopener" target="_blank">Jeffrey Dean</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="http://research.google.com/pubs/SanjayGhemawat.html" title="http://research.google.com/pubs/SanjayGhemawat.html" rel="noopener" target="_blank">Sanjay Ghemawat</a>
-                  </li>
-                
-              </ul>
-            </div>
-          
-
-          
-            
-          
-          
-
-        </div>
-      </section>
-
+        
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">categories</span>
+        </a>
+      </div>
+    
       
-
       
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags/">
+          
+        
+        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-name">tags</span>
+        </a>
+      </div>
+    
+  </nav>
+</div>
+
+
+
+      </div>
 
     </div>
   </aside>
+  <div id="sidebar-dimmer"></div>
 
 
-        
       </div>
     </main>
 
@@ -2453,27 +1342,16 @@
     <i class="fa fa-user"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">zero</span>
-
-  
-
-  
 </div>
-
-
   <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
-
-
-
   <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v6.6.0</div>
-
-
-
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.4.1</div>
 
         
+
+
+
+
 
 
 
@@ -2485,33 +1363,19 @@
         
       </div>
     </footer>
-
-    
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-        
-      </div>
-    
-
-    
-	
-    
-
-    
   </div>
 
   
-
-<script type="text/javascript">
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
+  <script src="/lib/anime.min.js?v=3.1.0"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+<script src="/js/utils.js?v=7.4.1"></script><script src="/js/motion.js?v=7.4.1"></script>
+<script src="/js/schemes/muse.js?v=7.4.1"></script>
+<script src="/js/next-boot.js?v=7.4.1"></script>
 
 
 
+  
 
 
 
@@ -2534,100 +1398,11 @@
 
 
   
-  
-    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  
-
-  
-  
-    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-  
-
-
-  
-
-
-  <script type="text/javascript" src="/js/src/utils.js?v=6.6.0"></script>
-
-  <script type="text/javascript" src="/js/src/motion.js?v=6.6.0"></script>
-
-
-
-  
-  
 
   
 
   
 
-
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.6.0"></script>
-
-
-
-  
-
-
-
-  
-
-
-
-
-
-
-<!-- LOCAL: You can save these files to your site and update links -->
-    
-        
-        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
-        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
-    
-<!-- END LOCAL -->
-
-    
-
-    
-
-
-
-
-
-
-  
-
-
-
-
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
 
 </body>
 </html>
