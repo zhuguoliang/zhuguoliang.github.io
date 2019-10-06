@@ -108,18 +108,18 @@
 
 
 
-  <meta name="description" content="VSWAPPER: A Memory Swapper for Virtualized Environments首先先把ballooning一顿臭骂。。。double paging: the guest kernel attempts to reclaim a page that has already been swapped out by the host, a fact unknown to">
+  <meta name="description" content="VSWAPPER: A Memory Swapper for Virtualized Environments  首先先把ballooning一顿臭骂。。。double paging: the guest kernel attempts to reclaim a page that has already been swapped out by the host, a fact unknown t">
 <meta name="keywords" content="虚拟化,内存管理,存储">
 <meta property="og:type" content="article">
 <meta property="og:title" content="vswapper">
 <meta property="og:url" content="http://yoursite.com/2016/09/27/vswapper/index.html">
 <meta property="og:site_name" content="West to the Northwest">
-<meta property="og:description" content="VSWAPPER: A Memory Swapper for Virtualized Environments首先先把ballooning一顿臭骂。。。double paging: the guest kernel attempts to reclaim a page that has already been swapped out by the host, a fact unknown to">
+<meta property="og:description" content="VSWAPPER: A Memory Swapper for Virtualized Environments  首先先把ballooning一顿臭骂。。。double paging: the guest kernel attempts to reclaim a page that has already been swapped out by the host, a fact unknown t">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-12-31T11:32:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="vswapper">
-<meta name="twitter:description" content="VSWAPPER: A Memory Swapper for Virtualized Environments首先先把ballooning一顿臭骂。。。double paging: the guest kernel attempts to reclaim a page that has already been swapped out by the host, a fact unknown to">
+<meta name="twitter:description" content="VSWAPPER: A Memory Swapper for Virtualized Environments  首先先把ballooning一顿臭骂。。。double paging: the guest kernel attempts to reclaim a page that has already been swapped out by the host, a fact unknown t">
 
 
 
@@ -476,7 +476,9 @@
       
 
       
-        <p>VSWAPPER: A Memory Swapper for Virtualized Environments<br><a id="more"></a><br>首先先把ballooning一顿臭骂。。。<br><strong>double paging</strong>: the guest kernel attempts to reclaim a page that has already been swapped out by the host, a fact unknown to the guest since it is uncooperative. When such an event occurs, it causes the page contents to be faulted-in from host swap area, only to be immediately written to the guest swap area, generating wasteful IO activity that host/guest cooperation would  have obviated.</p>
+        <p>VSWAPPER: A Memory Swapper for Virtualized Environments</p>
+<a id="more"></a>
+<p>首先先把ballooning一顿臭骂。。。<br><strong>double paging</strong>: the guest kernel attempts to reclaim a page that has already been swapped out by the host, a fact unknown to the guest since it is uncooperative. When such an event occurs, it causes the page contents to be faulted-in from host swap area, only to be immediately written to the guest swap area, generating wasteful IO activity that host/guest cooperation would  have obviated.</p>
 <p><strong>changing load</strong>： has varing working set, since prediction of the active working set size is difficult.<a href="XHive:%20Efficient%20cooperative%20caching%20for%20virtual%20machines" target="_blank" rel="noopener"></a><br>if the light load is transient and the memory requirement of the workload on the VM suddenly exceed the reduced RAM available, ballooning is insufficiently responsive to instantaneously increase RAM <a href="Transcendent%20memory%20and%20Linux"></a></p>
 <p>vswapper如何应对动态变化的内存负载的？？？？？<br><strong>paravirtualization</strong>: A guest OS is paravirtual if it is modified in a manner that makes it aware it is being virtulized,e.g. by installing hypervisor tools.</p>
 <p>Comment: 我们需要跟谁比较呢？带来的多余读写，适合的动态响应策略，都是我们像这里的ballooning 一样可以和unmodified system进行比较的优势。</p>
@@ -611,7 +613,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">124</span>
+                    <span class="site-state-item-count">125</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>

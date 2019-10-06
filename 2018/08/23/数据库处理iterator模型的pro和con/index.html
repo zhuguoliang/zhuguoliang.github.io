@@ -108,21 +108,21 @@
 
 
 
-  <meta name="description" content="iterator模型（也叫火山执行引擎）出现的年代，数据库查询处理的时间由IO时间主导，而CPU开销并不是很重要。  对每个作为中间结果或者最终结果生成的元组都要调用next函数 对next的调用通常是一个虚函数，或者函数指针  因此对next调用比普通调用更昂贵，因为虚函数调用会损害现代CPU的分支预测性能。  模型的代码局部性不好，需要复杂的book-keeping  假设对一个压缩的关系进行">
+  <meta name="description" content="iterator模型（也叫火山执行引擎）出现的年代，数据库查询处理的时间由IO时间主导，而CPU开销并不是很重要。  对每个作为中间结果或者最终结果生成的元组都要调用next函数 对next的调用通常是一个虚函数，或者函数指针  因此对next调用比普通调用更昂贵，因为虚函数调用会损害现代CPU的分支预测性能。3. 模型的代码局部性不好，需要复杂的book-keeping 假设对一个压缩的关系进行">
 <meta name="keywords" content="databases,查询优化">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据库处理iterator模型的pro和con">
 <meta property="og:url" content="http://yoursite.com/2018/08/23/数据库处理iterator模型的pro和con/index.html">
 <meta property="og:site_name" content="West to the Northwest">
-<meta property="og:description" content="iterator模型（也叫火山执行引擎）出现的年代，数据库查询处理的时间由IO时间主导，而CPU开销并不是很重要。  对每个作为中间结果或者最终结果生成的元组都要调用next函数 对next的调用通常是一个虚函数，或者函数指针  因此对next调用比普通调用更昂贵，因为虚函数调用会损害现代CPU的分支预测性能。  模型的代码局部性不好，需要复杂的book-keeping  假设对一个压缩的关系进行">
+<meta property="og:description" content="iterator模型（也叫火山执行引擎）出现的年代，数据库查询处理的时间由IO时间主导，而CPU开销并不是很重要。  对每个作为中间结果或者最终结果生成的元组都要调用next函数 对next的调用通常是一个虚函数，或者函数指针  因此对next调用比普通调用更昂贵，因为虚函数调用会损害现代CPU的分支预测性能。3. 模型的代码局部性不好，需要复杂的book-keeping 假设对一个压缩的关系进行">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/数据库处理iterator模型的pro和con/7.png">
-<meta property="og:image" content="http://yoursite.com/数据库处理iterator模型的pro和con/8.png">
+<meta property="og:image" content="http://yoursite.com/2018/08/23/数据库处理iterator模型的pro和con/7.png">
+<meta property="og:image" content="http://yoursite.com/2018/08/23/数据库处理iterator模型的pro和con/8.png">
 <meta property="og:updated_time" content="2018-12-31T05:38:26.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据库处理iterator模型的pro和con">
-<meta name="twitter:description" content="iterator模型（也叫火山执行引擎）出现的年代，数据库查询处理的时间由IO时间主导，而CPU开销并不是很重要。  对每个作为中间结果或者最终结果生成的元组都要调用next函数 对next的调用通常是一个虚函数，或者函数指针  因此对next调用比普通调用更昂贵，因为虚函数调用会损害现代CPU的分支预测性能。  模型的代码局部性不好，需要复杂的book-keeping  假设对一个压缩的关系进行">
-<meta name="twitter:image" content="http://yoursite.com/数据库处理iterator模型的pro和con/7.png">
+<meta name="twitter:description" content="iterator模型（也叫火山执行引擎）出现的年代，数据库查询处理的时间由IO时间主导，而CPU开销并不是很重要。  对每个作为中间结果或者最终结果生成的元组都要调用next函数 对next的调用通常是一个虚函数，或者函数指针  因此对next调用比普通调用更昂贵，因为虚函数调用会损害现代CPU的分支预测性能。3. 模型的代码局部性不好，需要复杂的book-keeping 假设对一个压缩的关系进行">
+<meta name="twitter:image" content="http://yoursite.com/2018/08/23/数据库处理iterator模型的pro和con/7.png">
 
 
 
@@ -466,16 +466,14 @@
 <li>对每个作为中间结果或者最终结果生成的元组都要调用next函数</li>
 <li>对next的调用通常是一个虚函数，或者函数指针</li>
 </ol>
-<p>因此对next调用比普通调用更昂贵，因为虚函数调用会损害现代CPU的分支预测性能。</p>
-<ol start="3">
-<li>模型的代码局部性不好，需要复杂的book-keeping</li>
-</ol>
+<p>因此对next调用比普通调用更昂贵，因为虚函数调用会损害现代CPU的分支预测性能。<br>3. 模型的代码局部性不好，需要复杂的book-keeping</p>
 <p>假设对一个压缩的关系进行简单的table扫描，由于元组一次生成一个，table扫描的操作需要记住当前元组在压缩的流中的位置，当需要访问下一个元组时，要跳转到对应的解压缩代码位置。</p>
 <p>下面用一个例子展示火山执行引擎的原理：</p>
-<img src="/数据库处理iterator模型的pro和con/7.png" width="600">
-<p>上图描述了 select id,name,age from people where age >30 的火山模型的查询计划，该查询计划包含 User，Project，Select，Scan 四个 operator，每个 operator 的 next 方法递归调用子节点的 next，一直递归调用到叶子节点 Scan operato，Scan Operator 的 next 从文件中返回一个元组。</p>
+<img src="/2018/08/23/数据库处理iterator模型的pro和con/7.png" width="600">
+
+<p>上图描述了 select id,name,age from people where age &gt;30 的火山模型的查询计划，该查询计划包含 User，Project，Select，Scan 四个 operator，每个 operator 的 next 方法递归调用子节点的 next，一直递归调用到叶子节点 Scan operato，Scan Operator 的 next 从文件中返回一个元组。</p>
 <p>火山模型的主要缺点是昂贵的解释开销 (interpretation overhead) 和低下的 CPU Cache 命中率。首先，火山模型的 next 方法通常实现为一个虚函数，在编译器中，虚函数调用需要查找虚函数表, 并且虚函数调用是一个非直接跳转 (indirect jump), 会导致一次错误的 CPU 分支预测 (branch mis-prediction), 一次错误的分支预测需要十几个周期的开销。火山模型为了返回一个元组，需要调用多次 next 方法，导致昂贵的函数调用开销。研究表明，在采用火山执行模型的 MySQL 中执行 TPC-H Q1 查询，仅有 10% 的时间用于真正的查询计算，其余的 90% 时间都浪费在解释开销 。其次，next 方法一次只返回一个元组，元组通常采用行存储，如图 Row Format，如果顺序访问第一列 1，2，3，那么每次访问都将导致 CPU Cache 命中失败 (假设该行不能完全放入 CPU Cache 中)。如果采用 Column Format，那么只有在访问第一个值时才出现缓存命中失败，后续访问 2 和 3 时都将缓存命中成功, 从而极大的提高查询性能。</p>
-<img src="/数据库处理iterator模型的pro和con/8.png" width="600">
+<img src="/2018/08/23/数据库处理iterator模型的pro和con/8.png" width="600">
 
       
     </div>
@@ -594,7 +592,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">124</span>
+                    <span class="site-state-item-count">125</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>

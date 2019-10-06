@@ -355,6 +355,155 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/31/Readings-in-Streaming-Systems/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zero">
+      <meta itemprop="description" content="try to look 5 years ahead">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="West to the Northwest">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2018/12/31/Readings-in-Streaming-Systems/" class="post-title-link" itemprop="http://yoursite.com/page/2/index.html"># Readings in Streaming Systems</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2018-12-31 20:29:30 / Modified: 20:30:28" itemprop="dateCreated datePublished" datetime="2018-12-31T20:29:30+08:00">2018-12-31</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>额</p>
+
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2018/12/31/Readings-in-Streaming-Systems/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/31/Qcon18-blink/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -851,8 +1000,8 @@
 <li>效率 </li>
 <li>容易debug </li>
 </ul>
-<p><strong>LSM树问题 写放大 3倍 读放大300多倍 </strong></p>
-<p><strong>内核文件系统的问题： </strong><br>内核文件系统，构建存储引擎没用到，<br>文件系统为了单个磁盘设计<br>对异步IO支持不好<br>文件系统的日志操作带来写放大问题 </p>
+<p>*<em>LSM树问题 写放大 3倍 读放大300多倍 *</em></p>
+<p>*<em>内核文件系统的问题： *</em><br>内核文件系统，构建存储引擎没用到，<br>文件系统为了单个磁盘设计<br>对异步IO支持不好<br>文件系统的日志操作带来写放大问题 </p>
 <p>用户空间的存储引擎，直接构建在块设备层之上<br>目前的问题在于上下文切换。 </p>
 <p>未来：pmd实现在用户层，存储引擎实现在 </p>
           <!--noindex-->
@@ -1159,8 +1308,7 @@
         
           <p>Linux内核有一些额外类型的section，被叫做特殊区，special sections<br>这些区使用来实现很多内核特性 </p>
 <p>ELF有个头，有很多段，每个段又包括一个或者多个区域，每个段的长度和每个区的长度在ELF头里面指出。 链接器把相同类型的区和并成一个区，然后给它分配一个起始地址。 比较简单的和执行文件中的section和内核中的section,可以发现有很多特别的区。 这些区域的数目依赖于体系结构，x86_64有超过30个，ARM有10个<br>特殊区域的定义在Linux链接器脚本中，这个默认的链接器脚本有区别，对应的文件存储在每个架构的子树中kernel/vmlinux.ld.S中<br>这个文件使用一系列定义在linux/include/asm_generic/vmlinux.lds.h头文件中的宏中。 </p>
-<p>   ARM平台连接脚本包含一个对特殊区域的简单易懂的定义<br>. = ALIGN(4);<br><strong>start_</strong>ex_table = .;<br>*(<strong>ex_table) 
-</strong>stop___ex_table = .; </p>
+<p>   ARM平台连接脚本包含一个对特殊区域的简单易懂的定义<br>. = ALIGN(4);<br><strong>start_</strong>ex_table = .;<br>*(<strong>ex_table)<br><em>_stop</em></strong>ex_table = .; </p>
 <p>这个<strong>ex_table特殊区域四字节对其。链接器创建一堆标识符，也就是</strong>start_ex_table和<strong>stop</strong>ex_table，然后这只他们的起始地址为<strong>ex_table的开始和结尾。 Linux函数可以用这些标识符来迭代</strong>ex_table的字节， </p>
 <p>下面，根据Linux特殊区域中存储的信息对这些特殊区域进行分组， </p>
 <p>在linux初始化时调用的函数放在.init.text区域，一旦系统个初始化之后，Linux用区域的delimiter来释放这个区域分配的页帧。 </p>
@@ -1513,7 +1661,7 @@
 
       
         
-          <p>DMA–>IOAT </p>
+          <p>DMA–&gt;IOAT </p>
 <p>之前对DMA的使用是从主机的内存直接传输到输入/输出设备，不需要主机CPU干预。一些网络例如Infiniband提供零拷贝数据传输。<br>然而，这些解决方案都是用于在节点之间进行数据传输。之前的研究人员也尝试过使用DMA在节点内部进行大规模数据传输。<br>很多这样的尝试失败的原因是由于DMA启动开销大，DRAM完成后的通知开销等开销问题。具体来说，要保证传输的内存页面不被swap出去，并且需要检查完成。 </p>
 <p>近期intel提出的IOAT引入了一个异步DMA拷贝引擎。 </p>
 <p>IOAT<br>主要三个特性 </p>
@@ -1696,8 +1844,8 @@
 
       
         
-          <p>go interface<br>interface是一种具有一组方法的类型，这些方法定义了interface的行为。<br><img src="/Go-interface/1.png" width="300"></p>
-
+          <p>go interface<br>interface是一种具有一组方法的类型，这些方法定义了interface的行为。 </p>
+<img src="/2018/12/31/Go-interface/1.png" width="300">
           <!--noindex-->
           
             <div class="post-button text-center">
@@ -1913,199 +2061,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/29/c-11和c-14区别/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zero">
-      <meta itemprop="description" content="try to look 5 years ahead">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="West to the Northwest">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2018/12/29/c-11和c-14区别/" class="post-title-link" itemprop="http://yoursite.com/page/2/index.html">c++11和c++14区别</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2018-12-29 15:57:17" itemprop="dateCreated datePublished" datetime="2018-12-29T15:57:17+08:00">2018-12-29</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-12-31 19:40:04" itemprop="dateModified" datetime="2018-12-31T19:40:04+08:00">2018-12-31</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="c-11"><a href="#c-11" class="headerlink" title="c++11"></a>c++11</h2><ul>
-<li>通过值决定对象类型 </li>
-<li>可以决定是否想要重载虚函数 </li>
-<li>可以使用Lambda表达式 </li>
-<li>新的用于遍历容器的for循环格式 </li>
-<li>auto_ptr 被 unique_ptr代替，更安全 </li>
-<li>线程库成为语言内部库，不需要包含外部库 </li>
-<li>在构建或者赋值的时候可以使用移动而不是复制。 <h3 id="这里使用移动而不是复制的方式很有意思，这是rust的重要特性"><a href="#这里使用移动而不是复制的方式很有意思，这是rust的重要特性" class="headerlink" title="这里使用移动而不是复制的方式很有意思，这是rust的重要特性"></a>这里使用移动而不是复制的方式很有意思，这是rust的重要特性</h3></li>
-</ul>
-<h2 id="c-14"><a href="#c-14" class="headerlink" title="c++14"></a>c++14</h2><ul>
-<li>auto 也能作为返回值了 </li>
-<li>auto也能做lambda参数了 </li>
-<li>加入废弃一个类的快捷方式 </li>
-<li>可以使用二进制数 </li>
-</ul>
-
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2018/12/29/c-11和c-14区别/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-         
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-       
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2153,7 +2108,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">124</span>
+                    <span class="site-state-item-count">125</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>

@@ -108,21 +108,21 @@
 
 
 
-  <meta name="description" content="zeromq作为加强型的socket，已经被用于很多大规模分布式系统的开发中，这里记录一下自己的思考，为什么要用zeromq。要回答这个问题，首先要谈到的是，zeromq是什么，下面这个在zeromq的guide中的图清楚显示了这个概念。借用云风大神的话来说，它就是”比 tcp 协议更高一级的协议”，并且“改变了通讯都基于一对一的连接这个假设”。 zeromq中的通讯模式有四种，  Request">
+  <meta name="description" content="zeromq作为加强型的socket，已经被用于很多大规模分布式系统的开发中，这里记录一下自己的思考，为什么要用zeromq。要回答这个问题，首先要谈到的是，zeromq是什么，下面这个在zeromq的guide中的图清楚显示了这个概念。借用云风大神的话来说，它就是”比 tcp 协议更高一级的协议”，并且“改变了通讯都基于一对一的连接这个假设”。   zeromq中的通讯模式有四种，  Reque">
 <meta name="keywords" content="分布式系统,消息队列">
 <meta property="og:type" content="article">
 <meta property="og:title" content="为什么要用zeromq">
 <meta property="og:url" content="http://yoursite.com/2017/07/03/为什么要用zeromq/index.html">
 <meta property="og:site_name" content="West to the Northwest">
-<meta property="og:description" content="zeromq作为加强型的socket，已经被用于很多大规模分布式系统的开发中，这里记录一下自己的思考，为什么要用zeromq。要回答这个问题，首先要谈到的是，zeromq是什么，下面这个在zeromq的guide中的图清楚显示了这个概念。借用云风大神的话来说，它就是”比 tcp 协议更高一级的协议”，并且“改变了通讯都基于一对一的连接这个假设”。 zeromq中的通讯模式有四种，  Request">
+<meta property="og:description" content="zeromq作为加强型的socket，已经被用于很多大规模分布式系统的开发中，这里记录一下自己的思考，为什么要用zeromq。要回答这个问题，首先要谈到的是，zeromq是什么，下面这个在zeromq的guide中的图清楚显示了这个概念。借用云风大神的话来说，它就是”比 tcp 协议更高一级的协议”，并且“改变了通讯都基于一对一的连接这个假设”。   zeromq中的通讯模式有四种，  Reque">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/为什么要用zeromq/fig1.png">
-<meta property="og:image" content="http://yoursite.com/为什么要用zeromq/ZMQ.png">
+<meta property="og:image" content="http://yoursite.com/2017/07/03/为什么要用zeromq/fig1.png">
+<meta property="og:image" content="http://yoursite.com/2017/07/03/为什么要用zeromq/ZMQ.png">
 <meta property="og:updated_time" content="2018-12-31T11:00:38.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="为什么要用zeromq">
-<meta name="twitter:description" content="zeromq作为加强型的socket，已经被用于很多大规模分布式系统的开发中，这里记录一下自己的思考，为什么要用zeromq。要回答这个问题，首先要谈到的是，zeromq是什么，下面这个在zeromq的guide中的图清楚显示了这个概念。借用云风大神的话来说，它就是”比 tcp 协议更高一级的协议”，并且“改变了通讯都基于一对一的连接这个假设”。 zeromq中的通讯模式有四种，  Request">
-<meta name="twitter:image" content="http://yoursite.com/为什么要用zeromq/fig1.png">
+<meta name="twitter:description" content="zeromq作为加强型的socket，已经被用于很多大规模分布式系统的开发中，这里记录一下自己的思考，为什么要用zeromq。要回答这个问题，首先要谈到的是，zeromq是什么，下面这个在zeromq的guide中的图清楚显示了这个概念。借用云风大神的话来说，它就是”比 tcp 协议更高一级的协议”，并且“改变了通讯都基于一对一的连接这个假设”。   zeromq中的通讯模式有四种，  Reque">
+<meta name="twitter:image" content="http://yoursite.com/2017/07/03/为什么要用zeromq/fig1.png">
 
 
 
@@ -479,7 +479,9 @@
       
 
       
-        <p>zeromq作为加强型的socket，已经被用于很多大规模分布式系统的开发中，这里记录一下自己的思考，为什么要用zeromq。<br>要回答这个问题，首先要谈到的是，zeromq是什么，下面这个在zeromq的guide中的图清楚显示了这个概念。借用云风大神的话来说，它就是”比 tcp 协议更高一级的协议”，并且“改变了通讯都基于一对一的连接这个假设”。<br><img src="/为什么要用zeromq/fig1.png" width="300"></p>
+        <p>zeromq作为加强型的socket，已经被用于很多大规模分布式系统的开发中，这里记录一下自己的思考，为什么要用zeromq。<br>要回答这个问题，首先要谈到的是，zeromq是什么，下面这个在zeromq的guide中的图清楚显示了这个概念。借用云风大神的话来说，它就是”比 tcp 协议更高一级的协议”，并且“改变了通讯都基于一对一的连接这个假设”。</p>
+<img src="/2017/07/03/为什么要用zeromq/fig1.png" width="300">
+
 <p>zeromq中的通讯模式有四种，</p>
 <ul>
 <li><strong>Request-reply</strong>, which connects a set of clients to a set of services. This is a remote procedure call and task distribution pattern.</li>
@@ -488,7 +490,7 @@
 <li><strong>Exclusive pair</strong>, which connects two sockets exclusively. This is a pattern for connecting two threads in a process, not to be confused with “normal” pairs of sockets.<br>要弄懂这些模式，首先要看函数 zmq_socket的手册页<br>初始化一个zmq的上下文context首先要调用zmq_socket，<br>void *zmq_socket (void *context, int type);<a id="more"></a>
 对于上面提到的四个模式，每个模式都有对应的不同的type来用来初始话一个zmq的socket.</li>
 </ul>
-<img src="/为什么要用zeromq/ZMQ.png" width="600">
+<img src="/2017/07/03/为什么要用zeromq/ZMQ.png" width="600">
 
       
     </div>
@@ -607,7 +609,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">124</span>
+                    <span class="site-state-item-count">125</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>

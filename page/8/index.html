@@ -355,6 +355,195 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/27/vswapper/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zero">
+      <meta itemprop="description" content="try to look 5 years ahead">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="West to the Northwest">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2016/09/27/vswapper/" class="post-title-link" itemprop="http://yoursite.com/page/8/index.html">vswapper</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2016-09-27 19:38:32" itemprop="dateCreated datePublished" datetime="2016-09-27T19:38:32+08:00">2016-09-27</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-12-31 19:32:49" itemprop="dateModified" datetime="2018-12-31T19:32:49+08:00">2018-12-31</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>VSWAPPER: A Memory Swapper for Virtualized Environments</p>
+<a id="more"></a>
+<p>首先先把ballooning一顿臭骂。。。<br><strong>double paging</strong>: the guest kernel attempts to reclaim a page that has already been swapped out by the host, a fact unknown to the guest since it is uncooperative. When such an event occurs, it causes the page contents to be faulted-in from host swap area, only to be immediately written to the guest swap area, generating wasteful IO activity that host/guest cooperation would  have obviated.</p>
+<p><strong>changing load</strong>： has varing working set, since prediction of the active working set size is difficult.<a href="XHive:%20Efficient%20cooperative%20caching%20for%20virtual%20machines" target="_blank" rel="noopener"></a><br>if the light load is transient and the memory requirement of the workload on the VM suddenly exceed the reduced RAM available, ballooning is insufficiently responsive to instantaneously increase RAM <a href="Transcendent%20memory%20and%20Linux"></a></p>
+<p>vswapper如何应对动态变化的内存负载的？？？？？<br><strong>paravirtualization</strong>: A guest OS is paravirtual if it is modified in a manner that makes it aware it is being virtulized,e.g. by installing hypervisor tools.</p>
+<p>Comment: 我们需要跟谁比较呢？带来的多余读写，适合的动态响应策略，都是我们像这里的ballooning 一样可以和unmodified system进行比较的优势。</p>
+<p>好吧，接下来不骂ballooning了，把原生系统虚拟化的不合作现象一顿臭骂。。。</p>
+<p><strong>Silent SwapWrites</strong>: So long as memory is plentiful, much of the memory is dedicated to caching file content long after the content is used, in the hope that it will get re-used in the future.<br><a href>Data centers in the wild: A large performance study</a><br>in virtual setup with uncooperative swapping, host decide which page to swap, host 没法区分一个被reclaim的页在guest VM中是否是脏的，所以把所有reclaim的页都放到swap区域，指定时间到了就会写回到disk，不管这个页和原来的页是否相同。。。<strong>、!!!这个对NVM有影响！！！</strong> 但是也是要在host非常紧张，reclaim了guest的页的情况才存在。</p>
+<blockquote>
+<p>If a victim page is dirty, the host writes it to its swap area so as to later be able to recover the correct data.</p>
+</blockquote>
+<p>这种脏页被写到swap的情况多吗？为什么不直接写回？</p>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2016/09/27/vswapper/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/09/26/Mike-Carson/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -469,7 +658,9 @@
 
       
         
-          <p>看HN的时候偶然发现了这个人，Mike Carson，这里就写写他做了什么有意思的东西吧。<br><a id="more"></a><br>他的网站是<a href="http://humb.ly/" title="mike" target="_blank" rel="noopener">http://humb.ly/</a><br>做了一个阅后即焚的文件缓存池，文件上传后一旦下载一次，就会被删除。<br>写着写着发现，这些工作也有一些壁垒，比如</p>
+          <p>看HN的时候偶然发现了这个人，Mike Carson，这里就写写他做了什么有意思的东西吧。</p>
+<a id="more"></a>
+<p>他的网站是<a href="http://humb.ly/" title="mike" target="_blank" rel="noopener">http://humb.ly/</a><br>做了一个阅后即焚的文件缓存池，文件上传后一旦下载一次，就会被删除。<br>写着写着发现，这些工作也有一些壁垒，比如</p>
 <ol>
 <li>需要web开发经验，通常很多都是web开发从业人员</li>
 <li>很多本来就给freelance写了很久代码的人</li>
@@ -1744,10 +1935,10 @@
 
       
         
-          <p>qemu_thread_create(&amp;iothread->thread, thread_name, iothread_run,<br>   95:                        iothread, QEMU_THREAD_JOINABLE);</p>
-<p>qemu_thread_join(&amp;iothread->thread);</p>
+          <p>qemu_thread_create(&amp;iothread-&gt;thread, thread_name, iothread_run,<br>   95:                        iothread, QEMU_THREAD_JOINABLE);</p>
+<p>qemu_thread_join(&amp;iothread-&gt;thread);</p>
 <p>qemu_notify_bh = qemu_bh_new(notify_event_cb, NULL);</p>
-<p>qemu_bh_schedule(qemu_notify_bh);<br>qemu_bh_delete(pool->completion_bh);_</p>
+<p>qemu_bh_schedule(qemu_notify_bh);<br>qemu_bh_delete(pool-&gt;completion_bh);_</p>
 
           <!--noindex-->
           
@@ -1976,186 +2167,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/08/25/postcopy-page-fault-handling/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zero">
-      <meta itemprop="description" content="try to look 5 years ahead">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="West to the Northwest">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2016/08/25/postcopy-page-fault-handling/" class="post-title-link" itemprop="http://yoursite.com/page/8/index.html">postcopy page fault handling</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2016-08-25 21:42:35" itemprop="dateCreated datePublished" datetime="2016-08-25T21:42:35+08:00">2016-08-25</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-12-31 19:23:19" itemprop="dateModified" datetime="2018-12-31T19:23:19+08:00">2018-12-31</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>在postcopy的过程中，如果target vm访问了一个没有被传输的页面，那么这个页面就会触发page fault，从而从源VM拷贝数据。这个过程在下面这个函数中完成。<br><a href="https://www.youtube.com/watch?v=2VNswMRT6JQ" target="_blank" rel="noopener">https://www.youtube.com/watch?v=2VNswMRT6JQ</a></p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
-
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2016/08/25/postcopy-page-fault-handling/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-         
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-       
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2203,7 +2214,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">124</span>
+                    <span class="site-state-item-count">125</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>

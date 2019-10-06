@@ -108,18 +108,18 @@
 
 
 
-  <meta name="description" content="这篇博文论证一个问题，为什么在IaaS云中，提供透明的内存管理是必要的. ESX by VMware  In ESX, the memory management techniques allow the virtual machines to use more memory thanthe physical machines available memory.-For example, you">
+  <meta name="description" content="这篇博文论证一个问题，为什么在IaaS云中，提供透明的内存管理是必要的. ESX by VMware  In ESX, the memory management techniques allow the virtual machines to use more memory thanthe physical machines available memory. For example, you">
 <meta name="keywords" content="云计算,内存管理">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Transparent management in IaaS cloud">
 <meta property="og:url" content="http://yoursite.com/2016/08/08/Transparent-management-in-IaaS-cloud/index.html">
 <meta property="og:site_name" content="West to the Northwest">
-<meta property="og:description" content="这篇博文论证一个问题，为什么在IaaS云中，提供透明的内存管理是必要的. ESX by VMware  In ESX, the memory management techniques allow the virtual machines to use more memory thanthe physical machines available memory.-For example, you">
+<meta property="og:description" content="这篇博文论证一个问题，为什么在IaaS云中，提供透明的内存管理是必要的. ESX by VMware  In ESX, the memory management techniques allow the virtual machines to use more memory thanthe physical machines available memory. For example, you">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-12-31T11:11:33.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Transparent management in IaaS cloud">
-<meta name="twitter:description" content="这篇博文论证一个问题，为什么在IaaS云中，提供透明的内存管理是必要的. ESX by VMware  In ESX, the memory management techniques allow the virtual machines to use more memory thanthe physical machines available memory.-For example, you">
+<meta name="twitter:description" content="这篇博文论证一个问题，为什么在IaaS云中，提供透明的内存管理是必要的. ESX by VMware  In ESX, the memory management techniques allow the virtual machines to use more memory thanthe physical machines available memory. For example, you">
 
 
 
@@ -479,7 +479,9 @@
         <p>这篇博文论证一个问题，为什么在IaaS云中，提供透明的内存管理是必要的.</p>
 <p>ESX by VMware</p>
 <ul>
-<li>In ESX, the memory management techniques allow the virtual machines to use more memory than<br>the physical machines available memory.<br>-For example, you can have a host with 2GB memory and run four virtual machines with 1GB<br>memory each. In that case, the memory is overcommitted. To improve memory utilization, ESX transfers<br>memory from idle virtual machine to virtual machines that need more memory .<br>-Transparent Page Sharing (TPS)</li>
+<li>In ESX, the memory management techniques allow the virtual machines to use more memory than<br>the physical machines available memory.</li>
+<li>For example, you can have a host with 2GB memory and run four virtual machines with 1GB<br>memory each. In that case, the memory is overcommitted. To improve memory utilization, ESX transfers<br>memory from idle virtual machine to virtual machines that need more memory .</li>
+<li>Transparent Page Sharing (TPS)</li>
 <li>When multiple VMs are running, some of them may have identical sets of memory content<br>(several VMs may be running the same OS, applications and the same user data). With page sharing the<br>hypervisor can reclaim the redundant copies and only keep one copy, which is shared by multiple virtual<br>machines in the host physical memory. Example 4shared, Github.</li>
 <li>Ballooning</li>
 <li>A driver used to communicate with applications to understand their memory needs to make room<br>for other applications.</li>
@@ -612,7 +614,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">124</span>
+                    <span class="site-state-item-count">125</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>

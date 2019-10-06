@@ -355,6 +355,187 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/08/25/postcopy-page-fault-handling/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zero">
+      <meta itemprop="description" content="try to look 5 years ahead">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="West to the Northwest">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2016/08/25/postcopy-page-fault-handling/" class="post-title-link" itemprop="http://yoursite.com/page/9/index.html">postcopy page fault handling</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+
+              
+                
+              
+
+              <time title="Created: 2016-08-25 21:42:35" itemprop="dateCreated datePublished" datetime="2016-08-25T21:42:35+08:00">2016-08-25</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">Edited on</span>
+                
+                <time title="Modified: 2018-12-31 19:23:19" itemprop="dateModified" datetime="2018-12-31T19:23:19+08:00">2018-12-31</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <p>在postcopy的过程中，如果target vm访问了一个没有被传输的页面，那么这个页面就会触发page fault，从而从源VM拷贝数据。这个过程在下面这个函数中完成。<br><a href="https://www.youtube.com/watch?v=2VNswMRT6JQ" target="_blank" rel="noopener">https://www.youtube.com/watch?v=2VNswMRT6JQ</a></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2016/08/25/postcopy-page-fault-handling/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+       
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/08/24/How-to-add-qemu-option-by-defining-a-xml/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -469,9 +650,9 @@
 
       
         
-          <p>The \<a href="qemu:commandline\" target="_blank" rel="noopener">qemu:commandline\</a> domain XML tag<br>There is a special namespace for QEMU-specific tags in libvirt domain XML. You<br>cannot use QEMU-specific tags without first declaring the namespace. To enable<br>it use the following:<br>\&lt;domain type=’kvm’ xmlns:qemu=’<a href="http://libvirt.org/schemas/domain/qemu/1.0&#39;\&gt;" target="_blank" rel="noopener">http://libvirt.org/schemas/domain/qemu/1.0&#39;\&gt;</a></p>
-<p>Now you can add command-line arguments to the QEMU invocation. For example, to load an option ROM with-option-rom:<br>\<a href="qemu:commandline\" target="_blank" rel="noopener">qemu:commandline\</a><br>   \&lt;qemu:arg value=’-option-rom’/><br>   \&lt;qemu:arg value=’path/to/my.rom’/><br>\&lt;/qemu:commandline></p>
-<p>It is also possible to add environment variables to the QEMU invocation:<br>\<a href="qemu:commandline\" target="_blank" rel="noopener">qemu:commandline\</a><br>   \&lt;qemu:env name=’MY_VAR’ value=’my_value’/><br>\&lt;/qemu:commandline></p>
+          <p>The &lt;qemu:commandline&gt; domain XML tag<br>There is a special namespace for QEMU-specific tags in libvirt domain XML. You<br>cannot use QEMU-specific tags without first declaring the namespace. To enable<br>it use the following:<br>&lt;domain type=’kvm’ xmlns:qemu=’<a href="http://libvirt.org/schemas/domain/qemu/1.0&#39;\&gt;" target="_blank" rel="noopener">http://libvirt.org/schemas/domain/qemu/1.0&#39;\&gt;</a></p>
+<p>Now you can add command-line arguments to the QEMU invocation. For example, to load an option ROM with-option-rom:<br>&lt;qemu:commandline&gt;<br>   &lt;qemu:arg value=’-option-rom’/&gt;<br>   &lt;qemu:arg value=’path/to/my.rom’/&gt;<br>&lt;/qemu:commandline&gt;</p>
+<p>It is also possible to add environment variables to the QEMU invocation:<br>&lt;qemu:commandline&gt;<br>   &lt;qemu:env name=’MY_VAR’ value=’my_value’/&gt;<br>&lt;/qemu:commandline&gt;</p>
 
           <!--noindex-->
           
@@ -831,8 +1012,14 @@
 
       
         
-          <p>qemu的迁移，可以通过tcp连接，也可以通过libvirt的RPC,但是核心的机制应该是相同的。<br><a id="more"></a><br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//迁移发起端：</span></span><br><span class="line">hmp-commands.hx</span><br><span class="line">|—\&gt; hmp\_migrate\_</span><br><span class="line">|—\&gt;qmp\_migrate</span><br><span class="line"><span class="comment">//入口函数qmp\_migrate（migration.c）</span></span><br><span class="line">qmp\_migrate</span><br><span class="line">     |--\&gt; migrate\_init</span><br><span class="line">     |--\&gt; ? tcp\_start\_outgoing\_migration</span><br><span class="line">     |--\&gt; ? rdma\_start\_outgoing\_migration</span><br><span class="line">     |--\&gt; ? exec\_start\_outgoing\_migration</span><br><span class="line">     |--\&gt; ? exec\_start\_outgoing\_migration</span><br><span class="line">     |--\&gt; ? unix\_start\_outgoing\_migration</span><br><span class="line">     |--\&gt; ? fd\_start\_outgoing\_migration </span><br><span class="line"></span><br><span class="line">|--\&gt; exec\_start\_outgoing\_migration</span><br><span class="line">* |--\&gt;  migration\_channel\_connect\_ \* |--\&gt;  migrate\_fd\_connect</span><br><span class="line">|--\&gt; rdma\_start\_outgoing\_migration</span><br><span class="line">* |--\&gt; ? migrate\_fd\_connect</span><br><span class="line">	* |--\&gt; ?  migration\_thread</span><br><span class="line">		* |--\&gt; ? qemu\_savevm\_state\_iterate</span><br><span class="line"><span class="comment">//这是源VM上的主迁移线程</span></span><br><span class="line">qemu\_savevm\_state—\&gt; qemu\_savevm\_state\_iterate</span><br><span class="line">qemu\_savevm\_state\_iterate调用注册savevm\_ram\_handler</span><br><span class="line">* |—\&gt; ram\_save\_iterate</span><br><span class="line"></span><br><span class="line">ram\_save\_iterate</span><br><span class="line">* |—\&gt; ram\_find\_and\_save\_block</span><br><span class="line">	* |—\&gt;ram\_save\_host\_page</span><br><span class="line">		* |—\&gt;ram\_save\_target\_page\_</span><br><span class="line">			* |—\&gt; ram\_save\_page</span><br><span class="line">				* |—\&gt; ram\_control\_save\_page\_</span><br><span class="line"></span><br><span class="line">ram\_save\_target\_page\_</span><br><span class="line"><span class="comment">//检查是否是脏页，如果是的话，继续调用ram\_save\_page保存这个页。</span></span><br><span class="line">ram\_save\_page</span><br><span class="line"><span class="comment">//把给定的页发送到流，调用ram\_control\_save\_page</span></span><br><span class="line"><span class="comment">//返回值是写出的页的数目，</span></span><br><span class="line">ram\_control\_save\_page\_</span><br><span class="line"><span class="comment">//调用QEMUFile注册的save\_page回调函数\_</span></span><br></pre></td></tr></table></figure></p>
-<p>保存VM时和内存有关的处理函数在下面这个结构中定义：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">static SaveVMHandlers savevm\_ram\_handlers = &#123;</span><br><span class="line">.save\_live\_setup = ram\_save\_setup,</span><br><span class="line">.save\_live\_iterate = ram\_save\_iterate,</span><br><span class="line">.save\_live\_complete\_postcopy = ram\_save\_complete,</span><br><span class="line">.save\_live\_complete\_precopy = ram\_save\_complete,</span><br><span class="line">.save\_live\_pending = ram\_save\_pending,</span><br><span class="line">.load\_state = ram\_load,</span><br><span class="line">.cleanup = ram\_migration\_cleanup,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+          <p>qemu的迁移，可以通过tcp连接，也可以通过libvirt的RPC,但是核心的机制应该是相同的。</p>
+<a id="more"></a>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">//迁移发起端：</span></span><br><span class="line">hmp-commands.hx</span><br><span class="line">|—\&gt; hmp\_migrate\_</span><br><span class="line">|—\&gt;qmp\_migrate</span><br><span class="line"><span class="comment">//入口函数qmp\_migrate（migration.c）</span></span><br><span class="line">qmp\_migrate</span><br><span class="line">     |--\&gt; migrate\_init</span><br><span class="line">     |--\&gt; ? tcp\_start\_outgoing\_migration</span><br><span class="line">     |--\&gt; ? rdma\_start\_outgoing\_migration</span><br><span class="line">     |--\&gt; ? exec\_start\_outgoing\_migration</span><br><span class="line">     |--\&gt; ? exec\_start\_outgoing\_migration</span><br><span class="line">     |--\&gt; ? unix\_start\_outgoing\_migration</span><br><span class="line">     |--\&gt; ? fd\_start\_outgoing\_migration </span><br><span class="line"></span><br><span class="line">|--\&gt; exec\_start\_outgoing\_migration</span><br><span class="line">* |--\&gt;  migration\_channel\_connect\_ \* |--\&gt;  migrate\_fd\_connect</span><br><span class="line">|--\&gt; rdma\_start\_outgoing\_migration</span><br><span class="line">* |--\&gt; ? migrate\_fd\_connect</span><br><span class="line">	* |--\&gt; ?  migration\_thread</span><br><span class="line">		* |--\&gt; ? qemu\_savevm\_state\_iterate</span><br><span class="line"><span class="comment">//这是源VM上的主迁移线程</span></span><br><span class="line">qemu\_savevm\_state—\&gt; qemu\_savevm\_state\_iterate</span><br><span class="line">qemu\_savevm\_state\_iterate调用注册savevm\_ram\_handler</span><br><span class="line">* |—\&gt; ram\_save\_iterate</span><br><span class="line"></span><br><span class="line">ram\_save\_iterate</span><br><span class="line">* |—\&gt; ram\_find\_and\_save\_block</span><br><span class="line">	* |—\&gt;ram\_save\_host\_page</span><br><span class="line">		* |—\&gt;ram\_save\_target\_page\_</span><br><span class="line">			* |—\&gt; ram\_save\_page</span><br><span class="line">				* |—\&gt; ram\_control\_save\_page\_</span><br><span class="line"></span><br><span class="line">ram\_save\_target\_page\_</span><br><span class="line"><span class="comment">//检查是否是脏页，如果是的话，继续调用ram\_save\_page保存这个页。</span></span><br><span class="line">ram\_save\_page</span><br><span class="line"><span class="comment">//把给定的页发送到流，调用ram\_control\_save\_page</span></span><br><span class="line"><span class="comment">//返回值是写出的页的数目，</span></span><br><span class="line">ram\_control\_save\_page\_</span><br><span class="line"><span class="comment">//调用QEMUFile注册的save\_page回调函数\_</span></span><br></pre></td></tr></table></figure>
+
+
+<p>保存VM时和内存有关的处理函数在下面这个结构中定义：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">static SaveVMHandlers savevm\_ram\_handlers = &#123;</span><br><span class="line">.save\_live\_setup = ram\_save\_setup,</span><br><span class="line">.save\_live\_iterate = ram\_save\_iterate,</span><br><span class="line">.save\_live\_complete\_postcopy = ram\_save\_complete,</span><br><span class="line">.save\_live\_complete\_precopy = ram\_save\_complete,</span><br><span class="line">.save\_live\_pending = ram\_save\_pending,</span><br><span class="line">.load\_state = ram\_load,</span><br><span class="line">.cleanup = ram\_migration\_cleanup,</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
 <p>在视频中标记为三个阶段<br>第一阶段：mark all ram dirty这个在ram_save_setup中实现，<br>第二阶段：持续发送在上次iterate之后的脏页，这个在ram_save_iterate中实现。<br>第三阶段：停止guest, 传输剩余的脏RAM页，设备状态。这个在migration_thread中实现_</p>
 <p>然而最近出现一些新问题：<br>随着内存总量的增加，需要迁移的内存量增大了，这样第二个阶段就会变得很慢<br>随着vCPU的增加，guest的产生脏页的速度也变慢了，这样同样会导致第二个阶段变得很慢。<br>这些新问题的解决，目前qemu采用了以下几个手段</p>
 <ol>
@@ -1205,7 +1392,7 @@
         
           <p>其实这些不能算是下一代操作系统，而是云操作系统。</p>
 <p><a href="https://cloudbase.it/qemu-img-windows/" target="_blank" rel="noopener">https://cloudbase.it/qemu-img-windows/</a><br>OSv<br><a href="https://github.com/cloudius-systems/osv/wiki/Running-OSv-image-under-KVM-QEMU" target="_blank" rel="noopener">https://github.com/cloudius-systems/osv/wiki/Running-OSv-image-under-KVM-QEMU</a></p>
-<p><a href="https://www.youtube.com/watch?v=FKc0lFaPzXA&amp;feature=youtu.be" target="_blank" rel="noopener">https://www.youtube.com/watch?v=FKc0lFaPzXA&amp;feature=youtu.be</a></p>
+<p><a href="https://www.youtube.com/watch?v=FKc0lFaPzXA&feature=youtu.be" target="_blank" rel="noopener">https://www.youtube.com/watch?v=FKc0lFaPzXA&amp;feature=youtu.be</a></p>
 <p><a href="https://groups.google.com/forum/#!topic/osv-dev/sbmyxE9B9V8" target="_blank" rel="noopener">https://groups.google.com/forum/#!topic/osv-dev/sbmyxE9B9V8</a></p>
 <p>coreOS<br><a href="https://coreos.com/os/docs/latest/booting-with-qemu.html" target="_blank" rel="noopener">https://coreos.com/os/docs/latest/booting-with-qemu.html</a></p>
 
@@ -1982,184 +2169,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/08/19/mem-usage-plot-analysis/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zero">
-      <meta itemprop="description" content="try to look 5 years ahead">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="West to the Northwest">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2016/08/19/mem-usage-plot-analysis/" class="post-title-link" itemprop="http://yoursite.com/page/9/index.html">mem usage plot analysis</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-
-              
-                
-              
-
-              <time title="Created: 2016-08-19 18:28:04" itemprop="dateCreated datePublished" datetime="2016-08-19T18:28:04+08:00">2016-08-19</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">Edited on</span>
-                
-                <time title="Modified: 2018-12-31 19:19:06" itemprop="dateModified" datetime="2018-12-31T19:19:06+08:00">2018-12-31</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <img src="/mem-usage-plot-analysis/mem-graph.png">
-          <!--noindex-->
-          
-            <div class="post-button text-center">
-              <a class="btn" href="/2016/08/19/mem-usage-plot-analysis/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-         
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-       
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2207,7 +2216,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">124</span>
+                    <span class="site-state-item-count">125</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>

@@ -108,18 +108,18 @@
 
 
 
-  <meta name="description" content="qemu_thread_create(&amp;amp;iothread-&amp;gt;thread, thread_name, iothread_run,   95:                        iothread, QEMU_THREAD_JOINABLE); qemu_thread_join(&amp;amp;iothread-&amp;gt;thread); qemu_notify_bh = qemu_bh_new">
+  <meta name="description" content="qemu_thread_create(&amp;amp;iothread-&amp;gt;thread, thread_name, iothread_run,   95:                        iothread, QEMU_THREAD_JOINABLE); qemu_thread_join(&amp;amp;iothread-&amp;gt;thread); qemu_notify_bh = qemu_">
 <meta name="keywords" content="虚拟化,云计算,coroutine">
 <meta property="og:type" content="article">
 <meta property="og:title" content="qemu中的thread, bh以及coroutine的用法">
 <meta property="og:url" content="http://yoursite.com/2016/08/30/qemu中的thread-bh以及coroutine的用法/index.html">
 <meta property="og:site_name" content="West to the Northwest">
-<meta property="og:description" content="qemu_thread_create(&amp;amp;iothread-&amp;gt;thread, thread_name, iothread_run,   95:                        iothread, QEMU_THREAD_JOINABLE); qemu_thread_join(&amp;amp;iothread-&amp;gt;thread); qemu_notify_bh = qemu_bh_new">
+<meta property="og:description" content="qemu_thread_create(&amp;amp;iothread-&amp;gt;thread, thread_name, iothread_run,   95:                        iothread, QEMU_THREAD_JOINABLE); qemu_thread_join(&amp;amp;iothread-&amp;gt;thread); qemu_notify_bh = qemu_">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-12-31T11:24:10.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="qemu中的thread, bh以及coroutine的用法">
-<meta name="twitter:description" content="qemu_thread_create(&amp;amp;iothread-&amp;gt;thread, thread_name, iothread_run,   95:                        iothread, QEMU_THREAD_JOINABLE); qemu_thread_join(&amp;amp;iothread-&amp;gt;thread); qemu_notify_bh = qemu_bh_new">
+<meta name="twitter:description" content="qemu_thread_create(&amp;amp;iothread-&amp;gt;thread, thread_name, iothread_run,   95:                        iothread, QEMU_THREAD_JOINABLE); qemu_thread_join(&amp;amp;iothread-&amp;gt;thread); qemu_notify_bh = qemu_">
 
 
 
@@ -476,10 +476,10 @@
       
 
       
-        <p>qemu_thread_create(&amp;iothread->thread, thread_name, iothread_run,<br>   95:                        iothread, QEMU_THREAD_JOINABLE);</p>
-<p>qemu_thread_join(&amp;iothread->thread);</p>
+        <p>qemu_thread_create(&amp;iothread-&gt;thread, thread_name, iothread_run,<br>   95:                        iothread, QEMU_THREAD_JOINABLE);</p>
+<p>qemu_thread_join(&amp;iothread-&gt;thread);</p>
 <p>qemu_notify_bh = qemu_bh_new(notify_event_cb, NULL);</p>
-<p>qemu_bh_schedule(qemu_notify_bh);<br>qemu_bh_delete(pool->completion_bh);_</p>
+<p>qemu_bh_schedule(qemu_notify_bh);<br>qemu_bh_delete(pool-&gt;completion_bh);_</p>
 
       
     </div>
@@ -600,7 +600,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">124</span>
+                    <span class="site-state-item-count">125</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>

@@ -479,10 +479,11 @@
         <p>QEMU的协程接口，这里介绍了几个主要函数，没有翻译，自己看看。</p>
 <p>The QEMU coroutine API<br>The coroutine API is documented in include/block/coroutine.h. The main functions are:</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">void</span> coroutine\_<span class="function">fn <span class="title">CoroutineEntry</span><span class="params">(<span class="keyword">void</span> \*opaque)</span></span>;</span><br><span class="line">Coroutine *qemu\_coroutine\_create(CoroutineEntry *entry);</span><br></pre></td></tr></table></figure>
+
 <a id="more"></a>
 <p>When a new coroutine is started, it will begin executing the entry function. The caller can pass an opaque pointer to data needed by the coroutine. If you are familiar with multi-threaded programming, this interface is similar to pthread_create(3).</p>
 <p>The new coroutine is executed by calling qemu_coroutine_enter():</p>
-<p>void qemu_coroutine_enter(Coroutine <em>coroutine, void </em>opaque);<br>If the coroutine needs to wait for an event such as I/O completion or user input, it calls qemu_coroutine_yield():</p>
+<p>void qemu_coroutine_enter(Coroutine *coroutine, void *opaque);<br>If the coroutine needs to wait for an event such as I/O completion or user input, it calls qemu_coroutine_yield():</p>
 <p>void coroutine_fn qemu_coroutine_yield(void);<br>The yield function transfers control back to the qemu_coroutine_enter() caller. The coroutine can be re-entered at a later point in time by calling qemu_coroutine_enter(), for example, when an I/O request has completed.</p>
 <p>Conclusion<br>Coroutines make it possible to write sequential code that is actually executed across multiple iterations of the event loop. This is useful for code that needs to perform blocking I/O and would quickly become messy if split into a chain of callback functions. Transfer of control is always explicit using enter/yield, and there is no scheduler that automatically switches between coroutines.</p>
 <p>QEMU provides additional primitives on top of the coroutine API for wait queues, mutexes, and timers. In a future blog post I will explain how to use these primitives.</p>
@@ -604,7 +605,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">124</span>
+                    <span class="site-state-item-count">125</span>
                     <span class="site-state-item-name">posts</span>
                   </a>
                 </div>
