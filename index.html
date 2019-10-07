@@ -257,7 +257,7 @@
                 
               
 
-              <time title="Created: 2019-10-07 19:39:03 / Modified: 20:03:01" itemprop="dateCreated datePublished" datetime="2019-10-07T19:39:03+08:00">2019-10-07</time>
+              <time title="Created: 2019-10-07 19:39:03 / Modified: 20:17:31" itemprop="dateCreated datePublished" datetime="2019-10-07T19:39:03+08:00">2019-10-07</time>
             </span>
           
             
@@ -299,12 +299,12 @@
 </ul><a id="more"></a>
 
 
-<h3 id="SegmentReadRequest"><a href="#SegmentReadRequest" class="headerlink" title="SegmentReadRequest"></a>SegmentReadRequest</h3><p>使用场景：</p>
+<h3 id="SegmentReadRequest"><a href="#SegmentReadRequest" class="headerlink" title="SegmentReadRequest"></a>SegmentReadRequest</h3><p>read行为分析：<br>使用场景：</p>
 <ul>
 <li>_AsynchronousBlockReader_中的readBlock函数，会发射一个读请求，这个请求异步地用文件中的下一个块填充给定的memorysegment。一旦读请求完成，这个segment会被加入reader的<strong>return queue</strong>.</li>
 <li>AsynchronousBulkBlockReader中的readBlock</li>
 </ul>
-<h3 id="SegmentWriteRequest"><a href="#SegmentWriteRequest" class="headerlink" title="SegmentWriteRequest"></a>SegmentWriteRequest</h3><p>写整个内存段<br>使用场景：</p>
+<h3 id="SegmentWriteRequest"><a href="#SegmentWriteRequest" class="headerlink" title="SegmentWriteRequest"></a>SegmentWriteRequest</h3><p>写整个内存段<br>write行为分析<br>使用场景：</p>
           <!--noindex-->
           
             <div class="post-button">
