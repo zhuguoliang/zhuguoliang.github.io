@@ -228,6 +228,215 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/07/xxxRequst请求类型分析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zero">
+      <meta itemprop="description" content="try to look 5 years ahead">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="West to the Northwest">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+            
+            <a href="/2019/10/07/xxxRequst请求类型分析/" class="post-title-link" itemprop="url">xxxRequst请求类型分析</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              
+                
+              
+
+              <time title="Created: 2019-10-07 19:39:03 / Modified: 20:03:01" itemprop="dateCreated datePublished" datetime="2019-10-07T19:39:03+08:00">2019-10-07</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>请求类中封装了Flink底层读写的函数，这篇文章分析一下他们所代表的IO类型以及在Flink中的使用场景。</p><h2 id="基本分类"><a href="#基本分类" class="headerlink" title="基本分类"></a>基本分类</h2><p>总共有六种Request </p><ul>
+<li>SegmentReadRequest: </li>
+<li>SegmentWriteRequest</li>
+<li>BufferWriteRequest</li>
+<li>BufferReadRequest</li>
+<li>FileSegmentReadRequest： </li>
+<li>SeekRequest</li>
+</ul><a id="more"></a>
+
+
+<h3 id="SegmentReadRequest"><a href="#SegmentReadRequest" class="headerlink" title="SegmentReadRequest"></a>SegmentReadRequest</h3><p>使用场景：</p>
+<ul>
+<li>_AsynchronousBlockReader_中的readBlock函数，会发射一个读请求，这个请求异步地用文件中的下一个块填充给定的memorysegment。一旦读请求完成，这个segment会被加入reader的<strong>return queue</strong>.</li>
+<li>AsynchronousBulkBlockReader中的readBlock</li>
+</ul>
+<h3 id="SegmentWriteRequest"><a href="#SegmentWriteRequest" class="headerlink" title="SegmentWriteRequest"></a>SegmentWriteRequest</h3><p>写整个内存段<br>使用场景：</p>
+          <!--noindex-->
+          
+            <div class="post-button">
+              <a class="btn" href="/2019/10/07/xxxRequst请求类型分析/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/07/createBlockChannelWriter的使用分析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zero">
+      <meta itemprop="description" content="try to look 5 years ahead">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="West to the Northwest">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+            
+            <a href="/2019/10/07/createBlockChannelWriter的使用分析/" class="post-title-link" itemprop="url">createBlockChannelWriter的使用分析</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              
+                
+              
+
+              <time title="Created: 2019-10-07 15:10:48 / Modified: 19:41:09" itemprop="dateCreated datePublished" datetime="2019-10-07T15:10:48+08:00">2019-10-07</time>
+            </span>
+          
+            
+
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>其实这篇文章应该叫做blockchannel的读写分析更恰当。</p><h2 id="Basics"><a href="#Basics" class="headerlink" title="Basics"></a>Basics</h2><h3 id="file-channel"><a href="#file-channel" class="headerlink" title="file channel"></a>file channel</h3><p>首先我们从file channel开始介绍。<br>FileChannel类是Java的NIO库里面的，FileChannel和Bytebuffer结合进行读写数据。<br>它的优点有：</p><ul>
+<li>可以在特定位置读写文件</li>
+<li>把文件的一部分放在内存中，更高效</li>
+<li>可以把文件数据从一个channel传输到另一个，并且更快</li>
+<li>可以锁住一个文件区域的数据，放置其他线程访问</li>
+<li>为了防止数据丢失，可以强制写文件更新到存储<h3 id="LinkedBlockingQueue"><a href="#LinkedBlockingQueue" class="headerlink" title="LinkedBlockingQueue"></a>LinkedBlockingQueue</h3></li>
+</ul><a id="more"></a>
+
+
+<h2 id="AsynchronousBlockWriter"><a href="#AsynchronousBlockWriter" class="headerlink" title="AsynchronousBlockWriter"></a>AsynchronousBlockWriter</h2><p>在iomanagerasync.java中，createBlockChannelWriter的实现就是创建了一个AsynchronousBlockWriter。<br>AsynchronousBlockWriter的作用，根据注释，是为给定的File channel创建一个新的块channel writer。</p>
+<h3 id="构造函数"><a href="#构造函数" class="headerlink" title="构造函数"></a>构造函数</h3><p>它的构造函数里面就干了两件事情，一个是创建了一个文件，另一个是创建了一个LinkedBlockingQueue。<br>它的调用树如下：<br><img src="/2019/10/07/createBlockChannelWriter的使用分析/diagram.png" alt><br>一路super :<br>AsynchronousBlockWriter<br> |<br>V<br>AsynchronousBlockWriterWithCallback<br>|<br>V<br>AsynchronousFileIOChannel<br>最后来到了AbstractFileIOChannel，可以看到创建了一个文件，并且设置fileChannel。</p>
+          <!--noindex-->
+          
+            <div class="post-button">
+              <a class="btn" href="/2019/10/07/createBlockChannelWriter的使用分析/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/06/Flink-IO的AsynchronousFileIOChannel分析/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -268,7 +477,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-10-07 12:51:58" itemprop="dateModified" datetime="2019-10-07T12:51:58+08:00">2019-10-07</time>
+                <time title="Modified: 2019-10-07 15:14:16" itemprop="dateModified" datetime="2019-10-07T15:14:16+08:00">2019-10-07</time>
               </span>
             
           
@@ -297,7 +506,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="类功能介绍"><a href="#类功能介绍" class="headerlink" title="类功能介绍"></a>类功能介绍</h2><p>首先翻译一下注释。<br>AsynchronousFileIOChannel是整块reader和writer的基类。读写请求由异步IO线程代理。在一个IO请求完成之后，这个块的内存段会被加入一个集合并且返回。<br>这个访问的异步特性使得实现一个read-ahead或者write-behind的IO访问类型变得可能。<br>参数: 这次访问向IO线程发出的请求的类型，读或写<br>这个类的功能是负责管理向IO worker thread发出的请求队列，</p><a id="more"></a>
+          <h2 id="类功能介绍"><a href="#类功能介绍" class="headerlink" title="类功能介绍"></a>类功能介绍</h2><p>首先翻译一下注释。</p><p><img src="/2019/10/06/Flink-IO的AsynchronousFileIOChannel分析/deps.png" alt><br>AsynchronousFileIOChannel是整块reader和writer的基类。读写请求由异步IO线程代理。在一个IO请求完成之后，这个块的内存段会被加入一个集合并且返回。<br>这个访问的异步特性使得实现一个read-ahead或者write-behind的IO访问类型变得可能。<br>参数: 这次访问向IO线程发出的请求的类型，读或写<br>这个类的功能是负责管理向IO worker thread发出的请求队列，</p><a id="more"></a>
+
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`<span class="keyword">protected</span> <span class="keyword">final</span> RequestQueue\&lt;R\&gt; requestQueue;</span><br></pre></td></tr></table></figure>
 
 <p>`<br>类的构造函数注释：<br>向path发起一个新的channel访问，channel接受要读写的buffer，并且把他们交给异步IO线程，处理完之后，buffer会通过加入到给定队列的方式返回。</p>
@@ -305,20 +515,6 @@
 
 <p>`</p>
 <h2 id="引用分析"><a href="#引用分析" class="headerlink" title="引用分析"></a>引用分析</h2><p>被很多类扩展，包括：</p>
-<ul>
-<li><p>AsynchronousBlockReader 这个引发了对createBlockChannelReader<br>的分析，下一节中会分析IOManagerAsync</p>
-</li>
-<li><p>AsynchronousBlockWriterWithCallback</p>
-</li>
-<li><p>AsynchronousBufferFileReader</p>
-</li>
-<li><p>AsynchronousBufferFileSegmentReader</p>
-</li>
-<li><p>AsynchronousBufferFileWriter</p>
-</li>
-<li><p>AsynchronousBulkBlockReader</p>
-</li>
-</ul>
           <!--noindex-->
           
             <div class="post-button">
@@ -1008,138 +1204,6 @@
   
 
     
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/31/计算存储分离之我见/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zero">
-      <meta itemprop="description" content="try to look 5 years ahead">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="West to the Northwest">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-            
-            <a href="/2018/12/31/计算存储分离之我见/" class="post-title-link" itemprop="url">计算存储分离之我见</a>
-          
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              
-                
-              
-
-              <time title="Created: 2018-12-31 20:30:10" itemprop="dateCreated datePublished" datetime="2018-12-31T20:30:10+08:00">2018-12-31</time>
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </article>
-  
-  
-  
-
-    
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/12/31/chandy-lamport算法/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zero">
-      <meta itemprop="description" content="try to look 5 years ahead">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="West to the Northwest">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-            
-            <a href="/2018/12/31/chandy-lamport算法/" class="post-title-link" itemprop="url">chandy lamport算法</a>
-          
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              
-                
-              
-
-              <time title="Created: 2018-12-31 20:29:55" itemprop="dateCreated datePublished" datetime="2018-12-31T20:29:55+08:00">2018-12-31</time>
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </article>
-  
-  
-  
-
-    
   </div>
 
   
@@ -1189,7 +1253,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">125</span>
+          <span class="site-state-item-count">127</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1215,7 +1279,7 @@
             <a href="/tags/">
           
         
-        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-count">57</span>
         <span class="site-state-item-name">tags</span>
         </a>
       </div>

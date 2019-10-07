@@ -228,6 +228,239 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/08/08/Transparent-management-in-IaaS-cloud/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zero">
+      <meta itemprop="description" content="try to look 5 years ahead">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="West to the Northwest">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+            
+            <a href="/2016/08/08/Transparent-management-in-IaaS-cloud/" class="post-title-link" itemprop="url">Transparent management in IaaS cloud</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              
+                
+              
+
+              <time title="Created: 2016-08-08 10:49:48" itemprop="dateCreated datePublished" datetime="2016-08-08T10:49:48+08:00">2016-08-08</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2018-12-31 19:11:33" itemprop="dateModified" datetime="2018-12-31T19:11:33+08:00">2018-12-31</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>这篇博文论证一个问题，为什么在IaaS云中，提供透明的内存管理是必要的.</p>
+<p>ESX by VMware</p>
+<ul>
+<li>In ESX, the memory management techniques allow the virtual machines to use more memory than<br>the physical machines available memory.</li>
+<li>For example, you can have a host with 2GB memory and run four virtual machines with 1GB<br>memory each. In that case, the memory is overcommitted. To improve memory utilization, ESX transfers<br>memory from idle virtual machine to virtual machines that need more memory .</li>
+<li>Transparent Page Sharing (TPS)</li>
+<li>When multiple VMs are running, some of them may have identical sets of memory content<br>(several VMs may be running the same OS, applications and the same user data). With page sharing the<br>hypervisor can reclaim the redundant copies and only keep one copy, which is shared by multiple virtual<br>machines in the host physical memory. Example 4shared, Github.</li>
+<li>Ballooning</li>
+<li>A driver used to communicate with applications to understand their memory needs to make room<br>for other applications.</li>
+</ul>
+<a id="more"></a>
+<p>在ESX中，内存管理允许虚拟机使用比实际物理机器可用内存更多的内存。<br>这样机会对客户机器定义了一种透明性，客户机器不用关心底层对内存管理的细节。内存的材质，内存的大小，对于云计算的租户来说，只需要提供他的任务需求。</p>
+<p>透明页共享，由宿主机器来管理虚拟机之间共享的内存页。</p>
+<p>透明大页</p>
+<p>Transparent Hardware Management of Stacked DRAM as Part of Memory<br>. In contrast to OS-managed policies,<br>our approach is transparent to software and achieves higher<br>performance due to its ability to adapt and remap data at a<br>fine granularity</p>
+<p>In<br>contrast, our system must provide the ability to remap physical<br>addresses in order to support the transparent swapping<br>of memory blocks between fast and slow memory.</p>
+<p> This paper presents a Part-ofMemory<br>(PoM) architecture that effectively combines slow<br>and fast memory to create a single physical address space<br>in an OS-transparent fashion.</p>
+          <!--noindex-->
+          
+            <div class="post-button">
+              <a class="btn" href="/2016/08/08/Transparent-management-in-IaaS-cloud/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/08/06/20160805/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zero">
+      <meta itemprop="description" content="try to look 5 years ahead">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="West to the Northwest">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+            
+            <a href="/2016/08/06/20160805/" class="post-title-link" itemprop="url">20160805</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              
+                
+              
+
+              <time title="Created: 2016-08-06 01:35:21" itemprop="dateCreated datePublished" datetime="2016-08-06T01:35:21+08:00">2016-08-06</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2018-12-31 19:10:58" itemprop="dateModified" datetime="2018-12-31T19:10:58+08:00">2018-12-31</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/记录/" itemprop="url" rel="index"><span itemprop="name">记录</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="今天做了什么"><a href="#今天做了什么" class="headerlink" title="今天做了什么"></a>今天做了什么</h3><p>买了几本书，然后就开始工作了。今天其实很倒霉，差点把代码库都毁了，然后又把发票撕烂了。打球还戳到了手指。Bad day~</p>
+<p>今天通过跟redhat 的zhang Fam 进行讨论，我发现很可能瓶颈并不在coroutine。而且即便实现了coroutine，并不能够很大程度帮助论文的创新。</p>
+<a id="more"></a>
+
+
+<p>计划执行情况如下：</p>
+<ul>
+<li><input checked disabled type="checkbox"> 每天拉屎……</li>
+<li><input checked disabled type="checkbox"> 坐姿要注意啦，劲椎痛</li>
+<li><input checked disabled type="checkbox"> 单杠</li>
+<li><input disabled type="checkbox"> 蹲墙功</li>
+<li><input disabled type="checkbox"> 每天记一点东西</li>
+<li><input checked disabled type="checkbox"> 眼操</li>
+<li><input checked disabled type="checkbox"> 颈椎活动</li>
+<li><input checked disabled type="checkbox"> 每天出门吃一次饭</li>
+</ul>
+<h3 id="有什么需要纠正的"><a href="#有什么需要纠正的" class="headerlink" title="有什么需要纠正的"></a>有什么需要纠正的</h3><p>觉得有时候做事情毛躁。早上起来和中午起来工作之前还是要运动一下比较合适。</p>
+<h3 id="有什么应该做没有做的"><a href="#有什么应该做没有做的" class="headerlink" title="有什么应该做没有做的"></a>有什么应该做没有做的</h3><p>没有朗读eng</p>
+          <!--noindex-->
+          
+            <div class="post-button">
+              <a class="btn" href="/2016/08/06/20160805/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/08/06/redis端分析/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1089,215 +1322,6 @@
   
 
     
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/07/30/偶遇一个大牛blogger/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zero">
-      <meta itemprop="description" content="try to look 5 years ahead">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="West to the Northwest">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-            
-            <a href="/2016/07/30/偶遇一个大牛blogger/" class="post-title-link" itemprop="url">偶遇一个大牛blogger</a>
-          
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              
-                
-              
-
-              <time title="Created: 2016-07-30 12:41:14" itemprop="dateCreated datePublished" datetime="2016-07-30T12:41:14+08:00">2016-07-30</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2018-12-31 13:38:26" itemprop="dateModified" datetime="2018-12-31T13:38:26+08:00">2018-12-31</time>
-              </span>
-            
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>今天看coroutine的c库，偶遇大牛云风，看了一下，skynet还是很厉害，能和Go过过招。<br>贴一下链接吧。</p>
-<a id="more"></a>
-<img src="/2016/07/30/偶遇一个大牛blogger/1.png" width="300">
-
-<p><a href="http://blog.codingnow.com/" target="_blank" rel="noopener">云风的博客</a></p>
-<p>下面这个人，好像是QEMU的作者啊，文风大气，逻辑清楚。</p>
-<p><a href="http://blog.vmsplice.net/" target="_blank" rel="noopener">Stefan Hajnoczi</a></p>
-<hr>
-<p>诡辩之苏格拉底辩论法，要不要试一试？？？</p>
-<p>每个人的心里都有真善美，同时每个人都有喜怒。</p>
-<blockquote>
-<p>Plus ca change.plus c’est la meme chose</p>
-</blockquote>
-          <!--noindex-->
-          
-            <div class="post-button">
-              <a class="btn" href="/2016/07/30/偶遇一个大牛blogger/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </article>
-  
-  
-  
-
-    
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/07/30/The-QEMU-coroutine-API/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zero">
-      <meta itemprop="description" content="try to look 5 years ahead">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="West to the Northwest">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-            
-            <a href="/2016/07/30/The-QEMU-coroutine-API/" class="post-title-link" itemprop="url">The QEMU coroutine API</a>
-          
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              
-                
-              
-
-              <time title="Created: 2016-07-30 01:50:46" itemprop="dateCreated datePublished" datetime="2016-07-30T01:50:46+08:00">2016-07-30</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2018-12-31 19:07:21" itemprop="dateModified" datetime="2018-12-31T19:07:21+08:00">2018-12-31</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>QEMU的协程接口，这里介绍了几个主要函数，没有翻译，自己看看。</p>
-<p>The QEMU coroutine API<br>The coroutine API is documented in include/block/coroutine.h. The main functions are:</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="keyword">void</span> coroutine\_<span class="function">fn <span class="title">CoroutineEntry</span><span class="params">(<span class="keyword">void</span> \*opaque)</span></span>;</span><br><span class="line">Coroutine *qemu\_coroutine\_create(CoroutineEntry *entry);</span><br></pre></td></tr></table></figure>
-
-<a id="more"></a>
-<p>When a new coroutine is started, it will begin executing the entry function. The caller can pass an opaque pointer to data needed by the coroutine. If you are familiar with multi-threaded programming, this interface is similar to pthread_create(3).</p>
-<p>The new coroutine is executed by calling qemu_coroutine_enter():</p>
-<p>void qemu_coroutine_enter(Coroutine *coroutine, void *opaque);<br>If the coroutine needs to wait for an event such as I/O completion or user input, it calls qemu_coroutine_yield():</p>
-<p>void coroutine_fn qemu_coroutine_yield(void);<br>The yield function transfers control back to the qemu_coroutine_enter() caller. The coroutine can be re-entered at a later point in time by calling qemu_coroutine_enter(), for example, when an I/O request has completed.</p>
-<p>Conclusion<br>Coroutines make it possible to write sequential code that is actually executed across multiple iterations of the event loop. This is useful for code that needs to perform blocking I/O and would quickly become messy if split into a chain of callback functions. Transfer of control is always explicit using enter/yield, and there is no scheduler that automatically switches between coroutines.</p>
-<p>QEMU provides additional primitives on top of the coroutine API for wait queues, mutexes, and timers. In a future blog post I will explain how to use these primitives.</p>
-          <!--noindex-->
-          
-            <div class="post-button">
-              <a class="btn" href="/2016/07/30/The-QEMU-coroutine-API/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </article>
-  
-  
-  
-
-    
   </div>
 
   
@@ -1347,7 +1371,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">125</span>
+          <span class="site-state-item-count">127</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1373,7 +1397,7 @@
             <a href="/tags/">
           
         
-        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-count">57</span>
         <span class="site-state-item-name">tags</span>
         </a>
       </div>

@@ -228,6 +228,211 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/08/30/qemu中的thread-bh以及coroutine的用法/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zero">
+      <meta itemprop="description" content="try to look 5 years ahead">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="West to the Northwest">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+            
+            <a href="/2016/08/30/qemu中的thread-bh以及coroutine的用法/" class="post-title-link" itemprop="url">qemu中的thread, bh以及coroutine的用法</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              
+                
+              
+
+              <time title="Created: 2016-08-30 23:23:21" itemprop="dateCreated datePublished" datetime="2016-08-30T23:23:21+08:00">2016-08-30</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2018-12-31 19:24:10" itemprop="dateModified" datetime="2018-12-31T19:24:10+08:00">2018-12-31</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>qemu_thread_create(&amp;iothread-&gt;thread, thread_name, iothread_run,<br>   95:                        iothread, QEMU_THREAD_JOINABLE);</p><p>qemu_thread_join(&amp;iothread-&gt;thread);</p><a id="more"></a>
+
+<p>qemu_notify_bh = qemu_bh_new(notify_event_cb, NULL);</p>
+<p>qemu_bh_schedule(qemu_notify_bh);<br>qemu_bh_delete(pool-&gt;completion_bh);_</p>
+
+          <!--noindex-->
+          
+            <div class="post-button">
+              <a class="btn" href="/2016/08/30/qemu中的thread-bh以及coroutine的用法/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/08/29/20160829/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zero">
+      <meta itemprop="description" content="try to look 5 years ahead">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="West to the Northwest">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+            
+            <a href="/2016/08/29/20160829/" class="post-title-link" itemprop="url">20160829</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              
+                
+              
+
+              <time title="Created: 2016-08-29 19:26:33" itemprop="dateCreated datePublished" datetime="2016-08-29T19:26:33+08:00">2016-08-29</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2018-12-31 19:23:38" itemprop="dateModified" datetime="2018-12-31T19:23:38+08:00">2018-12-31</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/记录/" itemprop="url" rel="index"><span itemprop="name">记录</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>看了云风的博客，我才发现技术博客不应当是大量的代码，而应该是很多自己的思考，其实真正有价值的是对问题的判断和认知过程，具体代码并不重要。</p>
+
+          <!--noindex-->
+          
+            <div class="post-button">
+              <a class="btn" href="/2016/08/29/20160829/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/08/25/postcopy-page-fault-handling/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1068,210 +1273,6 @@
   
 
     
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/08/19/暑假有意义的一件事/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zero">
-      <meta itemprop="description" content="try to look 5 years ahead">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="West to the Northwest">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-            
-            <a href="/2016/08/19/暑假有意义的一件事/" class="post-title-link" itemprop="url">暑假有意义的一件事</a>
-          
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              
-                
-              
-
-              <time title="Created: 2016-08-19 21:51:34" itemprop="dateCreated datePublished" datetime="2016-08-19T21:51:34+08:00">2016-08-19</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2018-12-31 18:59:06" itemprop="dateModified" datetime="2018-12-31T18:59:06+08:00">2018-12-31</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/生活/" itemprop="url" rel="index"><span itemprop="name">生活</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>暑假没有离开学校，没有色彩斑斓的旅行笔记可以分享，只有枯坐宿舍的时候看的几本闲书。<br>作为一个生在新疆的汉族，犹太人对我来说，一直是一个神秘而有趣的民族，假期偶然看到这么一本书《我的应许之地：以色列的悲情与荣耀》，于是就拿来翻了一下，我一直喜欢看喜剧故事，这本书却是个开放结尾。<br>最初对以色列的了解是小时候偶然听人讲过的圣经故事，那时候觉得犹太人就是受害者，摩西带着犹太人出埃及。然而在这本书中，我看到的是现在犹太人复国的喜悦，哈罗德山谷的崛起，吕大城中对巴勒斯坦人驱逐，七日战争。。。然而正如这本书的书名一样，现在的以色列，不过是出在这个悲喜轮回的光明一面，对巴勒斯坦人的不公平，似乎就像一个镜子，反射着几千年前希伯来人的悲惨经历。<br>看完这本书的那天，我突然有些可怜这个民族，突然有人来敲门，“看电影吗？斯皮尔伯格导演的。。。”<br>阿西吧。。。</p>
-
-          <!--noindex-->
-          
-            <div class="post-button">
-              <a class="btn" href="/2016/08/19/暑假有意义的一件事/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </article>
-  
-  
-  
-
-    
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/08/19/WeeklySum-2016-8-3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zero">
-      <meta itemprop="description" content="try to look 5 years ahead">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="West to the Northwest">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-            
-            <a href="/2016/08/19/WeeklySum-2016-8-3/" class="post-title-link" itemprop="url">WeeklySum-2016-8-3</a>
-          
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              
-                
-              
-
-              <time title="Created: 2016-08-19 19:20:06" itemprop="dateCreated datePublished" datetime="2016-08-19T19:20:06+08:00">2016-08-19</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2018-12-31 19:19:35" itemprop="dateModified" datetime="2018-12-31T19:19:35+08:00">2018-12-31</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/记录/" itemprop="url" rel="index"><span itemprop="name">记录</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>在周五的晚上，一个人坐在队值日的床上，突然想起来承诺自己很久的周总结没有做，心血来潮翻出了这一周的旧账，给自己算算有什么得失吧。近期以来自省非常的多，不知道什么时候大脑中被拨动了一个开关，让自己更多关注自己作为一个人和一般人的区别，和所崇拜的人的差距。<br>这一周最大的事情，莫过于找老板申请的到了一个小型万兆以太网的使用权。并且从14号开始申请以及部署，到18号，所有的数据和代码就已经到位了。下一步就是要进行实验。<br>对自己最不满意的地方，就是在论文写作方面，我突然间发现我在论文写作上面做出的规划太多，而实际完成的又很少，总是在大框架上列出很多条条框框，然后真正落实到文章中的又很少，这样导致文章的写作效率非常低。<br>其实在科研中，我有时会觉得自己写着写者冒出一些idea，然后做着做着又做得偏了，又去修正写的过程，我不太清楚这样是不是我方法的问题，但是我常常会遇到这样的迭代循环，让我不知所措。</p><a id="more"></a>
-<p>基本上这周的工作，就是在假设环境，后半周主要精力集中在寻找合适的benchmark上，我之前主要考虑的使用VMware提供的一些benchmark.主要能用的就是三个，specjbb,kernbench,eclipse。<br>然后我再寻找更多的benchmark。方向就是YCSB和Cloudsuite.<br>我发现自己很容易分心，在做benchmark的同时又去弄了kubernetes和docker，然后还看了osv和coreos。虽然可能和下一个课题有关，但是这样总是分散是不好的！！！<br>再次回到课题上，在分析了redis的内存轨迹之后，我发现基本上没有释放内存，就是一旦分配就一直在使用，即便VM关闭之后，redis也没有马上释放内存。所以说这些内存都是在使用着的。那么问题来了，实际情况是redis是采用自己的malloc机制zmalloc.c文件中。</p>
-<p><a href="http://blog.qiji.tech/archives/7854" target="_blank" rel="noopener">http://blog.qiji.tech/archives/7854</a></p>
-
-          <!--noindex-->
-          
-            <div class="post-button">
-              <a class="btn" href="/2016/08/19/WeeklySum-2016-8-3/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </article>
-  
-  
-  
-
-    
   </div>
 
   
@@ -1321,7 +1322,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">125</span>
+          <span class="site-state-item-count">127</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -1347,7 +1348,7 @@
             <a href="/tags/">
           
         
-        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-count">57</span>
         <span class="site-state-item-name">tags</span>
         </a>
       </div>

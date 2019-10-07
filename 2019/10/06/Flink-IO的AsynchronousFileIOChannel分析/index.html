@@ -63,14 +63,15 @@
 <meta property="og:site_name" content="West to the Northwest">
 <meta property="og:description" content="类功能介绍首先翻译一下注释。AsynchronousFileIOChannel是整块reader和writer的基类。读写请求由异步IO线程代理。在一个IO请求完成之后，这个块的内存段会被加入一个集合并且返回。这个访问的异步特性使得实现一个read-ahead或者write-behind的IO访问类型变得可能。参数: 这次访问向IO线程发出的请求的类型，读或写这个类的功能是负责管理向IO work">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/10/06/Flink-IO的AsynchronousFileIOChannel分析/deps.png">
 <meta property="og:image" content="http://yoursite.com/2019/10/06/Flink-IO的AsynchronousFileIOChannel分析/iomanager_async.png">
 <meta property="og:image" content="http://yoursite.com/2019/10/06/Flink-IO的AsynchronousFileIOChannel分析/iomanager.png">
-<meta property="og:image" content="http://yoursite.com/2019/10/06/Flink-IO的AsynchronousFileIOChannel分析/deps.png">
-<meta property="og:updated_time" content="2019-10-07T04:51:58.578Z">
+<meta property="og:image" content="http://yoursite.com/2019/10/06/Flink-IO的AsynchronousFileIOChannel分析/member.png">
+<meta property="og:updated_time" content="2019-10-07T07:14:16.332Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Flink IO的AsynchronousFileIOChannel分析">
 <meta name="twitter:description" content="类功能介绍首先翻译一下注释。AsynchronousFileIOChannel是整块reader和writer的基类。读写请求由异步IO线程代理。在一个IO请求完成之后，这个块的内存段会被加入一个集合并且返回。这个访问的异步特性使得实现一个read-ahead或者write-behind的IO访问类型变得可能。参数: 这次访问向IO线程发出的请求的类型，读或写这个类的功能是负责管理向IO work">
-<meta name="twitter:image" content="http://yoursite.com/2019/10/06/Flink-IO的AsynchronousFileIOChannel分析/iomanager_async.png">
+<meta name="twitter:image" content="http://yoursite.com/2019/10/06/Flink-IO的AsynchronousFileIOChannel分析/deps.png">
   <link rel="canonical" href="http://yoursite.com/2019/10/06/Flink-IO的AsynchronousFileIOChannel分析/">
 
 
@@ -273,7 +274,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-10-07 12:51:58" itemprop="dateModified" datetime="2019-10-07T12:51:58+08:00">2019-10-07</time>
+                <time title="Modified: 2019-10-07 15:14:16" itemprop="dateModified" datetime="2019-10-07T15:14:16+08:00">2019-10-07</time>
               </span>
             
           
@@ -302,7 +303,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="类功能介绍"><a href="#类功能介绍" class="headerlink" title="类功能介绍"></a>类功能介绍</h2><p>首先翻译一下注释。<br>AsynchronousFileIOChannel是整块reader和writer的基类。读写请求由异步IO线程代理。在一个IO请求完成之后，这个块的内存段会被加入一个集合并且返回。<br>这个访问的异步特性使得实现一个read-ahead或者write-behind的IO访问类型变得可能。<br>参数: 这次访问向IO线程发出的请求的类型，读或写<br>这个类的功能是负责管理向IO worker thread发出的请求队列，</p><a id="more"></a>
+        <h2 id="类功能介绍"><a href="#类功能介绍" class="headerlink" title="类功能介绍"></a>类功能介绍</h2><p>首先翻译一下注释。</p><p><img src="/2019/10/06/Flink-IO的AsynchronousFileIOChannel分析/deps.png" alt><br>AsynchronousFileIOChannel是整块reader和writer的基类。读写请求由异步IO线程代理。在一个IO请求完成之后，这个块的内存段会被加入一个集合并且返回。<br>这个访问的异步特性使得实现一个read-ahead或者write-behind的IO访问类型变得可能。<br>参数: 这次访问向IO线程发出的请求的类型，读或写<br>这个类的功能是负责管理向IO worker thread发出的请求队列，</p><a id="more"></a>
+
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`<span class="keyword">protected</span> <span class="keyword">final</span> RequestQueue\&lt;R\&gt; requestQueue;</span><br></pre></td></tr></table></figure>
 
 <p>`<br>类的构造函数注释：<br>向path发起一个新的channel访问，channel接受要读写的buffer，并且把他们交给异步IO线程，处理完之后，buffer会通过加入到给定队列的方式返回。</p>
@@ -328,7 +330,9 @@
 
 <p>`<br><img src="/2019/10/06/Flink-IO的AsynchronousFileIOChannel分析/iomanager_async.png" alt><br>这里会构建异步的IO管理器，轮流写入给定目录中的文件。</p>
 <p><img src="/2019/10/06/Flink-IO的AsynchronousFileIOChannel分析/iomanager.png" alt></p>
-<p><img src="/2019/10/06/Flink-IO的AsynchronousFileIOChannel分析/deps.png" alt></p>
+<p>只运行一个WriterThread和一个ReaderThread<br>看成员函数，包括了创建4种reader和2种writer的函数<br>reader分为bulkblockchannel, bufferfilesegment, bufferfile, blockchannel四种<br>writer分为bufferfile, blockchannel两种<br><img src="/2019/10/06/Flink-IO的AsynchronousFileIOChannel分析/member.png" alt></p>
+<p>BlockChannelWriter有很多引用，在hash operator中用于将产生的哈希存储到磁盘中，我将在后面的文章中仔细讨论。</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>这篇文章写得稍微有些乱，如果重新组织，一切应当从IOManagerAsync谈起，它里面包括了对bufferfile, bufferchannel， bufferfile的读写操作的封装，包括了对IO读写线程的创建。这里我按照自己看代码的顺序把文章写了下来，由于太懒了，也就没有重新组织。</p>
 
     </div>
 
@@ -365,6 +369,10 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/10/07/createBlockChannelWriter的使用分析/" rel="prev" title="createBlockChannelWriter的使用分析">
+                  createBlockChannelWriter的使用分析 <i class="fa fa-chevron-right"></i>
+                </a>
               
             </div>
           </div>
@@ -413,7 +421,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#类功能介绍"><span class="nav-number">1.</span> <span class="nav-text">类功能介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#引用分析"><span class="nav-number">2.</span> <span class="nav-text">引用分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#IOManagerAsync分析"><span class="nav-number">2.1.</span> <span class="nav-text">IOManagerAsync分析</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#类功能介绍"><span class="nav-number">1.</span> <span class="nav-text">类功能介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#引用分析"><span class="nav-number">2.</span> <span class="nav-text">引用分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#IOManagerAsync分析"><span class="nav-number">2.1.</span> <span class="nav-text">IOManagerAsync分析</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number"></span> <span class="nav-text">总结</span></a></div>
         
       </div>
       <!--/noindex-->
@@ -429,7 +437,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">125</span>
+          <span class="site-state-item-count">127</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -455,7 +463,7 @@
             <a href="/tags/">
           
         
-        <span class="site-state-item-count">56</span>
+        <span class="site-state-item-count">57</span>
         <span class="site-state-item-name">tags</span>
         </a>
       </div>
