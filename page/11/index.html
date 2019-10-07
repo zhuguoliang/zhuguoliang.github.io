@@ -228,6 +228,116 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/08/17/YCSB/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zero">
+      <meta itemprop="description" content="try to look 5 years ahead">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="West to the Northwest">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+            
+            <a href="/2016/08/17/YCSB/" class="post-title-link" itemprop="url">YCSB</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              
+                
+              
+
+              <time title="Created: 2016-08-17 22:24:10" itemprop="dateCreated datePublished" datetime="2016-08-17T22:24:10+08:00">2016-08-17</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2018-12-31 19:15:37" itemprop="dateModified" datetime="2018-12-31T19:15:37+08:00">2018-12-31</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/科研/" itemprop="url" rel="index"><span itemprop="name">科研</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h3 id="SOSP13"><a href="#SOSP13" class="headerlink" title="SOSP13"></a>SOSP13</h3><p><strong>Speedy Transactions in Multicore In-Memory Databases</strong><br>We ran a variant of YCSB workload mix A; YCSB is Yahoo’s popular key- value benchmark.<br>这篇文章运行YCSB工作负载的变种A<br>主要做了三个改变：</p><a id="more"></a>
+<ul>
+<li>固定读写比例80/20</li>
+<li>把写操作改成了读-修改-写</li>
+<li>把每条记录大小从1000B缩小到100B</li>
+</ul>
+<p>Our variant differs in the following ways: (a) we fix the read/write ratio to 80/20 (instead of 50/50), (b) we change write operations to read-modify- writes, which in MemSilo happen in a single transaction, and (c) we shrink the size of records to 100 bytes (in- stead of 1000 bytes). These modifications prevent unin- teresting overheads that affect both systems from hiding overheads that affect only MemSilo. </p>
+<p>More specifically, (a) prevents the memory allocator for new records from becoming the primary bottleneck, (b) creates a transac- tion that actually generates read-write conflicts, which stresses MemSilo’s protocol, and (c) prevents memcpy from becoming the primary bottleneck. Both transac- tions sample keys uniformly from the key space.We fix the tree size to contain 160M keys, and vary the number of workers performing transactions against the tree.<br><strong>TODO</strong>：<br>下载<br><a href="https://github.com/brianfrankcooper/YCSB/releases" target="_blank" rel="noopener">https://github.com/brianfrankcooper/YCSB/releases</a></p>
+<p>感觉redis状态有点奇怪，是不是其他机器上的redis没有跑起来？<br>redis分析地址的方法？<br>明天把stream跑起来，然后完整建立一个观察访问量的框架。。。<br>YCSB和cloudsuite这两个哪个能够固定访问总量？<br>Clearing the Clouds是EPFL发布的时候的文章<br>这篇文章要引用！！！</p>
+<p>bin/nodetool enablethrift<br>bin/cassandra -f</p>
+
+          <!--noindex-->
+          
+            <div class="post-button">
+              <a class="btn" href="/2016/08/17/YCSB/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/08/17/20160817/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1190,110 +1300,6 @@
   
 
     
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/08/09/kubernetes是什么/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zero">
-      <meta itemprop="description" content="try to look 5 years ahead">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="West to the Northwest">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-            
-            <a href="/2016/08/09/kubernetes是什么/" class="post-title-link" itemprop="url">kubernetes是什么</a>
-          
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              
-                
-              
-
-              <time title="Created: 2016-08-09 14:13:20" itemprop="dateCreated datePublished" datetime="2016-08-09T14:13:20+08:00">2016-08-09</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2018-12-31 19:12:07" itemprop="dateModified" datetime="2018-12-31T19:12:07+08:00">2018-12-31</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p>kubernetes是什么，在经过一个小时的探索之后，我其实也并没有看懂，暂且对我目前的认知做一个总结。</p><p>kubernetes是一个以pod为单位调度的框架。k里面比较重要的理念就是decouple，将前端和后端去耦合，在开发者角度来说看到的是同质化的机器抽象，并不用关心后端实际物理机器的生死。</p><p>涉及到几个关键概念，pod， controller.</p><a id="more"></a>
-
-
-<p>以后慢慢在实践中摸索吧，我不只想做一个devops。</p>
-
-          <!--noindex-->
-          
-            <div class="post-button">
-              <a class="btn" href="/2016/08/09/kubernetes是什么/#more" rel="contents">
-                Read more &raquo;
-              </a>
-            </div>
-          
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </article>
-  
-  
-  
-
-    
   </div>
 
   
@@ -1343,7 +1349,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">127</span>
+          <span class="site-state-item-count">128</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
