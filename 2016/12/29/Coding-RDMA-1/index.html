@@ -29,7 +29,7 @@
     version: '7.4.1',
     exturl: false,
     sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
+    copycode: {"enable":true,"show_result":false,"style":null},
     back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
@@ -298,7 +298,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h3 id="RDMA-provides-Channel-based-IO"><a href="#RDMA-provides-Channel-based-IO" class="headerlink" title="RDMA provides Channel based IO"></a>RDMA provides Channel based IO</h3><p>In traditional sockets networks, applications request network resources from the operating system through an API which conducts the transaction on their behalf. However RDMA use the OS to establish a channel and then allows applications to directly exchange <em>messages</em> without further OS intervention</p>
+        <h3 id="RDMA-provides-Channel-based-IO"><a href="#RDMA-provides-Channel-based-IO" class="headerlink" title="RDMA provides Channel based IO"></a>RDMA provides Channel based IO</h3><p>In traditional sockets networks, applications request network resources from the operating system through an API which conducts the transaction on their behalf. However RDMA use the OS to establish a channel and then allows applications to directly exchange <em>messages</em> without further OS intervention</p><a id="more"></a>
 <h3 id="Compare-with-TCP-IP"><a href="#Compare-with-TCP-IP" class="headerlink" title="Compare with TCP/IP"></a>Compare with TCP/IP</h3><ul>
 <li>When an application wants to send a packet, the OS places the bytes into an anonymous buffer in main memory belonging to the operating system and when the byte transfer is complete, the OS copies the data in its buffer into the receive buffer of the application. This process is repeated each time a packet arrives until the entire byte stream is received. TCP is responsible for retransmitting any lost packets due to congestion.</li>
 <li>In IB, a complete message is delivered directly to an application. Once an application has requested transport of an RDMA Read or Write, the IB hardware segments the outbound message as needed into packets whose size is determined by the fabric path maximum transfer unit. These packets are transmitted through the IB network and delivered directly into the receiving application’s virtual buffer where they are re-assembled into a complete message. The receiving application is notified once the entire message has been received. Thus neither the sending nor the receiving application is involved until the entire message is delivered into the receiving application’s buffer.</li>

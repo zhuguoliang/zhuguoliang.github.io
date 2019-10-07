@@ -29,7 +29,7 @@
     version: '7.4.1',
     exturl: false,
     sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
+    copycode: {"enable":true,"show_result":false,"style":null},
     back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
@@ -55,18 +55,18 @@
   };
 </script>
 
-  <meta name="description" content="flink有丰富的窗口语义。 在这个训练中你会学到：  如何使用窗口来无限流上计算累计 flink支持什么类型的窗口 如何使用窗口累计来实现一个数据流程序Introduction想要在有界子集上计算累计分析对流处理时是很自然的，通常这些分析想要回答一下这些类的问题： 每分钟页面的访问 每个用户每星期的会话数目 每分钟每个传感器的最大温度  使用flink计算窗口化的分析依赖于两个主要的抽象：一是窗">
+  <meta name="description" content="flink有丰富的窗口语义。在这个训练中你会学到： 如何使用窗口来无限流上计算累计 flink支持什么类型的窗口 如何使用窗口累计来实现一个数据流程序Introduction想要在有界子集上计算累计分析对流处理时是很自然的，通常这些分析想要回答一下这些类的问题： 每分钟页面的访问 每个用户每星期的会话数目 每分钟每个传感器的最大温度    使用flink计算窗口化的分析依赖于两个主要的抽象：一是窗">
 <meta name="keywords" content="flink,stream processing">
 <meta property="og:type" content="article">
 <meta property="og:title" content="flink窗口">
 <meta property="og:url" content="http://yoursite.com/2019/03/07/flink窗口/index.html">
 <meta property="og:site_name" content="West to the Northwest">
-<meta property="og:description" content="flink有丰富的窗口语义。 在这个训练中你会学到：  如何使用窗口来无限流上计算累计 flink支持什么类型的窗口 如何使用窗口累计来实现一个数据流程序Introduction想要在有界子集上计算累计分析对流处理时是很自然的，通常这些分析想要回答一下这些类的问题： 每分钟页面的访问 每个用户每星期的会话数目 每分钟每个传感器的最大温度  使用flink计算窗口化的分析依赖于两个主要的抽象：一是窗">
+<meta property="og:description" content="flink有丰富的窗口语义。在这个训练中你会学到： 如何使用窗口来无限流上计算累计 flink支持什么类型的窗口 如何使用窗口累计来实现一个数据流程序Introduction想要在有界子集上计算累计分析对流处理时是很自然的，通常这些分析想要回答一下这些类的问题： 每分钟页面的访问 每个用户每星期的会话数目 每分钟每个传感器的最大温度    使用flink计算窗口化的分析依赖于两个主要的抽象：一是窗">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2019-03-08T06:05:46.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="flink窗口">
-<meta name="twitter:description" content="flink有丰富的窗口语义。 在这个训练中你会学到：  如何使用窗口来无限流上计算累计 flink支持什么类型的窗口 如何使用窗口累计来实现一个数据流程序Introduction想要在有界子集上计算累计分析对流处理时是很自然的，通常这些分析想要回答一下这些类的问题： 每分钟页面的访问 每个用户每星期的会话数目 每分钟每个传感器的最大温度  使用flink计算窗口化的分析依赖于两个主要的抽象：一是窗">
+<meta name="twitter:description" content="flink有丰富的窗口语义。在这个训练中你会学到： 如何使用窗口来无限流上计算累计 flink支持什么类型的窗口 如何使用窗口累计来实现一个数据流程序Introduction想要在有界子集上计算累计分析对流处理时是很自然的，通常这些分析想要回答一下这些类的问题： 每分钟页面的访问 每个用户每星期的会话数目 每分钟每个传感器的最大温度    使用flink计算窗口化的分析依赖于两个主要的抽象：一是窗">
   <link rel="canonical" href="http://yoursite.com/2019/03/07/flink窗口/">
 
 
@@ -298,16 +298,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>flink有丰富的窗口语义。</p>
-<p>在这个训练中你会学到：</p>
-<ul>
+        <p>flink有丰富的窗口语义。</p><p>在这个训练中你会学到：</p><ul>
 <li>如何使用窗口来无限流上计算累计</li>
 <li>flink支持什么类型的窗口</li>
 <li>如何使用窗口累计来实现一个数据流程序<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2>想要在有界子集上计算累计分析对流处理时是很自然的，通常这些分析想要回答一下这些类的问题：</li>
 <li>每分钟页面的访问</li>
 <li>每个用户每星期的会话数目</li>
 <li>每分钟每个传感器的最大温度</li>
-</ul>
+</ul><a id="more"></a>
+
+
 <p>使用flink计算窗口化的分析依赖于两个主要的抽象：一是窗口分配者把时间分配给窗口（并且在必要时创建新窗口），二是窗口函数，这些函数会被应用到分配到窗口的事件上。</p>
 <p>flink的窗口API还有一个概念叫做Triggers，触发器。触发器决定什么时候调用窗口函数，还有Evictors移除器，它负责从一个窗口中删除元素。</p>
 <p>简单来说，你可以对一个键数据流这样应用窗口：</p>

@@ -29,7 +29,7 @@
     version: '7.4.1',
     exturl: false,
     sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
+    copycode: {"enable":true,"show_result":false,"style":null},
     back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
@@ -55,18 +55,18 @@
   };
 </script>
 
-  <meta name="description" content="Linux内核有一些额外类型的section，被叫做特殊区，special sections这些区使用来实现很多内核特性  ELF有个头，有很多段，每个段又包括一个或者多个区域，每个段的长度和每个区的长度在ELF头里面指出。 链接器把相同类型的区和并成一个区，然后给它分配一个起始地址。 比较简单的和执行文件中的section和内核中的section,可以发现有很多特别的区。 这些区域的数目依赖于体">
+  <meta name="description" content="Linux内核有一些额外类型的section，被叫做特殊区，special sections这些区使用来实现很多内核特性 ELF有个头，有很多段，每个段又包括一个或者多个区域，每个段的长度和每个区的长度在ELF头里面指出。 链接器把相同类型的区和并成一个区，然后给它分配一个起始地址。 比较简单的和执行文件中的section和内核中的section,可以发现有很多特别的区。 这些区域的数目依赖于体系">
 <meta name="keywords" content="内核">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Linux 内核ELF中的特殊sections">
 <meta property="og:url" content="http://yoursite.com/2018/12/31/Linux-内核ELF中的特殊sections/index.html">
 <meta property="og:site_name" content="West to the Northwest">
-<meta property="og:description" content="Linux内核有一些额外类型的section，被叫做特殊区，special sections这些区使用来实现很多内核特性  ELF有个头，有很多段，每个段又包括一个或者多个区域，每个段的长度和每个区的长度在ELF头里面指出。 链接器把相同类型的区和并成一个区，然后给它分配一个起始地址。 比较简单的和执行文件中的section和内核中的section,可以发现有很多特别的区。 这些区域的数目依赖于体">
+<meta property="og:description" content="Linux内核有一些额外类型的section，被叫做特殊区，special sections这些区使用来实现很多内核特性 ELF有个头，有很多段，每个段又包括一个或者多个区域，每个段的长度和每个区的长度在ELF头里面指出。 链接器把相同类型的区和并成一个区，然后给它分配一个起始地址。 比较简单的和执行文件中的section和内核中的section,可以发现有很多特别的区。 这些区域的数目依赖于体系">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-12-31T12:03:22.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Linux 内核ELF中的特殊sections">
-<meta name="twitter:description" content="Linux内核有一些额外类型的section，被叫做特殊区，special sections这些区使用来实现很多内核特性  ELF有个头，有很多段，每个段又包括一个或者多个区域，每个段的长度和每个区的长度在ELF头里面指出。 链接器把相同类型的区和并成一个区，然后给它分配一个起始地址。 比较简单的和执行文件中的section和内核中的section,可以发现有很多特别的区。 这些区域的数目依赖于体">
+<meta name="twitter:description" content="Linux内核有一些额外类型的section，被叫做特殊区，special sections这些区使用来实现很多内核特性 ELF有个头，有很多段，每个段又包括一个或者多个区域，每个段的长度和每个区的长度在ELF头里面指出。 链接器把相同类型的区和并成一个区，然后给它分配一个起始地址。 比较简单的和执行文件中的section和内核中的section,可以发现有很多特别的区。 这些区域的数目依赖于体系">
   <link rel="canonical" href="http://yoursite.com/2018/12/31/Linux-内核ELF中的特殊sections/">
 
 
@@ -290,8 +290,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>Linux内核有一些额外类型的section，被叫做特殊区，special sections<br>这些区使用来实现很多内核特性 </p>
-<p>ELF有个头，有很多段，每个段又包括一个或者多个区域，每个段的长度和每个区的长度在ELF头里面指出。 链接器把相同类型的区和并成一个区，然后给它分配一个起始地址。 比较简单的和执行文件中的section和内核中的section,可以发现有很多特别的区。 这些区域的数目依赖于体系结构，x86_64有超过30个，ARM有10个<br>特殊区域的定义在Linux链接器脚本中，这个默认的链接器脚本有区别，对应的文件存储在每个架构的子树中kernel/vmlinux.ld.S中<br>这个文件使用一系列定义在linux/include/asm_generic/vmlinux.lds.h头文件中的宏中。 </p>
+        <p>Linux内核有一些额外类型的section，被叫做特殊区，special sections<br>这些区使用来实现很多内核特性 </p><p>ELF有个头，有很多段，每个段又包括一个或者多个区域，每个段的长度和每个区的长度在ELF头里面指出。 链接器把相同类型的区和并成一个区，然后给它分配一个起始地址。 比较简单的和执行文件中的section和内核中的section,可以发现有很多特别的区。 这些区域的数目依赖于体系结构，x86_64有超过30个，ARM有10个<br>特殊区域的定义在Linux链接器脚本中，这个默认的链接器脚本有区别，对应的文件存储在每个架构的子树中kernel/vmlinux.ld.S中<br>这个文件使用一系列定义在linux/include/asm_generic/vmlinux.lds.h头文件中的宏中。 </p><a id="more"></a>
+
 <p>   ARM平台连接脚本包含一个对特殊区域的简单易懂的定义<br>. = ALIGN(4);<br><strong>start_</strong>ex_table = .;<br>*(<strong>ex_table)<br><em>_stop</em></strong>ex_table = .; </p>
 <p>这个<strong>ex_table特殊区域四字节对其。链接器创建一堆标识符，也就是</strong>start_ex_table和<strong>stop</strong>ex_table，然后这只他们的起始地址为<strong>ex_table的开始和结尾。 Linux函数可以用这些标识符来迭代</strong>ex_table的字节， </p>
 <p>下面，根据Linux特殊区域中存储的信息对这些特殊区域进行分组， </p>

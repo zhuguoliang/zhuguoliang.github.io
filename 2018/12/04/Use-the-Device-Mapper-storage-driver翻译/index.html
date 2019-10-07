@@ -29,7 +29,7 @@
     version: '7.4.1',
     exturl: false,
     sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
+    copycode: {"enable":true,"show_result":false,"style":null},
     back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
@@ -298,7 +298,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>device mapper是一个基于内核的框架，用来在linux下支持很多高级的卷管理策略。docker的devicemapper存储驱动利用这个框架的thin provisioning以及快照功能来进行镜像和容器的管理。本文中docker的设备存储驱动标记为devicemapper, 内核中的框架为Device Mapper。</p>
+        <p>device mapper是一个基于内核的框架，用来在linux下支持很多高级的卷管理策略。docker的devicemapper存储驱动利用这个框架的thin provisioning以及快照功能来进行镜像和容器的管理。本文中docker的设备存储驱动标记为devicemapper, 内核中的框架为Device Mapper。</p><a id="more"></a>
 <p>对于兼容的系统，devicemapper的支持已经包含在内核中，然而在docker中使用它需要进行一些配置。<br>devicemapper驱动使用指定给docker的块设备来在块层操作，而不是在文件层，这些设备可以通过在docker host中增加物理存储来扩展，并且相比在操作系统层使用文件系统，这种方式表现更好。</p>
 <h2 id="预先要求"><a href="#预先要求" class="headerlink" title="预先要求"></a>预先要求</h2><ul>
 <li>device mapper 存储驱动是在很多OS发型版中支持的DOCKER企业版上已经支持的存储驱动，详细请看产品兼容表。</li>

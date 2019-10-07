@@ -29,7 +29,7 @@
     version: '7.4.1',
     exturl: false,
     sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
+    copycode: {"enable":true,"show_result":false,"style":null},
     back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
@@ -484,15 +484,15 @@
 <li>高可用</li>
 <li>ACID事务</li>
 <li>SQL的数据库  </li>
-</ol>
-<h2 id="发展历程"><a href="#发展历程" class="headerlink" title="发展历程"></a>发展历程</h2><ol>
+</ol><h2 id="发展历程"><a href="#发展历程" class="headerlink" title="发展历程"></a>发展历程</h2><ol>
 <li>只在内存中</li>
 <li>加入golevelDB做持久化</li>
 <li>基于HBASE做分布式，但是发现下层软件栈厚，依赖过多</li>
 <li>开发TIkv 选择用rust实现，选择没有GC的语言 选择rocksDB</li>
 <li>用sysbench 性能没有达到预期，还有很多sql功能没有实现–》实现更好的sql层，</li>
 <li>tispark</li>
-</ol>
+</ol><a id="more"></a>
+
 <h2 id="测试很重要"><a href="#测试很重要" class="headerlink" title="测试很重要"></a>测试很重要</h2><ul>
 <li>单元测试 </li>
 <li>性能测试 </li>
@@ -600,10 +600,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>如何构建元数据服务 </p>
-<p>failover<br>zookeeper 存储空间严格受限，所有数据在内存中。<br>DHT无法精确控制，负载不均衡情况<br>最终选择：<br>levelDB+ ZOOKEEPER<br>原因：轻量级，稳定 </p>
-<p>Log replication<br> 数据认为成操作日志累加结果，记录操作日志即可拿到完整数据状态。 </p>
-<p>zookeeper选取meta server leader， zookeeper负责log持久化 其他的从zookeeper上拉取log<br>failover，当leader fail 重新选举，把没有消费完的日志重新消费，即可继续提供服务 </p>
+          <p>如何构建元数据服务 </p><p>failover<br>zookeeper 存储空间严格受限，所有数据在内存中。<br>DHT无法精确控制，负载不均衡情况<br>最终选择：<br>levelDB+ ZOOKEEPER<br>原因：轻量级，稳定 </p><p>Log replication<br> 数据认为成操作日志累加结果，记录操作日志即可拿到完整数据状态。 </p><p>zookeeper选取meta server leader， zookeeper负责log持久化 其他的从zookeeper上拉取log<br>failover，当leader fail 重新选举，把没有消费完的日志重新消费，即可继续提供服务 </p><a id="more"></a>
+
+
+
 <p>数据存储引擎要求 </p>
 <ul>
 <li>可靠 </li>
@@ -614,7 +614,6 @@
 <p>*<em>LSM树问题 写放大 3倍 读放大300多倍 *</em></p>
 <p>*<em>内核文件系统的问题： *</em><br>内核文件系统，构建存储引擎没用到，<br>文件系统为了单个磁盘设计<br>对异步IO支持不好<br>文件系统的日志操作带来写放大问题 </p>
 <p>用户空间的存储引擎，直接构建在块设备层之上<br>目前的问题在于上下文切换。 </p>
-<p>未来：pmd实现在用户层，存储引擎实现在 </p>
           <!--noindex-->
           
             <div class="post-button">
@@ -772,8 +771,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>Linux内核有一些额外类型的section，被叫做特殊区，special sections<br>这些区使用来实现很多内核特性 </p>
-<p>ELF有个头，有很多段，每个段又包括一个或者多个区域，每个段的长度和每个区的长度在ELF头里面指出。 链接器把相同类型的区和并成一个区，然后给它分配一个起始地址。 比较简单的和执行文件中的section和内核中的section,可以发现有很多特别的区。 这些区域的数目依赖于体系结构，x86_64有超过30个，ARM有10个<br>特殊区域的定义在Linux链接器脚本中，这个默认的链接器脚本有区别，对应的文件存储在每个架构的子树中kernel/vmlinux.ld.S中<br>这个文件使用一系列定义在linux/include/asm_generic/vmlinux.lds.h头文件中的宏中。 </p>
+          <p>Linux内核有一些额外类型的section，被叫做特殊区，special sections<br>这些区使用来实现很多内核特性 </p><p>ELF有个头，有很多段，每个段又包括一个或者多个区域，每个段的长度和每个区的长度在ELF头里面指出。 链接器把相同类型的区和并成一个区，然后给它分配一个起始地址。 比较简单的和执行文件中的section和内核中的section,可以发现有很多特别的区。 这些区域的数目依赖于体系结构，x86_64有超过30个，ARM有10个<br>特殊区域的定义在Linux链接器脚本中，这个默认的链接器脚本有区别，对应的文件存储在每个架构的子树中kernel/vmlinux.ld.S中<br>这个文件使用一系列定义在linux/include/asm_generic/vmlinux.lds.h头文件中的宏中。 </p><a id="more"></a>
+
 <p>   ARM平台连接脚本包含一个对特殊区域的简单易懂的定义<br>. = ALIGN(4);<br><strong>start_</strong>ex_table = .;<br>*(<strong>ex_table)<br><em>_stop</em></strong>ex_table = .; </p>
 <p>这个<strong>ex_table特殊区域四字节对其。链接器创建一堆标识符，也就是</strong>start_ex_table和<strong>stop</strong>ex_table，然后这只他们的起始地址为<strong>ex_table的开始和结尾。 Linux函数可以用这些标识符来迭代</strong>ex_table的字节， </p>
 <p>下面，根据Linux特殊区域中存储的信息对这些特殊区域进行分组， </p>
@@ -871,15 +870,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>抽出固定的不受打扰的时间，来完成专注的工作和对话。 </p>
-<p>如果没有办法摆脱多任务并行，最好每天抽出一小时，不受打扰地完成一个任务 </p>
-<p>离线方法 </p>
-<ol>
+          <p>抽出固定的不受打扰的时间，来完成专注的工作和对话。 </p><p>如果没有办法摆脱多任务并行，最好每天抽出一小时，不受打扰地完成一个任务 </p><p>离线方法 </p><ol>
 <li>首先找出一天中思考表现最好的时间段，（可以试着把安静的一小时安排在一天中不同的时间段，找出这个时间，但对于大多数人来说是清晨，或者可以在临睡之前的一小时）</li>
 <li>在周日晚上抽出20分钟彻底离线，用于计划一周的工作，确定最重要的任务是哪些，安排在什么时间去做，确保每天都有充足的安静时间</li>
 <li>每天抽出10分钟来安排第二天的事情，时间不应该晚于睡前1小时，在这10分钟里面，确定最重要的事情并且记下来，这样在睡觉的时候，存储脑就会提前开始工作。</li>
 <li>如果需要阅读艰深的文本，最好打印出来，因为研究表明，在纸面上阅读更容易发现重要的细节或错误，而在屏幕上可能错过。</li>
-</ol>
+</ol><a id="more"></a>
+
+
+
 <p>批量处理方法，减少任务切换次数 </p>
 <ol>
 <li>艾森豪威尔原理，重要的事情通常不紧急，紧急的事情通常不重要。</li>
@@ -979,8 +978,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>DMA–&gt;IOAT </p>
-<p>之前对DMA的使用是从主机的内存直接传输到输入/输出设备，不需要主机CPU干预。一些网络例如Infiniband提供零拷贝数据传输。<br>然而，这些解决方案都是用于在节点之间进行数据传输。之前的研究人员也尝试过使用DMA在节点内部进行大规模数据传输。<br>很多这样的尝试失败的原因是由于DMA启动开销大，DRAM完成后的通知开销等开销问题。具体来说，要保证传输的内存页面不被swap出去，并且需要检查完成。 </p>
+          <p>DMA–&gt;IOAT </p><p>之前对DMA的使用是从主机的内存直接传输到输入/输出设备，不需要主机CPU干预。一些网络例如Infiniband提供零拷贝数据传输。<br>然而，这些解决方案都是用于在节点之间进行数据传输。之前的研究人员也尝试过使用DMA在节点内部进行大规模数据传输。<br>很多这样的尝试失败的原因是由于DMA启动开销大，DRAM完成后的通知开销等开销问题。具体来说，要保证传输的内存页面不被swap出去，并且需要检查完成。 </p><a id="more"></a>
+
 <p>近期intel提出的IOAT引入了一个异步DMA拷贝引擎。 </p>
 <p>IOAT<br>主要三个特性 </p>
 <ol>
@@ -996,7 +995,6 @@
 </ol>
 <p>下面这个链接是一个在线看代码的地方，下面是最新的对ioat支持<br><a href="https://elixir.free-electrons.com/linux/latest/source/drivers/dma/ioat/dma.c" target="_blank" rel="noopener">https://elixir.free-electrons.com/linux/latest/source/drivers/dma/ioat/dma.c</a></p>
 <p>在下面这个链接讨论了支持IOAT 的DCA相关的内核patch，基本实现在2007年。<br><a href="https://lwn.net/Articles/247493/" target="_blank" rel="noopener">https://lwn.net/Articles/247493/</a></p>
-
           <!--noindex-->
           
             <div class="post-button">

@@ -29,7 +29,7 @@
     version: '7.4.1',
     exturl: false,
     sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
+    copycode: {"enable":true,"show_result":false,"style":null},
     back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
@@ -276,7 +276,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>systemctl restart sysstat.service<br>On Ubuntu 16.04 I just ran into this same issue. After some grousing around I found I needed to enable the service by editing the file /etc/default/sysstat<br>Change ENABLED=”false” to true:</p>
+        <p>systemctl restart sysstat.service<br>On Ubuntu 16.04 I just ran into this same issue. After some grousing around I found I needed to enable the service by editing the file /etc/default/sysstat<br>Change ENABLED=”false” to true:</p><a id="more"></a>
 <blockquote>
 <p>Should sadc collect system activity informations? Valid values<br>are “true” and “false”. Please do not put other values, they<br>will be overwritten by debconf!<br>ENABLED=”true”<br>Restart the service:<br>systemctl restart sysstat.service</p>
 </blockquote>

@@ -29,7 +29,7 @@
     version: '7.4.1',
     exturl: false,
     sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
+    copycode: {"enable":true,"show_result":false,"style":null},
     back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
@@ -298,7 +298,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>The reinterpret_cast operator also allows any integral type to be converted into any pointer type and vice versa. Misuse of the reinterpret_cast operator can easily be unsafe. Unless the desired conversion is inherently low-level, you should use one of the other cast operators.<br>这个操作符允许任何整数类型被转换为任何指针类型。如果使用错误，这个操作符很容易导致不安全。除非你需要的转换是在底层进行的，否则建议使用其他的cast操作符。</p>
+        <p>The reinterpret_cast operator also allows any integral type to be converted into any pointer type and vice versa. Misuse of the reinterpret_cast operator can easily be unsafe. Unless the desired conversion is inherently low-level, you should use one of the other cast operators.<br>这个操作符允许任何整数类型被转换为任何指针类型。如果使用错误，这个操作符很容易导致不安全。除非你需要的转换是在底层进行的，否则建议使用其他的cast操作符。</p><a id="more"></a>
 <p>The reinterpret_cast operator can be used for conversions such as char* to int*, or One_class* to Unrelated_class*, which are inherently unsafe.<br>这个操作符可以用来从char*到int* 或者从一个class*到另一个不相关的class *</p>
 <p>The result of a reinterpret_cast cannot safely be used for anything other than being cast back to its original type. Other uses are, at best, nonportable.<br>The reinterpret_cast operator cannot cast away the const, volatile, or __unaligned attributes. See const_cast Operator for information on removing these attributes.</p>
 <p>The reinterpret_cast operator converts a null pointer value to the null pointer value of the destination type._</p>

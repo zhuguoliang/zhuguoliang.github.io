@@ -29,7 +29,7 @@
     version: '7.4.1',
     exturl: false,
     sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
+    copycode: {"enable":true,"show_result":false,"style":null},
     back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
@@ -268,7 +268,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-10-07 11:29:54" itemprop="dateModified" datetime="2019-10-07T11:29:54+08:00">2019-10-07</time>
+                <time title="Modified: 2019-10-07 12:51:58" itemprop="dateModified" datetime="2019-10-07T12:51:58+08:00">2019-10-07</time>
               </span>
             
           
@@ -300,14 +300,11 @@
           <h2 id="类功能介绍"><a href="#类功能介绍" class="headerlink" title="类功能介绍"></a>类功能介绍</h2><p>首先翻译一下注释。<br>AsynchronousFileIOChannel是整块reader和writer的基类。读写请求由异步IO线程代理。在一个IO请求完成之后，这个块的内存段会被加入一个集合并且返回。<br>这个访问的异步特性使得实现一个read-ahead或者write-behind的IO访问类型变得可能。<br>参数: 这次访问向IO线程发出的请求的类型，读或写<br>这个类的功能是负责管理向IO worker thread发出的请求队列，</p><a id="more"></a>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`<span class="keyword">protected</span> <span class="keyword">final</span> RequestQueue\&lt;R\&gt; requestQueue;</span><br></pre></td></tr></table></figure>
 
-<p>`</p>
-<figure class="highlight plain"><figcaption><span>[][1] [title][2]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">protected final RequestQueue\&lt;R\&gt; requestQueue;</span><br></pre></td></tr></table></figure>
-
-
-<p>类的构造函数注释：<br>向path发起一个新的channel访问，channel接受要读写的buffer，并且把他们交给异步IO线程，处理完之后，buffer会通过加入到给定队列的方式返回。</p>
+<p>`<br>类的构造函数注释：<br>向path发起一个新的channel访问，channel接受要读写的buffer，并且把他们交给异步IO线程，处理完之后，buffer会通过加入到给定队列的方式返回。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">`<span class="comment">/**  * Creates a new channel access to the path indicated by the given ID. The channel accepts buffers to be read/written and hands them to the asynchronous I/O thread. After being processed, the buffers are returned by adding the to the given queue.</span></span><br><span class="line"><span class="comment"> *  * <span class="doctag">@param</span> channelID    The id describing the path of the file that the channel accessed.</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> requestQueue The queue that this channel hands its IO requests to.</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> callback     The callback to be invoked when a request is done.</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> writeEnabled Flag describing whether the channel should be opened in read/write mode, rather than in read-only mode.</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> IOException Thrown, if the channel could no be opened.</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
 
-<p>`## 引用分析<br>被很多类扩展，包括：</p>
+<p>`</p>
+<h2 id="引用分析"><a href="#引用分析" class="headerlink" title="引用分析"></a>引用分析</h2><p>被很多类扩展，包括：</p>
 <ul>
 <li><p>AsynchronousBlockReader 这个引发了对createBlockChannelReader<br>的分析，下一节中会分析IOManagerAsync</p>
 </li>
@@ -421,12 +418,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>由于比赛需要，这部分是非常重要的内容，所以自己手动翻译一下。</p>
-<h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><p>Flink中数据交换的构建遵循以下设计原则</p>
-<ol>
+          <p>由于比赛需要，这部分是非常重要的内容，所以自己手动翻译一下。</p><h2 id="基础知识"><a href="#基础知识" class="headerlink" title="基础知识"></a>基础知识</h2><p>Flink中数据交换的构建遵循以下设计原则</p><ol>
 <li>数据交换的控制流是接收方发出的，这与mapreduce相似。</li>
 <li>数据交换的数据流，也就是实际数据传输通过IntermediateResult这个提法来抽象，并且是可插拔的，这意味着系统能够用相同的实现同时支持批流数据传输<br>数据交换包括几个对象，包括：</li>
-</ol>
+</ol><a id="more"></a>
+
+
 <ul>
 <li>JobManager 这是主节点，负责调度任务，恢复以及协调，通过ExecutionGraph数据结构保存job执行的全貌</li>
 <li>TaskManagers 这是工作节点，一个TM在线程级别并发执行多个task。每个TM还包含了一个CommunicationManager（CM在task之间共享），以及一个MemoryManager（MM，也是在task之间共享）。TM之间可以通过建立好的TCP连接交换数据。</li>
@@ -435,20 +432,6 @@
 <p><img src="/2019/10/04/flink-task之间的数据交换/jobmanager-taskmanagers.png" alt></p>
 <p>ExecutionGraph： 执行图是包含着job计算的基础事实的数据结构，它由代表着计算task的执行节点（ExecutionVertex）组成。节点通过ExecutionEdges执行边（EE）连接到中间结果。</p>
 <p><img src="/2019/10/04/flink-task之间的数据交换/executiongraph.png" alt><br>JM里面有一些逻辑数据结构，他们有他们的运行时等价结构来负责TM内部的世界数据处理。</p>
-<ul>
-<li><p>对于IntermediateResultPartition的运行时等价结构叫做ResultPartition。ResultPartition（RP）代表一个BufferWriter写的数据块，比如，一个task产生的数据块。一个RP是Result Subpartitions（RSs）的集合。这是为了区分分发给不同的接收者产生的数据结构，比如说在一个reduce或者join操作中的一个partitioning shuffle 操作。</p>
-</li>
-<li><p>ResultSubpartition(RS) 代表了有一个operator创建的数据的分区，同时还包括了把这个数据分区转发给接受放operator的逻辑。特定RS的实现决定了实际的数据传输逻辑，这是一个可插拔的机制，运行系统支持多种数据传输，比如PipelinedSubpartition是一个流水线的实现，支持流数据交换而SpillableSubpartition是一个阻塞的实现来支持批数据交换。</p>
-</li>
-<li><p>InputGate: 在接收方的RP的等价类。它负责收集数据buffer，并且在上游处理他们。</p>
-</li>
-<li><p>InputChannel：在接收方的RS等价类。它负责收集特定数据分区的数据buffer。</p>
-</li>
-<li><p>Buffer: 参看  <a href="https://cwiki.apache.org/confluence/pages/viewpage.action?pageId=53741525" target="_blank" rel="noopener">https://cwiki.apache.org/confluence/pages/viewpage.action?pageId=53741525</a></p>
-</li>
-<li><p>Serializers and deserializers reliably convert typed records into raw byte buffers and vice versa, handling records that span multiple buffers, etc.</p>
-</li>
-</ul>
           <!--noindex-->
           
             <div class="post-button">
@@ -606,7 +589,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>锁的发展基本上就是5个阶段，第一个阶段粗粒度的锁开始，一个锁管一个对象，这样过度序列化。<br>第二个阶段是通过细粒度的锁，乐观的锁，放松一致性的锁等等。但是这种锁的容易做错，或者造成优先级倒置，死锁等等问题。特别是大规模系统中，锁的使用都写在代码注释里面，做着做着就失传了，靠看代码维持。<br>第三个阶段是CAS阶段，就是通过原子操作实现无锁数据结构，这种方法能够多线程协同完成工作，上限很高，但是代码可维护性不是很好，通常是难以接续传男不传女传南不传北传胖不传瘦。<br>第四个阶段和第五个阶段都是事务化阶段，分别是软件事务化和硬件事务化。 </p>
+          <p>锁的发展基本上就是5个阶段，第一个阶段粗粒度的锁开始，一个锁管一个对象，这样过度序列化。<br>第二个阶段是通过细粒度的锁，乐观的锁，放松一致性的锁等等。但是这种锁的容易做错，或者造成优先级倒置，死锁等等问题。特别是大规模系统中，锁的使用都写在代码注释里面，做着做着就失传了，靠看代码维持。<br>第三个阶段是CAS阶段，就是通过原子操作实现无锁数据结构，这种方法能够多线程协同完成工作，上限很高，但是代码可维护性不是很好，通常是难以接续传男不传女传南不传北传胖不传瘦。<br>第四个阶段和第五个阶段都是事务化阶段，分别是软件事务化和硬件事务化。 </p><a id="more"></a>
 <p>和传统在静态，从逻辑上判断关键区域不同，TSX让处理器来动态决定是否线程需要串行执行关键区，这里的动态是相对我们考虑什么时候使用锁的时候的静态逻辑分析来说的，如果一次执行中，同步是不需要的，那么不需要任何的跨线程的序列化。如何判断是不是需要同步，intel通过分析用户定义的事务代码，建立事务中内存区域的读集合和写集合，动态监测发生在同一个cache行中的处理器间访问冲突，决定是否需要序列化事务的操作。 </p>
 
           <!--noindex-->
@@ -700,8 +683,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>为每个task或者operator收集的metric可以在dashboard可视化，在job的主页上，选择metrics标签页，在选择top graph中的一个task之后，你可以通过使用add metric下拉菜单选择要显示的metric </p>
-<p>如何看到metrics–&gt;修改工程的pom.xml文件<br>I was able to start the Flink webui from IntelliJ by adding flink-runtime-web to the dependencies for my project. I did this by adding this to my pom.xml file: </p>
+          <p>为每个task或者operator收集的metric可以在dashboard可视化，在job的主页上，选择metrics标签页，在选择top graph中的一个task之后，你可以通过使用add metric下拉菜单选择要显示的metric </p><p>如何看到metrics–&gt;修改工程的pom.xml文件<br>I was able to start the Flink webui from IntelliJ by adding flink-runtime-web to the dependencies for my project. I did this by adding this to my pom.xml file: </p><a id="more"></a>
+
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">`\&lt;dependency\&gt;</span><br><span class="line">    \&lt;groupId\&gt;org.apache.flink\&lt;/groupId\&gt;</span><br><span class="line">    \&lt;artifactId\&gt;flink-runtime-web_2.11\&lt;/artifactId\&gt;</span><br><span class="line">    \&lt;version\&gt;$&#123;flink.version&#125;\&lt;/version\&gt;</span><br><span class="line">\&lt;/dependency\&gt;</span><br></pre></td></tr></table></figure>
 
 <p>`然后在类文件中加入下面代码</p>
@@ -808,16 +791,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>flink有丰富的窗口语义。</p>
-<p>在这个训练中你会学到：</p>
-<ul>
+          <p>flink有丰富的窗口语义。</p><p>在这个训练中你会学到：</p><ul>
 <li>如何使用窗口来无限流上计算累计</li>
 <li>flink支持什么类型的窗口</li>
 <li>如何使用窗口累计来实现一个数据流程序<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2>想要在有界子集上计算累计分析对流处理时是很自然的，通常这些分析想要回答一下这些类的问题：</li>
 <li>每分钟页面的访问</li>
 <li>每个用户每星期的会话数目</li>
 <li>每分钟每个传感器的最大温度</li>
-</ul>
+</ul><a id="more"></a>
+
+
 <p>使用flink计算窗口化的分析依赖于两个主要的抽象：一是窗口分配者把时间分配给窗口（并且在必要时创建新窗口），二是窗口函数，这些函数会被应用到分配到窗口的事件上。</p>
 <p>flink的窗口API还有一个概念叫做Triggers，触发器。触发器决定什么时候调用窗口函数，还有Evictors移除器，它负责从一个窗口中删除元素。</p>
 <p>简单来说，你可以对一个键数据流这样应用窗口：</p>
@@ -825,8 +808,6 @@
 
 <p>`You can also use windowing with non-keyed streams, but keep in mind that in this case, the processing will not be done in parallel:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">`stream.</span><br><span class="line">  .windowAll(\&lt;window assigner\&gt;)</span><br><span class="line">  .reduce|aggregate|process(\&lt;window function\&gt;)</span><br></pre></td></tr></table></figure>
-
-<p>`</p>
           <!--noindex-->
           
             <div class="post-button">
@@ -996,7 +977,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>systemctl restart sysstat.service<br>On Ubuntu 16.04 I just ran into this same issue. After some grousing around I found I needed to enable the service by editing the file /etc/default/sysstat<br>Change ENABLED=”false” to true:</p>
+          <p>systemctl restart sysstat.service<br>On Ubuntu 16.04 I just ran into this same issue. After some grousing around I found I needed to enable the service by editing the file /etc/default/sysstat<br>Change ENABLED=”false” to true:</p><a id="more"></a>
 <blockquote>
 <p>Should sadc collect system activity informations? Valid values<br>are “true” and “false”. Please do not put other values, they<br>will be overwritten by debconf!<br>ENABLED=”true”<br>Restart the service:<br>systemctl restart sysstat.service</p>
 </blockquote>

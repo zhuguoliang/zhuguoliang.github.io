@@ -29,7 +29,7 @@
     version: '7.4.1',
     exturl: false,
     sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
+    copycode: {"enable":true,"show_result":false,"style":null},
     back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
@@ -398,7 +398,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>By default, the EAL creates hugepage files on each hugetlbfs filesystem using the rtemap_X filename, where X is in the range 0 to the maximum number of hugepages -1. </p>
+          <p>By default, the EAL creates hugepage files on each hugetlbfs filesystem using the rtemap_X filename, where X is in the range 0 to the maximum number of hugepages -1. </p><a id="more"></a>
 <p>Similarly, it creates shared configuration files, memory mapped in each process, using the /var/run/.rte_config filename, when run as root (or $HOME/.rte_config when run as a non-root user; if filesystem and device permissions are set up to allow this). The rte part of the filenames of each of the above is configurable using the file-prefix parameter.</p>
 
           <!--noindex-->
@@ -804,8 +804,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>Refactorings in CLion</p>
-<p>▪ Rename (Shift+F6) renames symbols, automatically correcting all references in the code for you.<br>▪ Change Signature (Ctrl+F6 on Windows/Linux, Cmd+F6 on OS X) helps you add/remove/reorder function parameters, change the result type or update the name of the function, all usages will be fixed as well.<br>▪ Move (F6) moves files or directories, as well as methods, variables or constants.<br>▪ Copy (F5) allows you to create a copy of file or directory.<br>▪ Safe Delete (Alt+Delete on Windows/Linux, Cmd+Delete Forward on OS X) safely removes files and symbols from your code.</p>
+          <p>Refactorings in CLion</p><p>▪ Rename (Shift+F6) renames symbols, automatically correcting all references in the code for you.<br>▪ Change Signature (Ctrl+F6 on Windows/Linux, Cmd+F6 on OS X) helps you add/remove/reorder function parameters, change the result type or update the name of the function, all usages will be fixed as well.<br>▪ Move (F6) moves files or directories, as well as methods, variables or constants.<br>▪ Copy (F5) allows you to create a copy of file or directory.<br>▪ Safe Delete (Alt+Delete on Windows/Linux, Cmd+Delete Forward on OS X) safely removes files and symbols from your code.</p><a id="more"></a>
+
 <p>▪ Inline (Ctrl+Alt+N on Windows/Linux, Alt+Cmd+N on OS X) replaces redundant variable usage/method calls with its initializer/declaration.<br>▪ Extract refactoring – CLion analyses the block of code where the refactoring was invoked, detects input and output variables, together with the usages of the selected expression to replace them with the newly created:<br>▪ Variable (Ctrl+Alt+V on Windows/Linux, Alt+Cmd+V on OS X)<br>▪ Constant (Ctrl+Alt+C on Windows/Linux, Alt+Cmd+C on OS X)<br>▪ Parameter (Ctrl+Alt+P on Windows/Linux, Alt+Cmd+P on OS X)<br>▪ Typedef (Ctrl+Alt+K on Windows/Linux, Alt+Cmd+K on OS X)<br>▪ Define (Ctrl+Alt+D on Windows/Linux, Alt+Cmd+D on OS X)<br>▪ Method (Ctrl+Alt+M on Windows/Linux, Alt+Cmd+M on OS X)<br>▪ Superclass<br>▪ Subclass<br>▪ Pull Members Up safely moves class members to a superclass.<br>▪ Push Members Down safely moves class members to a subclass.<br>You can use Refactor This (Ctrl+Alt+Shift+T on Windows/Linux, Ctrl+T on OS X) to get the list of the refactorings available in the current scope.</p>
 
           <!--noindex-->
@@ -1123,14 +1123,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>PROJECT(XXX)<br>工程名</p>
-<hr>
-<p>SET(CMAKE_CXX_COMPILER g++-5)<br>SET设置一个变量的值<br>SET(LIBRARIES ${LIBRARIES} rt numa pthread)<br>SET(LIBRARIES ${LIBRARIES} curl)  </p>
-<h1 id="SET-LIBRARIES-LIBRARIES-boost-coroutine-boost-system"><a href="#SET-LIBRARIES-LIBRARIES-boost-coroutine-boost-system" class="headerlink" title="SET(LIBRARIES ${LIBRARIES} boost_coroutine boost_system)"></a>SET(LIBRARIES ${LIBRARIES} boost_coroutine boost_system)</h1><p>多个选项之间用空格隔开<br>-—<br>INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src)<br>Add the given directories to those the compiler uses to search for include files</p>
+          <p>PROJECT(XXX)<br>工程名</p><hr><p>SET(CMAKE_CXX_COMPILER g++-5)<br>SET设置一个变量的值<br>SET(LIBRARIES ${LIBRARIES} rt numa pthread)<br>SET(LIBRARIES ${LIBRARIES} curl)  </p><h1 id="SET-LIBRARIES-LIBRARIES-boost-coroutine-boost-system"><a href="#SET-LIBRARIES-LIBRARIES-boost-coroutine-boost-system" class="headerlink" title="SET(LIBRARIES ${LIBRARIES} boost_coroutine boost_system)"></a>SET(LIBRARIES ${LIBRARIES} boost_coroutine boost_system)</h1><a id="more"></a>
+
+
+<p>多个选项之间用空格隔开<br>-—<br>INCLUDE_DIRECTORIES(${CMAKE_SOURCE_DIR}/src)<br>Add the given directories to those the compiler uses to search for include files</p>
 <hr>
 <p>ADD_DEFINITIONS(-std=c++14)<br>为源文件的编译添加由-D定义的标志。</p>
 <hr>
-<h2 id="MESSAGE-STATUS-“Debugging-is-disabled-to-enable-run-cmake-DDEBUG-ON-”"><a href="#MESSAGE-STATUS-“Debugging-is-disabled-to-enable-run-cmake-DDEBUG-ON-”" class="headerlink" title="MESSAGE(STATUS “Debugging is disabled (to enable, run cmake .. -DDEBUG=ON)”)"></a>MESSAGE(STATUS “Debugging is disabled (to enable, run <code>cmake .. -DDEBUG=ON</code>)”)</h2><p>SET_SOURCE_FILES_PROPERTIES(src/mica/util/siphash/siphash24.c PROPERTIES LANGUAGE CXX)</p>
+<h2 id="MESSAGE-STATUS-“Debugging-is-disabled-to-enable-run-cmake-DDEBUG-ON-”"><a href="#MESSAGE-STATUS-“Debugging-is-disabled-to-enable-run-cmake-DDEBUG-ON-”" class="headerlink" title="MESSAGE(STATUS “Debugging is disabled (to enable, run cmake .. -DDEBUG=ON)”)"></a>MESSAGE(STATUS “Debugging is disabled (to enable, run <code>cmake .. -DDEBUG=ON</code>)”)</h2>
           <!--noindex-->
           
             <div class="post-button">
@@ -1230,7 +1230,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>The reinterpret_cast operator also allows any integral type to be converted into any pointer type and vice versa. Misuse of the reinterpret_cast operator can easily be unsafe. Unless the desired conversion is inherently low-level, you should use one of the other cast operators.<br>这个操作符允许任何整数类型被转换为任何指针类型。如果使用错误，这个操作符很容易导致不安全。除非你需要的转换是在底层进行的，否则建议使用其他的cast操作符。</p>
+          <p>The reinterpret_cast operator also allows any integral type to be converted into any pointer type and vice versa. Misuse of the reinterpret_cast operator can easily be unsafe. Unless the desired conversion is inherently low-level, you should use one of the other cast operators.<br>这个操作符允许任何整数类型被转换为任何指针类型。如果使用错误，这个操作符很容易导致不安全。除非你需要的转换是在底层进行的，否则建议使用其他的cast操作符。</p><a id="more"></a>
 <p>The reinterpret_cast operator can be used for conversions such as char* to int*, or One_class* to Unrelated_class*, which are inherently unsafe.<br>这个操作符可以用来从char*到int* 或者从一个class*到另一个不相关的class *</p>
 <p>The result of a reinterpret_cast cannot safely be used for anything other than being cast back to its original type. Other uses are, at best, nonportable.<br>The reinterpret_cast operator cannot cast away the const, volatile, or __unaligned attributes. See const_cast Operator for information on removing these attributes.</p>
 <p>The reinterpret_cast operator converts a null pointer value to the null pointer value of the destination type._</p>

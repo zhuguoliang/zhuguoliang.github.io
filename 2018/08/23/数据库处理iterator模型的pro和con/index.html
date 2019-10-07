@@ -29,7 +29,7 @@
     version: '7.4.1',
     exturl: false,
     sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
+    copycode: {"enable":true,"show_result":false,"style":null},
     back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
@@ -55,20 +55,20 @@
   };
 </script>
 
-  <meta name="description" content="iterator模型（也叫火山执行引擎）出现的年代，数据库查询处理的时间由IO时间主导，而CPU开销并不是很重要。  对每个作为中间结果或者最终结果生成的元组都要调用next函数 对next的调用通常是一个虚函数，或者函数指针  因此对next调用比普通调用更昂贵，因为虚函数调用会损害现代CPU的分支预测性能。3. 模型的代码局部性不好，需要复杂的book-keeping 假设对一个压缩的关系进行">
+  <meta name="description" content="iterator模型（也叫火山执行引擎）出现的年代，数据库查询处理的时间由IO时间主导，而CPU开销并不是很重要。 对每个作为中间结果或者最终结果生成的元组都要调用next函数 对next的调用通常是一个虚函数，或者函数指针 因此对next调用比普通调用更昂贵，因为虚函数调用会损害现代CPU的分支预测性能。3. 模型的代码局部性不好，需要复杂的book-keeping   假设对一个压缩的关系进行">
 <meta name="keywords" content="databases,查询优化">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据库处理iterator模型的pro和con">
 <meta property="og:url" content="http://yoursite.com/2018/08/23/数据库处理iterator模型的pro和con/index.html">
 <meta property="og:site_name" content="West to the Northwest">
-<meta property="og:description" content="iterator模型（也叫火山执行引擎）出现的年代，数据库查询处理的时间由IO时间主导，而CPU开销并不是很重要。  对每个作为中间结果或者最终结果生成的元组都要调用next函数 对next的调用通常是一个虚函数，或者函数指针  因此对next调用比普通调用更昂贵，因为虚函数调用会损害现代CPU的分支预测性能。3. 模型的代码局部性不好，需要复杂的book-keeping 假设对一个压缩的关系进行">
+<meta property="og:description" content="iterator模型（也叫火山执行引擎）出现的年代，数据库查询处理的时间由IO时间主导，而CPU开销并不是很重要。 对每个作为中间结果或者最终结果生成的元组都要调用next函数 对next的调用通常是一个虚函数，或者函数指针 因此对next调用比普通调用更昂贵，因为虚函数调用会损害现代CPU的分支预测性能。3. 模型的代码局部性不好，需要复杂的book-keeping   假设对一个压缩的关系进行">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2018/08/23/数据库处理iterator模型的pro和con/7.png">
 <meta property="og:image" content="http://yoursite.com/2018/08/23/数据库处理iterator模型的pro和con/8.png">
 <meta property="og:updated_time" content="2018-12-31T05:38:26.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据库处理iterator模型的pro和con">
-<meta name="twitter:description" content="iterator模型（也叫火山执行引擎）出现的年代，数据库查询处理的时间由IO时间主导，而CPU开销并不是很重要。  对每个作为中间结果或者最终结果生成的元组都要调用next函数 对next的调用通常是一个虚函数，或者函数指针  因此对next调用比普通调用更昂贵，因为虚函数调用会损害现代CPU的分支预测性能。3. 模型的代码局部性不好，需要复杂的book-keeping 假设对一个压缩的关系进行">
+<meta name="twitter:description" content="iterator模型（也叫火山执行引擎）出现的年代，数据库查询处理的时间由IO时间主导，而CPU开销并不是很重要。 对每个作为中间结果或者最终结果生成的元组都要调用next函数 对next的调用通常是一个虚函数，或者函数指针 因此对next调用比普通调用更昂贵，因为虚函数调用会损害现代CPU的分支预测性能。3. 模型的代码局部性不好，需要复杂的book-keeping   假设对一个压缩的关系进行">
 <meta name="twitter:image" content="http://yoursite.com/2018/08/23/数据库处理iterator模型的pro和con/7.png">
   <link rel="canonical" href="http://yoursite.com/2018/08/23/数据库处理iterator模型的pro和con/">
 
@@ -288,12 +288,12 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>iterator模型（也叫火山执行引擎）出现的年代，数据库查询处理的时间由IO时间主导，而CPU开销并不是很重要。</p>
-<ol>
+        <p>iterator模型（也叫火山执行引擎）出现的年代，数据库查询处理的时间由IO时间主导，而CPU开销并不是很重要。</p><ol>
 <li>对每个作为中间结果或者最终结果生成的元组都要调用next函数</li>
 <li>对next的调用通常是一个虚函数，或者函数指针</li>
-</ol>
-<p>因此对next调用比普通调用更昂贵，因为虚函数调用会损害现代CPU的分支预测性能。<br>3. 模型的代码局部性不好，需要复杂的book-keeping</p>
+</ol><p>因此对next调用比普通调用更昂贵，因为虚函数调用会损害现代CPU的分支预测性能。<br>3. 模型的代码局部性不好，需要复杂的book-keeping</p><a id="more"></a>
+
+
 <p>假设对一个压缩的关系进行简单的table扫描，由于元组一次生成一个，table扫描的操作需要记住当前元组在压缩的流中的位置，当需要访问下一个元组时，要跳转到对应的解压缩代码位置。</p>
 <p>下面用一个例子展示火山执行引擎的原理：</p>
 <img src="/2018/08/23/数据库处理iterator模型的pro和con/7.png" width="600">

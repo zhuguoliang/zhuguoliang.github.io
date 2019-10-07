@@ -29,7 +29,7 @@
     version: '7.4.1',
     exturl: false,
     sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
+    copycode: {"enable":true,"show_result":false,"style":null},
     back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
@@ -729,8 +729,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="书摘"><a href="#书摘" class="headerlink" title="书摘"></a>书摘</h2><h3 id="《世界观，现代年轻人必懂的科学哲学与科学史》"><a href="#《世界观，现代年轻人必懂的科学哲学与科学史》" class="headerlink" title="《世界观，现代年轻人必懂的科学哲学与科学史》"></a>《世界观，现代年轻人必懂的科学哲学与科学史》</h3><p>这本书是一个关于科学史和科学哲学的著作，主要分三个部分，一是介绍科学史和科学哲学的一些基本问题，二是探索亚里士多德世界观到牛顿世界观的转变，三是探索近代发展，特别是相对论，量子理论和演化论对西方世界观带来的挑战。</p>
-<h3 id="《怎样写好一个故事》"><a href="#《怎样写好一个故事》" class="headerlink" title="《怎样写好一个故事》"></a>《怎样写好一个故事》</h3><p>这本书是由91篇非虚构故事的写作者的一些经验之谈组成的，整本书分为九章，简单翻看一下，我觉得这本书里面的文章质量参差不齐，有的文章信息量不大，讲述的是大家都知道的知识，幸运的是还有部分文章是值得一读的。</p>
+          <h2 id="书摘"><a href="#书摘" class="headerlink" title="书摘"></a>书摘</h2><h3 id="《世界观，现代年轻人必懂的科学哲学与科学史》"><a href="#《世界观，现代年轻人必懂的科学哲学与科学史》" class="headerlink" title="《世界观，现代年轻人必懂的科学哲学与科学史》"></a>《世界观，现代年轻人必懂的科学哲学与科学史》</h3><p>这本书是一个关于科学史和科学哲学的著作，主要分三个部分，一是介绍科学史和科学哲学的一些基本问题，二是探索亚里士多德世界观到牛顿世界观的转变，三是探索近代发展，特别是相对论，量子理论和演化论对西方世界观带来的挑战。</p><h3 id="《怎样写好一个故事》"><a href="#《怎样写好一个故事》" class="headerlink" title="《怎样写好一个故事》"></a>《怎样写好一个故事》</h3><p>这本书是由91篇非虚构故事的写作者的一些经验之谈组成的，整本书分为九章，简单翻看一下，我觉得这本书里面的文章质量参差不齐，有的文章信息量不大，讲述的是大家都知道的知识，幸运的是还有部分文章是值得一读的。</p><a id="more"></a>
+
 <blockquote>
 <p>重视观念的重要性，培养将观念和故事结合的技能<br>有关服装，装饰以及口音的身份细节—社会经济学地图上<br>戏剧中的场景概念—<br>从人物的角度<br>引用很多会话</p>
 </blockquote>
@@ -1256,7 +1256,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><p>首先从arch/x86/kvm/mmu.c里面的init_kvm_mmu讲起，这个函数决定了KVM的mmu类型。我们默认打开二维分页tdp_enabled _在这个情况下硬件会遍历两个页表，一个是GVA-&gt;GPA的，在遍历这个链表的同时，会遍历GPA-&gt;HPA的链表，由于我们的硬件支持，所以不用做shadow paging.<br>，那么init_kvm_tdp_mmu<br>里面看一看，这里注册了很多处理函数，可以看到值得关注的几个函数_ 1. tdp_page_fault<br>2. nonpaging_sync_page<br>3. nonpaging_invlpg_<br>4. nonpaging_update_pte<br>5. kvm_inject_page_fault_<br>这几个函数光看名字就很诱惑啦，让人很想搞清楚what r u 弄啥嘞。。。</p>
+          <h2 id="初始化"><a href="#初始化" class="headerlink" title="初始化"></a>初始化</h2><p>首先从arch/x86/kvm/mmu.c里面的init_kvm_mmu讲起，这个函数决定了KVM的mmu类型。我们默认打开二维分页tdp_enabled _在这个情况下硬件会遍历两个页表，一个是GVA-&gt;GPA的，在遍历这个链表的同时，会遍历GPA-&gt;HPA的链表，由于我们的硬件支持，所以不用做shadow paging.<br>，那么init_kvm_tdp_mmu<br>里面看一看，这里注册了很多处理函数，可以看到值得关注的几个函数_ 1. tdp_page_fault<br>2. nonpaging_sync_page<br>3. nonpaging_invlpg_<br>4. nonpaging_update_pte<br>5. kvm_inject_page_fault_<br>这几个函数光看名字就很诱惑啦，让人很想搞清楚what r u 弄啥嘞。。。</p><a id="more"></a>
 <h2 id="Steps-in-building-EPT"><a href="#Steps-in-building-EPT" class="headerlink" title="Steps in building EPT"></a>Steps in building EPT</h2><ol>
 <li>最初guest的CR3寄存器指向的guest物理页面也是空页面</li>
 <li>要访问页表的时候发生异常，KVM没有介入处理，而是由guest OS的缺页异常处理函数负责分配一个guest物理页面，然后调用vmx_set_cr3将这个物理地址(GPA)回填，建立guest的页表结构。</li>

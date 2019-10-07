@@ -29,7 +29,7 @@
     version: '7.4.1',
     exturl: false,
     sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
+    copycode: {"enable":true,"show_result":false,"style":null},
     back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
@@ -55,18 +55,18 @@
   };
 </script>
 
-  <meta name="description" content="如何构建元数据服务  failoverzookeeper 存储空间严格受限，所有数据在内存中。DHT无法精确控制，负载不均衡情况最终选择：levelDB+ ZOOKEEPER原因：轻量级，稳定  Log replication 数据认为成操作日志累加结果，记录操作日志即可拿到完整数据状态。  zookeeper选取meta server leader， zookeeper负责log持久化 其他的从">
+  <meta name="description" content="如何构建元数据服务 failoverzookeeper 存储空间严格受限，所有数据在内存中。DHT无法精确控制，负载不均衡情况最终选择：levelDB+ ZOOKEEPER原因：轻量级，稳定 Log replication 数据认为成操作日志累加结果，记录操作日志即可拿到完整数据状态。 zookeeper选取meta server leader， zookeeper负责log持久化 其他的从zoo">
 <meta name="keywords" content="分布式系统">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Qcon18&#39; smartx">
 <meta property="og:url" content="http://yoursite.com/2018/12/31/Qcon18-smartx/index.html">
 <meta property="og:site_name" content="West to the Northwest">
-<meta property="og:description" content="如何构建元数据服务  failoverzookeeper 存储空间严格受限，所有数据在内存中。DHT无法精确控制，负载不均衡情况最终选择：levelDB+ ZOOKEEPER原因：轻量级，稳定  Log replication 数据认为成操作日志累加结果，记录操作日志即可拿到完整数据状态。  zookeeper选取meta server leader， zookeeper负责log持久化 其他的从">
+<meta property="og:description" content="如何构建元数据服务 failoverzookeeper 存储空间严格受限，所有数据在内存中。DHT无法精确控制，负载不均衡情况最终选择：levelDB+ ZOOKEEPER原因：轻量级，稳定 Log replication 数据认为成操作日志累加结果，记录操作日志即可拿到完整数据状态。 zookeeper选取meta server leader， zookeeper负责log持久化 其他的从zoo">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-12-31T12:09:09.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Qcon18&#39; smartx">
-<meta name="twitter:description" content="如何构建元数据服务  failoverzookeeper 存储空间严格受限，所有数据在内存中。DHT无法精确控制，负载不均衡情况最终选择：levelDB+ ZOOKEEPER原因：轻量级，稳定  Log replication 数据认为成操作日志累加结果，记录操作日志即可拿到完整数据状态。  zookeeper选取meta server leader， zookeeper负责log持久化 其他的从">
+<meta name="twitter:description" content="如何构建元数据服务 failoverzookeeper 存储空间严格受限，所有数据在内存中。DHT无法精确控制，负载不均衡情况最终选择：levelDB+ ZOOKEEPER原因：轻量级，稳定 Log replication 数据认为成操作日志累加结果，记录操作日志即可拿到完整数据状态。 zookeeper选取meta server leader， zookeeper负责log持久化 其他的从zoo">
   <link rel="canonical" href="http://yoursite.com/2018/12/31/Qcon18-smartx/">
 
 
@@ -290,10 +290,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>如何构建元数据服务 </p>
-<p>failover<br>zookeeper 存储空间严格受限，所有数据在内存中。<br>DHT无法精确控制，负载不均衡情况<br>最终选择：<br>levelDB+ ZOOKEEPER<br>原因：轻量级，稳定 </p>
-<p>Log replication<br> 数据认为成操作日志累加结果，记录操作日志即可拿到完整数据状态。 </p>
-<p>zookeeper选取meta server leader， zookeeper负责log持久化 其他的从zookeeper上拉取log<br>failover，当leader fail 重新选举，把没有消费完的日志重新消费，即可继续提供服务 </p>
+        <p>如何构建元数据服务 </p><p>failover<br>zookeeper 存储空间严格受限，所有数据在内存中。<br>DHT无法精确控制，负载不均衡情况<br>最终选择：<br>levelDB+ ZOOKEEPER<br>原因：轻量级，稳定 </p><p>Log replication<br> 数据认为成操作日志累加结果，记录操作日志即可拿到完整数据状态。 </p><p>zookeeper选取meta server leader， zookeeper负责log持久化 其他的从zookeeper上拉取log<br>failover，当leader fail 重新选举，把没有消费完的日志重新消费，即可继续提供服务 </p><a id="more"></a>
+
+
+
 <p>数据存储引擎要求 </p>
 <ul>
 <li>可靠 </li>

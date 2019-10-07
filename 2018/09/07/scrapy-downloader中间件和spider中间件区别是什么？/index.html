@@ -29,7 +29,7 @@
     version: '7.4.1',
     exturl: false,
     sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
+    copycode: {"enable":true,"show_result":false,"style":null},
     back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
@@ -55,18 +55,18 @@
   };
 </script>
 
-  <meta name="description" content="使用scrapy自动创建的爬虫中middleware.py中自定义了两个中间件类，在我的理解中scrape的中间件没有什么区别，所以查了一下，  下载器中间件，尽管他们使用一样的接口，他们的目标不同dowlloader中间件修改请求和响应，或者生成请求来回答响应。他们并不直接与蜘蛛交互，这里面可以实现cookie， caching， proxy, 设置user-agent头等等。原理上是为down">
+  <meta name="description" content="使用scrapy自动创建的爬虫中middleware.py中自定义了两个中间件类，在我的理解中scrape的中间件没有什么区别，所以查了一下， 下载器中间件，尽管他们使用一样的接口，他们的目标不同dowlloader中间件修改请求和响应，或者生成请求来回答响应。他们并不直接与蜘蛛交互，这里面可以实现cookie， caching， proxy, 设置user-agent头等等。原理上是为downl">
 <meta name="keywords" content="golang,web">
 <meta property="og:type" content="article">
 <meta property="og:title" content="scrapy downloader中间件和spider中间件区别是什么？">
 <meta property="og:url" content="http://yoursite.com/2018/09/07/scrapy-downloader中间件和spider中间件区别是什么？/index.html">
 <meta property="og:site_name" content="West to the Northwest">
-<meta property="og:description" content="使用scrapy自动创建的爬虫中middleware.py中自定义了两个中间件类，在我的理解中scrape的中间件没有什么区别，所以查了一下，  下载器中间件，尽管他们使用一样的接口，他们的目标不同dowlloader中间件修改请求和响应，或者生成请求来回答响应。他们并不直接与蜘蛛交互，这里面可以实现cookie， caching， proxy, 设置user-agent头等等。原理上是为down">
+<meta property="og:description" content="使用scrapy自动创建的爬虫中middleware.py中自定义了两个中间件类，在我的理解中scrape的中间件没有什么区别，所以查了一下， 下载器中间件，尽管他们使用一样的接口，他们的目标不同dowlloader中间件修改请求和响应，或者生成请求来回答响应。他们并不直接与蜘蛛交互，这里面可以实现cookie， caching， proxy, 设置user-agent头等等。原理上是为downl">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2018-12-31T05:38:25.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="scrapy downloader中间件和spider中间件区别是什么？">
-<meta name="twitter:description" content="使用scrapy自动创建的爬虫中middleware.py中自定义了两个中间件类，在我的理解中scrape的中间件没有什么区别，所以查了一下，  下载器中间件，尽管他们使用一样的接口，他们的目标不同dowlloader中间件修改请求和响应，或者生成请求来回答响应。他们并不直接与蜘蛛交互，这里面可以实现cookie， caching， proxy, 设置user-agent头等等。原理上是为down">
+<meta name="twitter:description" content="使用scrapy自动创建的爬虫中middleware.py中自定义了两个中间件类，在我的理解中scrape的中间件没有什么区别，所以查了一下， 下载器中间件，尽管他们使用一样的接口，他们的目标不同dowlloader中间件修改请求和响应，或者生成请求来回答响应。他们并不直接与蜘蛛交互，这里面可以实现cookie， caching， proxy, 设置user-agent头等等。原理上是为downl">
   <link rel="canonical" href="http://yoursite.com/2018/09/07/scrapy-downloader中间件和spider中间件区别是什么？/">
 
 
@@ -298,13 +298,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>使用scrapy自动创建的爬虫中middleware.py中自定义了两个中间件类，在我的理解中scrape的中间件没有什么区别，所以查了一下，</p>
-<ol>
+        <p>使用scrapy自动创建的爬虫中middleware.py中自定义了两个中间件类，在我的理解中scrape的中间件没有什么区别，所以查了一下，</p><ol>
 <li><p>下载器中间件，尽管他们使用一样的接口，他们的目标不同<br>dowlloader中间件修改请求和响应，或者生成请求来回答响应。<br>他们并不直接与蜘蛛交互，这里面可以实现cookie， caching， proxy, 设置user-agent头等等。原理上是为downloader加入功能。</p>
 </li>
 <li><p>蜘蛛中间件修改传入和传出的东西，比如请求，item，exception以及start_requests. 它与下载器中间件共享基本功能，但是他们不能生成请求来回答响应。 他们位于蜘蛛和下载器之间，一个例子是过滤有坏的HTTP状态代码的回答。</p>
 </li>
-</ol>
+</ol><a id="more"></a>
+
 <p>While they have almost identical interfaces, they serve different purposes:<br>• Downloader middlewares modify requests and responses or generate requests in response to responses. They don’t directly interact with spiders. Some examples are middlewares that implement cookies, caching, proxies, redirects, setting user-agent headers, etc. They just add functionality to the downloader system.  </p>
 <p>• Spider middlewares modify things that pass in and out of spiders, like requests, items, exceptions, and start_requests. They do share some basic functionality with downloader middlewares, but they can’t generate requests in response to responses. They stand between the spiders and the downloader. One example is filtering out responses with bad HTTP status codes.  </p>
 <p>Some middlewares can function as either a downloader middleware or a spider middleware, but they’re often trivial and will be forced into one category or the other once you add more complex functionality.</p>

@@ -29,7 +29,7 @@
     version: '7.4.1',
     exturl: false,
     sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
+    copycode: {"enable":true,"show_result":false,"style":null},
     back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
@@ -63,13 +63,14 @@
 <meta property="og:site_name" content="West to the Northwest">
 <meta property="og:description" content="类功能介绍首先翻译一下注释。AsynchronousFileIOChannel是整块reader和writer的基类。读写请求由异步IO线程代理。在一个IO请求完成之后，这个块的内存段会被加入一个集合并且返回。这个访问的异步特性使得实现一个read-ahead或者write-behind的IO访问类型变得可能。参数: 这次访问向IO线程发出的请求的类型，读或写这个类的功能是负责管理向IO work">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://yoursite.com/2019/10/06/Flink-IO的AsynchronousFileIOChannel分析/iomanager_async.png">
 <meta property="og:image" content="http://yoursite.com/2019/10/06/Flink-IO的AsynchronousFileIOChannel分析/iomanager.png">
 <meta property="og:image" content="http://yoursite.com/2019/10/06/Flink-IO的AsynchronousFileIOChannel分析/deps.png">
-<meta property="og:updated_time" content="2019-10-07T03:29:54.161Z">
+<meta property="og:updated_time" content="2019-10-07T04:51:58.578Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Flink IO的AsynchronousFileIOChannel分析">
 <meta name="twitter:description" content="类功能介绍首先翻译一下注释。AsynchronousFileIOChannel是整块reader和writer的基类。读写请求由异步IO线程代理。在一个IO请求完成之后，这个块的内存段会被加入一个集合并且返回。这个访问的异步特性使得实现一个read-ahead或者write-behind的IO访问类型变得可能。参数: 这次访问向IO线程发出的请求的类型，读或写这个类的功能是负责管理向IO work">
-<meta name="twitter:image" content="http://yoursite.com/2019/10/06/Flink-IO的AsynchronousFileIOChannel分析/iomanager.png">
+<meta name="twitter:image" content="http://yoursite.com/2019/10/06/Flink-IO的AsynchronousFileIOChannel分析/iomanager_async.png">
   <link rel="canonical" href="http://yoursite.com/2019/10/06/Flink-IO的AsynchronousFileIOChannel分析/">
 
 
@@ -272,7 +273,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-10-07 11:29:54" itemprop="dateModified" datetime="2019-10-07T11:29:54+08:00">2019-10-07</time>
+                <time title="Modified: 2019-10-07 12:51:58" itemprop="dateModified" datetime="2019-10-07T12:51:58+08:00">2019-10-07</time>
               </span>
             
           
@@ -304,14 +305,11 @@
         <h2 id="类功能介绍"><a href="#类功能介绍" class="headerlink" title="类功能介绍"></a>类功能介绍</h2><p>首先翻译一下注释。<br>AsynchronousFileIOChannel是整块reader和writer的基类。读写请求由异步IO线程代理。在一个IO请求完成之后，这个块的内存段会被加入一个集合并且返回。<br>这个访问的异步特性使得实现一个read-ahead或者write-behind的IO访问类型变得可能。<br>参数: 这次访问向IO线程发出的请求的类型，读或写<br>这个类的功能是负责管理向IO worker thread发出的请求队列，</p><a id="more"></a>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`<span class="keyword">protected</span> <span class="keyword">final</span> RequestQueue\&lt;R\&gt; requestQueue;</span><br></pre></td></tr></table></figure>
 
-<p>`</p>
-<figure class="highlight plain"><figcaption><span>[][1] [title][2]</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">protected final RequestQueue\&lt;R\&gt; requestQueue;</span><br></pre></td></tr></table></figure>
-
-
-<p>类的构造函数注释：<br>向path发起一个新的channel访问，channel接受要读写的buffer，并且把他们交给异步IO线程，处理完之后，buffer会通过加入到给定队列的方式返回。</p>
+<p>`<br>类的构造函数注释：<br>向path发起一个新的channel访问，channel接受要读写的buffer，并且把他们交给异步IO线程，处理完之后，buffer会通过加入到给定队列的方式返回。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">`<span class="comment">/**  * Creates a new channel access to the path indicated by the given ID. The channel accepts buffers to be read/written and hands them to the asynchronous I/O thread. After being processed, the buffers are returned by adding the to the given queue.</span></span><br><span class="line"><span class="comment"> *  * <span class="doctag">@param</span> channelID    The id describing the path of the file that the channel accessed.</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> requestQueue The queue that this channel hands its IO requests to.</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> callback     The callback to be invoked when a request is done.</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> writeEnabled Flag describing whether the channel should be opened in read/write mode, rather than in read-only mode.</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@throws</span> IOException Thrown, if the channel could no be opened.</span></span><br><span class="line"><span class="comment"> */</span></span><br></pre></td></tr></table></figure>
 
-<p>`## 引用分析<br>被很多类扩展，包括：</p>
+<p>`</p>
+<h2 id="引用分析"><a href="#引用分析" class="headerlink" title="引用分析"></a>引用分析</h2><p>被很多类扩展，包括：</p>
 <ul>
 <li><p>AsynchronousBlockReader 这个引发了对createBlockChannelReader<br>的分析，下一节中会分析IOManagerAsync</p>
 </li>
@@ -326,7 +324,10 @@
 <li><p>AsynchronousBulkBlockReader</p>
 </li>
 </ul>
-<h3 id="IOManagerAsync分析"><a href="#IOManagerAsync分析" class="headerlink" title="IOManagerAsync分析"></a>IOManagerAsync分析</h3><p><img src="/2019/10/06/Flink-IO的AsynchronousFileIOChannel分析/iomanager.png" alt></p>
+<h3 id="IOManagerAsync分析"><a href="#IOManagerAsync分析" class="headerlink" title="IOManagerAsync分析"></a>IOManagerAsync分析</h3><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">`Constructs a new asynchronous I/O manager, writing file round robin across the given directories.</span><br></pre></td></tr></table></figure>
+
+<p>`<br><img src="/2019/10/06/Flink-IO的AsynchronousFileIOChannel分析/iomanager_async.png" alt><br>这里会构建异步的IO管理器，轮流写入给定目录中的文件。</p>
+<p><img src="/2019/10/06/Flink-IO的AsynchronousFileIOChannel分析/iomanager.png" alt></p>
 <p><img src="/2019/10/06/Flink-IO的AsynchronousFileIOChannel分析/deps.png" alt></p>
 
     </div>
@@ -412,7 +413,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#类功能介绍"><span class="nav-number">1.</span> <span class="nav-text">类功能介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#IOManagerAsync分析"><span class="nav-number">1.1.</span> <span class="nav-text">IOManagerAsync分析</span></a></li></ol></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#类功能介绍"><span class="nav-number">1.</span> <span class="nav-text">类功能介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#引用分析"><span class="nav-number">2.</span> <span class="nav-text">引用分析</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#IOManagerAsync分析"><span class="nav-number">2.1.</span> <span class="nav-text">IOManagerAsync分析</span></a></li></ol></li></ol></div>
         
       </div>
       <!--/noindex-->

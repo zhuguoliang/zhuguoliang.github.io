@@ -29,7 +29,7 @@
     version: '7.4.1',
     exturl: false,
     sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
-    copycode: {"enable":false,"show_result":false,"style":null},
+    copycode: {"enable":true,"show_result":false,"style":null},
     back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
@@ -301,7 +301,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h3 id="malloc—-gt-sbrk"><a href="#malloc—-gt-sbrk" class="headerlink" title="malloc—&gt;sbrk"></a>malloc—&gt;sbrk</h3><p>malloc allocates memory on the heap, period.<br>Your C library typically keeps a list (or some more intricate data structure) of available memory chunks, finding a suitable chunk to satisfy a malloc (possibly splitting a larger chunk into a number of smaller ones) and returning free’d memory to the list (possibly merging a few smaller chunks into a bigger one)<br>Only when the list doesn’t contain a large enough chunk to satisfy your malloc, the library will ask the OS for more memory, e.g. using the sbrk syscall. </p>
+        <h3 id="malloc—-gt-sbrk"><a href="#malloc—-gt-sbrk" class="headerlink" title="malloc—&gt;sbrk"></a>malloc—&gt;sbrk</h3><p>malloc allocates memory on the heap, period.<br>Your C library typically keeps a list (or some more intricate data structure) of available memory chunks, finding a suitable chunk to satisfy a malloc (possibly splitting a larger chunk into a number of smaller ones) and returning free’d memory to the list (possibly merging a few smaller chunks into a bigger one)<br>Only when the list doesn’t contain a large enough chunk to satisfy your malloc, the library will ask the OS for more memory, e.g. using the sbrk syscall. </p><a id="more"></a>
 <h3 id="sbrk"><a href="#sbrk" class="headerlink" title="sbrk"></a>sbrk</h3><p> strace -c ls</p>
 <p>现在基本可以认定，redis的zmalloc最终调用sbrk，然而在这个情形下，我们可以记录zmalloc得到的地址序列，分析命中的位置，</p>
 <p>继续仔细分析redis的详细内存增长，是以什么样的粒度进行分配的，主要使用了哪个内存分配机制。</p>
