@@ -228,6 +228,95 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/08/Flink-spill-compression分析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zero">
+      <meta itemprop="description" content="try to look 5 years ahead">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="West to the Northwest">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+            
+            <a href="/2019/10/08/Flink-spill-compression分析/" class="post-title-link" itemprop="url">Flink spill compression分析</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              
+                
+              
+
+              <time title="Created: 2019-10-08 16:43:36 / Modified: 16:48:00" itemprop="dateCreated datePublished" datetime="2019-10-08T16:43:36+08:00">2019-10-08</time>
+            </span>
+          
+            
+
+            
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>这篇文章会从下面这个选项开始，分析flink什么时候做spill的压缩</p>
+<blockquote>
+<p>TABLE_EXEC_SPILL_COMPRESSION_ENABLED</p>
+</blockquote>
+<p>除去test总共三个地方做了引用，一个是hashtable，两个是operator。</p>
+<ol>
+<li>BaseHybridHashTable</li>
+<li>BinaryExternalSorter</li>
+<li>BufferedKVExternalSorter</li>
+</ol>
+
+          <!--noindex-->
+          
+            <div class="post-button">
+              <a class="btn" href="/2019/10/08/Flink-spill-compression分析/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/07/xxxReader-xxxWriter分析/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -257,12 +346,33 @@
                 
               
 
-              <time title="Created: 2019-10-07 20:26:39 / Modified: 20:57:26" itemprop="dateCreated datePublished" datetime="2019-10-07T20:26:39+08:00">2019-10-07</time>
+              <time title="Created: 2019-10-07 20:26:39" itemprop="dateCreated datePublished" datetime="2019-10-07T20:26:39+08:00">2019-10-07</time>
             </span>
           
             
 
             
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-10-14 09:38:14" itemprop="dateModified" datetime="2019-10-14T09:38:14+08:00">2019-10-14</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -276,8 +386,25 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>Request和reader/writer之间的映射关系如下图：<br><img src="/2019/10/07/xxxReader-xxxWriter分析/1.png" alt><br>分别有6种Request和6种reader/writer, 但是他们并不是一一映射，本文我们针对读写者来进行分析。</p>
+          <p>Request和reader/writer之间的映射关系如下图：<br><img src="/2019/10/07/xxxReader-xxxWriter分析/1.png" alt><br>分别有6种Request和6种reader/writer, 但是他们并不是一一映射，本文我们针对读写者来进行分析。</p><ol>
+<li>AsynchronousBlockReader </li>
+<li>AsynchronousBulkBlockReader </li>
+<li>AsynchronousBlockWriterWithCallback </li>
+<li>AsynchronousBufferFileWriter </li>
+<li>AsynchronousBufferFileReader </li>
+<li>AsynchronousBufferFileSegmentReader </li>
+</ol><a id="more"></a>
 
+<p>1和2共同父类AsynchronousFileIOChannel</p>
+<h2 id="AsynchronousBlockReader简介"><a href="#AsynchronousBlockReader简介" class="headerlink" title="AsynchronousBlockReader简介"></a>AsynchronousBlockReader简介</h2><p>处理的是SegmentReadRequest，特点是读取一段内存。主要是两个函数，分别是getNextReturnedBlock和readBlock。</p>
+<h3 id="getNextReturnedBlock被引用情况"><a href="#getNextReturnedBlock被引用情况" class="headerlink" title="getNextReturnedBlock被引用情况"></a>getNextReturnedBlock被引用情况</h3><p>通过观察getNextReturnedBlock的引用，view-&gt;reader/writer-&gt;request三层结构慢慢显现出来了。</p>
+<ol>
+<li><strong>ChannelReaderInputView</strong></li>
+<li>FileChannelInputView</li>
+<li>HeaderlessChannelReaderInputView</li>
+<li>SeekableFileChannelInputView</li>
+</ol>
+<h3 id="readBlock被引用情况分析"><a href="#readBlock被引用情况分析" class="headerlink" title="readBlock被引用情况分析"></a>readBlock被引用情况分析</h3>
           <!--noindex-->
           
             <div class="post-button">
@@ -1110,97 +1237,6 @@
   
 
     
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/13/flink源码阅读之一/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="zero">
-      <meta itemprop="description" content="try to look 5 years ahead">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="West to the Northwest">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-            
-            <a href="/2019/02/13/flink源码阅读之一/" class="post-title-link" itemprop="url">flink源码阅读之一</a>
-          
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">Posted on</span>
-
-              
-                
-              
-
-              <time title="Created: 2019-02-13 22:13:08" itemprop="dateCreated datePublished" datetime="2019-02-13T22:13:08+08:00">2019-02-13</time>
-            </span>
-          
-            
-
-            
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2019-03-08 14:05:38" itemprop="dateModified" datetime="2019-03-08T14:05:38+08:00">2019-03-08</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-          <div class="post-eof"></div>
-        
-      </footer>
-  </article>
-  
-  
-  
-
-    
   </div>
 
   
@@ -1250,7 +1286,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">128</span>
+          <span class="site-state-item-count">129</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

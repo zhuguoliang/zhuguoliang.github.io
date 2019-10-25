@@ -55,18 +55,19 @@
   };
 </script>
 
-  <meta name="description" content="Request和reader/writer之间的映射关系如下图：分别有6种Request和6种reader/writer, 但是他们并不是一一映射，本文我们针对读写者来进行分析。">
+  <meta name="description" content="Request和reader/writer之间的映射关系如下图：分别有6种Request和6种reader/writer, 但是他们并不是一一映射，本文我们针对读写者来进行分析。 AsynchronousBlockReader  AsynchronousBulkBlockReader  AsynchronousBlockWriterWithCallback  AsynchronousBufferF">
+<meta name="keywords" content="flink,stream processing,Async IO">
 <meta property="og:type" content="article">
 <meta property="og:title" content="xxxReader&#x2F;xxxWriter分析">
 <meta property="og:url" content="http://yoursite.com/2019/10/07/xxxReader-xxxWriter分析/index.html">
 <meta property="og:site_name" content="West to the Northwest">
-<meta property="og:description" content="Request和reader/writer之间的映射关系如下图：分别有6种Request和6种reader/writer, 但是他们并不是一一映射，本文我们针对读写者来进行分析。">
+<meta property="og:description" content="Request和reader/writer之间的映射关系如下图：分别有6种Request和6种reader/writer, 但是他们并不是一一映射，本文我们针对读写者来进行分析。 AsynchronousBlockReader  AsynchronousBulkBlockReader  AsynchronousBlockWriterWithCallback  AsynchronousBufferF">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://yoursite.com/2019/10/07/xxxReader-xxxWriter分析/1.png">
-<meta property="og:updated_time" content="2019-10-07T12:57:26.130Z">
+<meta property="og:updated_time" content="2019-10-14T01:38:14.379Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="xxxReader&#x2F;xxxWriter分析">
-<meta name="twitter:description" content="Request和reader/writer之间的映射关系如下图：分别有6种Request和6种reader/writer, 但是他们并不是一一映射，本文我们针对读写者来进行分析。">
+<meta name="twitter:description" content="Request和reader/writer之间的映射关系如下图：分别有6种Request和6种reader/writer, 但是他们并不是一一映射，本文我们针对读写者来进行分析。 AsynchronousBlockReader  AsynchronousBulkBlockReader  AsynchronousBlockWriterWithCallback  AsynchronousBufferF">
 <meta name="twitter:image" content="http://yoursite.com/2019/10/07/xxxReader-xxxWriter分析/1.png">
   <link rel="canonical" href="http://yoursite.com/2019/10/07/xxxReader-xxxWriter分析/">
 
@@ -259,12 +260,33 @@
                 
               
 
-              <time title="Created: 2019-10-07 20:26:39 / Modified: 20:57:26" itemprop="dateCreated datePublished" datetime="2019-10-07T20:26:39+08:00">2019-10-07</time>
+              <time title="Created: 2019-10-07 20:26:39" itemprop="dateCreated datePublished" datetime="2019-10-07T20:26:39+08:00">2019-10-07</time>
             </span>
           
             
 
             
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2019-10-14 09:38:14" itemprop="dateModified" datetime="2019-10-14T09:38:14+08:00">2019-10-14</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
+
+                
+                
+              
+            </span>
           
 
           
@@ -278,7 +300,34 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>Request和reader/writer之间的映射关系如下图：<br><img src="/2019/10/07/xxxReader-xxxWriter分析/1.png" alt><br>分别有6种Request和6种reader/writer, 但是他们并不是一一映射，本文我们针对读写者来进行分析。</p>
+        <p>Request和reader/writer之间的映射关系如下图：<br><img src="/2019/10/07/xxxReader-xxxWriter分析/1.png" alt><br>分别有6种Request和6种reader/writer, 但是他们并不是一一映射，本文我们针对读写者来进行分析。</p><ol>
+<li>AsynchronousBlockReader </li>
+<li>AsynchronousBulkBlockReader </li>
+<li>AsynchronousBlockWriterWithCallback </li>
+<li>AsynchronousBufferFileWriter </li>
+<li>AsynchronousBufferFileReader </li>
+<li>AsynchronousBufferFileSegmentReader </li>
+</ol><a id="more"></a>
+
+<p>1和2共同父类AsynchronousFileIOChannel</p>
+<h2 id="AsynchronousBlockReader简介"><a href="#AsynchronousBlockReader简介" class="headerlink" title="AsynchronousBlockReader简介"></a>AsynchronousBlockReader简介</h2><p>处理的是SegmentReadRequest，特点是读取一段内存。主要是两个函数，分别是getNextReturnedBlock和readBlock。</p>
+<h3 id="getNextReturnedBlock被引用情况"><a href="#getNextReturnedBlock被引用情况" class="headerlink" title="getNextReturnedBlock被引用情况"></a>getNextReturnedBlock被引用情况</h3><p>通过观察getNextReturnedBlock的引用，view-&gt;reader/writer-&gt;request三层结构慢慢显现出来了。</p>
+<ol>
+<li><strong>ChannelReaderInputView</strong></li>
+<li>FileChannelInputView</li>
+<li>HeaderlessChannelReaderInputView</li>
+<li>SeekableFileChannelInputView</li>
+</ol>
+<h3 id="readBlock被引用情况分析"><a href="#readBlock被引用情况分析" class="headerlink" title="readBlock被引用情况分析"></a>readBlock被引用情况分析</h3><ol>
+<li>BaseHybridHashTable</li>
+<li><strong>ChannelReaderInputView</strong></li>
+<li>FileChannelInputView</li>
+<li>SeekableFileChannelInputView</li>
+</ol>
+<h2 id="AsynchronousBulkBlockReader"><a href="#AsynchronousBulkBlockReader" class="headerlink" title="AsynchronousBulkBlockReader"></a>AsynchronousBulkBlockReader</h2><p>同样处理SegmentReadRequest。 不同的是其私有对象</p>
+<blockquote>
+<p>private final ArrayList&lt;MemorySegment&gt; returnBuffers;<br>可以看到是处理大量内存段的读取的。</p>
+</blockquote>
 
     </div>
 
@@ -289,6 +338,19 @@
       
 
       <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/flink/" rel="tag"># flink</a>
+            
+              <a href="/tags/stream-processing/" rel="tag"># stream processing</a>
+            
+              <a href="/tags/Async-IO/" rel="tag"># Async IO</a>
+            
+          </div>
+        
 
         
 
@@ -304,6 +366,10 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2019/10/08/Flink-spill-compression分析/" rel="prev" title="Flink spill compression分析">
+                  Flink spill compression分析 <i class="fa fa-chevron-right"></i>
+                </a>
               
             </div>
           </div>
@@ -352,6 +418,8 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#AsynchronousBlockReader简介"><span class="nav-number">1.</span> <span class="nav-text">AsynchronousBlockReader简介</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#getNextReturnedBlock被引用情况"><span class="nav-number">1.1.</span> <span class="nav-text">getNextReturnedBlock被引用情况</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#readBlock被引用情况分析"><span class="nav-number">1.2.</span> <span class="nav-text">readBlock被引用情况分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#AsynchronousBulkBlockReader"><span class="nav-number">2.</span> <span class="nav-text">AsynchronousBulkBlockReader</span></a></li></ol></div>
+        
       </div>
       <!--/noindex-->
 
@@ -366,7 +434,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">128</span>
+          <span class="site-state-item-count">129</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

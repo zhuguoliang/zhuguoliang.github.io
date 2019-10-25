@@ -228,6 +228,115 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/07/31/sheepdog源码阅读/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zero">
+      <meta itemprop="description" content="try to look 5 years ahead">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="West to the Northwest">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+            
+            <a href="/2016/07/31/sheepdog源码阅读/" class="post-title-link" itemprop="url">sheepdog源码阅读</a>
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              
+                
+              
+
+              <time title="Created: 2016-07-31 13:46:07" itemprop="dateCreated datePublished" datetime="2016-07-31T13:46:07+08:00">2016-07-31</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: 2018-12-31 19:09:35" itemprop="dateModified" datetime="2018-12-31T19:09:35+08:00">2018-12-31</time>
+              </span>
+            
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">In</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p>这篇博文主要关注sheepdog中的打开存储系统的初始化设置以及基本的读写操作，并不关注sheepdog中有关分布式的内容。<br>在sheepdog中，读写请求的处理是通过将对应的请求以及相应的</p>
+<h2 id="sd-open"><a href="#sd-open" class="headerlink" title="sd_open"></a>sd_open</h2><p>sd_open主要完成了初始化的工作，包括初始化了三个重要的链表。</p>
+<a id="more"></a>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">int</span> sd\_open(BlockDriverState *bs, QDict *options, <span class="keyword">int</span> flags,</span><br><span class="line">	               Error **errp)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//..............                   </span></span><br><span class="line">	QLIST_INIT(&amp;s-&gt;inflight_aio_head);</span><br><span class="line">	QLIST_INIT(&amp;s-&gt;failed_aio_head);</span><br><span class="line">	QLIST_INIT(&amp;s-&gt;inflight_aiocb_head);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">//然后连接到sheeodog，读取inode元数据</span></span><br><span class="line">	fd = connect_to_sdog(s, errp);</span><br><span class="line">	ret = read_object(fd, s-&gt;aio_context, buf, vid_to_vdi_oid(vid),</span><br><span class="line">	                  <span class="number">0</span>, SD_INODE_SIZE, <span class="number">0</span>, s-&gt;cache_flags);</span><br><span class="line">	 <span class="comment">//最后初始化协程队列和协程锁</span></span><br><span class="line">	qemu_co_mutex_init(&amp;s-&gt;lock);</span><br><span class="line">	qemu_co_queue_init(&amp;s-&gt;overlapping_queue);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="sd-co-readv"><a href="#sd-co-readv" class="headerlink" title="sd_co_readv"></a>sd_co_readv</h2><p>sd_co_readv协程处理读请求</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> coroutine\_fn <span class="keyword">int</span> sd\_co\_readv(BlockDriverState \*bs, int64\<span class="keyword">_t</span> sector\_num,</span><br><span class="line">	                   <span class="keyword">int</span> nb_sectors, QEMUIOVector *qiov)</span><br><span class="line">&#123;</span><br><span class="line">	<span class="comment">//为这个请求申请分配acb，进行一系列设置（包括在acb保存当前的协程）</span></span><br><span class="line">	acb = sd_aio_setup(bs, qiov, sector_num, nb_sectors);</span><br><span class="line">	<span class="comment">//然后查找当前的请求是不是已经在inflight_aiocb_head里面了，如果重复了，就把当前的协程加入到协程队列的队尾,然后重试</span></span><br><span class="line">	retry:</span><br><span class="line">	<span class="keyword">if</span> (check_overlapping_aiocb(s, acb)) &#123;</span><br><span class="line">	    qemu_co_queue_wait(&amp;s-&gt;overlapping_queue);</span><br><span class="line">	    <span class="keyword">goto</span> retry;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//以len为长度，构造请求加入到inflight_aio_head队列，不等请求响应就返回，返回的请求由aio_read_response处理。</span></span><br><span class="line">	<span class="comment">//由sd_co_rw_vector里面的add_aio_request函数创建协程，调用aio_read_response处理请求的返回信息。</span></span><br><span class="line">	ret = sd_co_rw_vector(acb);</span><br><span class="line">	<span class="keyword">if</span> (ret &lt;= <span class="number">0</span>) &#123;</span><br><span class="line">	    QLIST_REMOVE(acb, aiocb_siblings);</span><br><span class="line">	    qemu_co_queue_restart_all(&amp;s-&gt;overlapping_queue);</span><br><span class="line">	    qemu_aio_unref(acb);</span><br><span class="line">	    <span class="keyword">return</span> ret;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//问题是yield之后restart all是什么意思呢？我理解这里是唤醒调度</span></span><br><span class="line">	qemu_coroutine_yield();</span><br><span class="line">	<span class="comment">//yield之后，把控制权交回调用了qemu_coroutine_enter的位置，现在需要把acb从队列中移除，然后重启其它所有协程</span></span><br><span class="line">	QLIST_REMOVE(acb, aiocb_siblings);</span><br><span class="line">	qemu_co_queue_restart_all(&amp;s-&gt;overlapping_queue);</span><br><span class="line">	<span class="keyword">return</span> acb-&gt;ret;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>函数调用关系：<br>sd_co_rw_vector–&gt; add_aio_request –&gt;aio_set_fd_handler(s-&gt;aio_context, s-&gt;fd, false,<br>                       co_read_response, co_write_request, s); –&gt; co_read_response &amp;&amp; co_write_request</p>
+<pre><code>co_read_response[非协程，是fd handler] 创建协程--&gt;aio_read_response</code></pre>
+          <!--noindex-->
+          
+            <div class="post-button">
+              <a class="btn" href="/2016/07/31/sheepdog源码阅读/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+          <div class="post-eof"></div>
+        
+      </footer>
+  </article>
+  
+  
+  
+
+    
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-Hans">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/07/31/20160731/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1119,7 +1228,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">128</span>
+          <span class="site-state-item-count">129</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>

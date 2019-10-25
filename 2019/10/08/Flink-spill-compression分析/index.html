@@ -55,22 +55,18 @@
   };
 </script>
 
-  <meta name="description" content="malloc—&amp;gt;sbrkmalloc allocates memory on the heap, period.Your C library typically keeps a list (or some more intricate data structure) of available memory chunks, finding a suitable chunk to satisfy">
-<meta name="keywords" content="内存分配,malloc,sbrk,tcmalloc">
+  <meta name="description" content="这篇文章会从下面这个选项开始，分析flink什么时候做spill的压缩  TABLE_EXEC_SPILL_COMPRESSION_ENABLED  除去test总共三个地方做了引用，一个是hashtable，两个是operator。  BaseHybridHashTable BinaryExternalSorter BufferedKVExternalSorter">
 <meta property="og:type" content="article">
-<meta property="og:title" content="zmalloc">
-<meta property="og:url" content="http://yoursite.com/2016/08/19/zmalloc/index.html">
+<meta property="og:title" content="Flink spill compression分析">
+<meta property="og:url" content="http://yoursite.com/2019/10/08/Flink-spill-compression分析/index.html">
 <meta property="og:site_name" content="West to the Northwest">
-<meta property="og:description" content="malloc—&amp;gt;sbrkmalloc allocates memory on the heap, period.Your C library typically keeps a list (or some more intricate data structure) of available memory chunks, finding a suitable chunk to satisfy">
+<meta property="og:description" content="这篇文章会从下面这个选项开始，分析flink什么时候做spill的压缩  TABLE_EXEC_SPILL_COMPRESSION_ENABLED  除去test总共三个地方做了引用，一个是hashtable，两个是operator。  BaseHybridHashTable BinaryExternalSorter BufferedKVExternalSorter">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="http://yoursite.com/2016/08/19/zmalloc/1.png">
-<meta property="og:image" content="http://yoursite.com/2016/08/19/zmalloc/2.png">
-<meta property="og:updated_time" content="2018-12-31T10:58:06.000Z">
+<meta property="og:updated_time" content="2019-10-08T08:48:00.004Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="zmalloc">
-<meta name="twitter:description" content="malloc—&amp;gt;sbrkmalloc allocates memory on the heap, period.Your C library typically keeps a list (or some more intricate data structure) of available memory chunks, finding a suitable chunk to satisfy">
-<meta name="twitter:image" content="http://yoursite.com/2016/08/19/zmalloc/1.png">
-  <link rel="canonical" href="http://yoursite.com/2016/08/19/zmalloc/">
+<meta name="twitter:title" content="Flink spill compression分析">
+<meta name="twitter:description" content="这篇文章会从下面这个选项开始，分析flink什么时候做spill的压缩  TABLE_EXEC_SPILL_COMPRESSION_ENABLED  除去test总共三个地方做了引用，一个是hashtable，两个是operator。  BaseHybridHashTable BinaryExternalSorter BufferedKVExternalSorter">
+  <link rel="canonical" href="http://yoursite.com/2019/10/08/Flink-spill-compression分析/">
 
 
 <script id="page-configurations">
@@ -84,7 +80,7 @@
   };
 </script>
 
-  <title>zmalloc | West to the Northwest</title>
+  <title>Flink spill compression分析 | West to the Northwest</title>
   
 
 
@@ -233,7 +229,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-Hans">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2016/08/19/zmalloc/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/10/08/Flink-spill-compression分析/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zero">
@@ -245,7 +241,7 @@
       <meta itemprop="name" content="West to the Northwest">
     </span>
       <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">zmalloc
+        <h1 class="post-title" itemprop="name headline">Flink spill compression分析
 
           
         </h1>
@@ -261,33 +257,12 @@
                 
               
 
-              <time title="Created: 2016-08-19 21:51:34" itemprop="dateCreated datePublished" datetime="2016-08-19T21:51:34+08:00">2016-08-19</time>
+              <time title="Created: 2019-10-08 16:43:36 / Modified: 16:48:00" itemprop="dateCreated datePublished" datetime="2019-10-08T16:43:36+08:00">2019-10-08</time>
             </span>
           
             
 
             
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: 2018-12-31 18:58:06" itemprop="dateModified" datetime="2018-12-31T18:58:06+08:00">2018-12-31</time>
-              </span>
-            
-          
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">In</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/学习/" itemprop="url" rel="index"><span itemprop="name">学习</span></a></span>
-
-                
-                
-              
-            </span>
           
 
           
@@ -301,24 +276,16 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h3 id="malloc—-gt-sbrk"><a href="#malloc—-gt-sbrk" class="headerlink" title="malloc—&gt;sbrk"></a>malloc—&gt;sbrk</h3><p>malloc allocates memory on the heap, period.<br>Your C library typically keeps a list (or some more intricate data structure) of available memory chunks, finding a suitable chunk to satisfy a malloc (possibly splitting a larger chunk into a number of smaller ones) and returning free’d memory to the list (possibly merging a few smaller chunks into a bigger one)<br>Only when the list doesn’t contain a large enough chunk to satisfy your malloc, the library will ask the OS for more memory, e.g. using the sbrk syscall. </p><a id="more"></a>
-<h3 id="sbrk"><a href="#sbrk" class="headerlink" title="sbrk"></a>sbrk</h3><p> strace -c ls</p>
-<p>现在基本可以认定，redis的zmalloc最终调用sbrk，然而在这个情形下，我们可以记录zmalloc得到的地址序列，分析命中的位置，</p>
-<p>继续仔细分析redis的详细内存增长，是以什么样的粒度进行分配的，主要使用了哪个内存分配机制。</p>
-<p>tcmalloc中的内存分配机制，在它的内存分配机制中，引入对读写均衡度的考量。明天要看一下在使用tcmalloc的时候，主要使用了哪个队列。</p>
-<p>tcmalloc</p>
-<p>tcmalloc为每个线程分配了线程局部的cache，小分配就都是子啊这种线程局部的cache中完成，</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">inline</span> <span class="keyword">void</span>\* <span class="keyword">do</span>\_malloc\_no\_errno(size\<span class="keyword">_t</span> size) &#123;</span><br><span class="line">  <span class="keyword">if</span> (ThreadCache::have\_tls &amp;&amp;</span><br><span class="line">  LIKELY(size \&lt; ThreadCache::MinSizeForSlowPath())) &#123;</span><br><span class="line"><span class="keyword">return</span> <span class="keyword">do</span>\_malloc\_small(ThreadCache::GetCacheWhichMustBePresent(), size);</span><br><span class="line">  &#125; <span class="keyword">else</span> <span class="keyword">if</span> (size \&lt;= kMaxSize) &#123;</span><br><span class="line"><span class="keyword">return</span> <span class="keyword">do</span>\_malloc\_small(ThreadCache::GetCache(), size);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"><span class="keyword">return</span> <span class="keyword">do</span>\_malloc\_pages(ThreadCache::GetCache(), size);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>small cache分配</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">inline</span> <span class="keyword">void</span>* <span class="keyword">do</span>\_malloc\_small(ThreadCache* heap, size\<span class="keyword">_t</span> size) &#123;</span><br><span class="line">  ASSERT(Static::IsInited());</span><br><span class="line">  ASSERT(heap != <span class="literal">NULL</span>);</span><br><span class="line">  size\<span class="keyword">_t</span> cl = Static::sizemap()-\&gt;SizeClass(size);</span><br><span class="line">  size = Static::sizemap()-\&gt;class\_to\_size(cl);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> ((FLAGS\_tcmalloc\_sample\_parameter \&gt; <span class="number">0</span>) &amp;&amp; heap-\&gt;SampleAllocation(size)) &#123;</span><br><span class="line"><span class="keyword">return</span> DoSampledAllocation(size);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line"><span class="comment">// The common case, and also the simplest.  This just pops the</span></span><br><span class="line"><span class="comment">// size-appropriate freelist, after replenishing it if it's empty.</span></span><br><span class="line"><span class="keyword">return</span> CheckedMallocResult(heap-\&gt;Allocate(size, cl));</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
-<p>tc_malloc_stats输出<br>在tcmalloc中，小对象在per-thread的cache中进行分配，大对象在page heap中进行分配，图中可以看出per-thread cache的大小从8B、16B到13KB.<br>实际上tcmalloc为小对象创建了86个大小的size classes。</p>
-<img src="/2016/08/19/zmalloc/1.png">
-
-<p>要想弄懂，主要看下面这个实验，上面申请的是256KB+8B的块，总共申请了200MB，下面的实验中，我们申请256KB-8B的块。<br>可以看出790个span，每个31个8KB的页，</p>
-<img src="/2016/08/19/zmalloc/2.png">
-<p>和期望不符合的一点是class 86的obj数目只有36个，<br>do_malloc_stats —&gt;PrintStats —&gt;DumpStats</p>
+        <p>这篇文章会从下面这个选项开始，分析flink什么时候做spill的压缩</p>
+<blockquote>
+<p>TABLE_EXEC_SPILL_COMPRESSION_ENABLED</p>
+</blockquote>
+<p>除去test总共三个地方做了引用，一个是hashtable，两个是operator。</p>
+<ol>
+<li>BaseHybridHashTable</li>
+<li>BinaryExternalSorter</li>
+<li>BufferedKVExternalSorter</li>
+</ol>
 
     </div>
 
@@ -329,29 +296,14 @@
       
 
       <footer class="post-footer">
-          
-            
-          
-          <div class="post-tags">
-            
-              <a href="/tags/内存分配/" rel="tag"># 内存分配</a>
-            
-              <a href="/tags/malloc/" rel="tag"># malloc</a>
-            
-              <a href="/tags/sbrk/" rel="tag"># sbrk</a>
-            
-              <a href="/tags/tcmalloc/" rel="tag"># tcmalloc</a>
-            
-          </div>
-        
 
         
 
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
               
-                <a href="/2016/08/19/暑假有意义的一件事/" rel="next" title="暑假有意义的一件事">
-                  <i class="fa fa-chevron-left"></i> 暑假有意义的一件事
+                <a href="/2019/10/07/xxxReader-xxxWriter分析/" rel="next" title="xxxReader/xxxWriter分析">
+                  <i class="fa fa-chevron-left"></i> xxxReader/xxxWriter分析
                 </a>
               
             </div>
@@ -359,10 +311,6 @@
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-              
-                <a href="/2016/08/20/material/" rel="prev" title="material">
-                  material <i class="fa fa-chevron-right"></i>
-                </a>
               
             </div>
           </div>
@@ -411,8 +359,6 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#malloc—-gt-sbrk"><span class="nav-number">1.</span> <span class="nav-text">malloc—&gt;sbrk</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#sbrk"><span class="nav-number">2.</span> <span class="nav-text">sbrk</span></a></li></ol></div>
-        
       </div>
       <!--/noindex-->
 
@@ -575,7 +521,7 @@
       repo: 'gitment-comments',
       owner: 'zhuguoliang',
       admin: ['zhuguoliang'],
-      id: '8f3062e4a1554f9be475011889bff95c',
+      id: '78f389c8afdcf1d3cde7eb3fc264dc8f',
         language: window.navigator.language || window.navigator.userLanguage,
       
       distractionFreeMode: 'true'
