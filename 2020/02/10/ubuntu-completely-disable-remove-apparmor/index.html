@@ -55,18 +55,18 @@
   };
 </script>
 
-  <meta name="description" content="Apparmor is making container restore stalling, hence I need to disable it for the testbed. sudo systemctl stop apparmorsudo systemctl disable apparmorsudo apt remove –assume-yes –purge apparmor">
+  <meta name="description" content="Apparmor is making container restore stalling, hence I need to disable it for the testbed. sudo systemctl stop apparmorsudo systemctl disable apparmor AppArmor can be disabled, and the kernel module u">
 <meta name="keywords" content="podman,ubuntu">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ubuntu completely disable&amp;remove apparmor">
 <meta property="og:url" content="http://yoursite.com/2020/02/10/ubuntu-completely-disable-remove-apparmor/index.html">
 <meta property="og:site_name" content="West to the Northwest">
-<meta property="og:description" content="Apparmor is making container restore stalling, hence I need to disable it for the testbed. sudo systemctl stop apparmorsudo systemctl disable apparmorsudo apt remove –assume-yes –purge apparmor">
+<meta property="og:description" content="Apparmor is making container restore stalling, hence I need to disable it for the testbed. sudo systemctl stop apparmorsudo systemctl disable apparmor AppArmor can be disabled, and the kernel module u">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2020-02-10T08:03:20.104Z">
+<meta property="og:updated_time" content="2020-02-10T10:04:42.059Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ubuntu completely disable&amp;remove apparmor">
-<meta name="twitter:description" content="Apparmor is making container restore stalling, hence I need to disable it for the testbed. sudo systemctl stop apparmorsudo systemctl disable apparmorsudo apt remove –assume-yes –purge apparmor">
+<meta name="twitter:description" content="Apparmor is making container restore stalling, hence I need to disable it for the testbed. sudo systemctl stop apparmorsudo systemctl disable apparmor AppArmor can be disabled, and the kernel module u">
   <link rel="canonical" href="http://yoursite.com/2020/02/10/ubuntu-completely-disable-remove-apparmor/">
 
 
@@ -258,7 +258,7 @@
                 
               
 
-              <time title="Created: 2020-02-10 16:00:38 / Modified: 16:03:20" itemprop="dateCreated datePublished" datetime="2020-02-10T16:00:38+08:00">2020-02-10</time>
+              <time title="Created: 2020-02-10 16:00:38 / Modified: 18:04:42" itemprop="dateCreated datePublished" datetime="2020-02-10T16:00:38+08:00">2020-02-10</time>
             </span>
           
             
@@ -291,7 +291,8 @@
 
       
         <p>Apparmor is making container restore stalling, hence I need to disable it for the testbed.</p>
-<p>sudo systemctl stop apparmor<br>sudo systemctl disable apparmor<br>sudo apt remove –assume-yes –purge apparmor</p>
+<p>sudo systemctl stop apparmor<br>sudo systemctl disable apparmor</p>
+<p>AppArmor can be disabled, and the kernel module unloaded by entering the following:<br>sudo systemctl stop apparmor.service<br>sudo update-rc.d -f apparmor remove</p>
 
     </div>
 
